@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1A4D58">
+  <title>Blazing Firebirds</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Firebirds">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <a href="#" class="brand" aria-label="Blazing Firebirds home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F2C13E"/>
+            <stop offset="1" stop-color="#D88B2C"/>
+          </linearGradient>
+        </defs>
+        <path d="M32 4
+                 C 24 16, 18 22, 18 32
+                 C 18 42, 24 50, 24 50
+                 C 22 44, 22 38, 26 34
+                 C 26 40, 28 46, 32 50
+                 C 36 46, 38 40, 38 34
+                 C 42 38, 42 44, 40 50
+                 C 40 50, 46 42, 46 32
+                 C 46 22, 40 16, 32 4 Z"
+              fill="url(#flame)"/>
+        <circle cx="32" cy="40" r="3" fill="#C8392E"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-text__top">Blazing</span>
+        <span class="brand-text__bottom">Firebirds</span>
+      </span>
+    </a>
+    <div class="meta" id="meta-strip" aria-live="polite"></div>
+  </header>
+
+  <main id="app" class="app">
+    <div class="loading">Loading squad data…</div>
+  </main>
+
+  <footer class="footer">
+    <p>Data from <a href="https://hutt.spawtz.com/" target="_blank" rel="noopener">Hutt Indoor Sports</a> · Refreshes every 1 hour</p>
+    <p class="footer-fineprint">Built by Vernon's Dad Brandon. <span class="footer-long">Any issues, feedback or ideas feel free to <a href="mailto:buzzofnz@gmail.com?subject=Blazing%20Firebirds%20App%20Feedback" target="_blank" rel="noopener">email me</a></span><span class="footer-short">Any feedback please <a href="mailto:buzzofnz@gmail.com?subject=Blazing%20Firebirds%20App%20Feedback" target="_blank" rel="noopener">email me</a></span></p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>

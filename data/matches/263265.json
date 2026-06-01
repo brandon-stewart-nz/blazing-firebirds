@@ -1,0 +1,216 @@
+{
+  "fixture_id": 263265,
+  "title": "Hutt Park - Anderson Aces - Arihaan vs Blazing Firebirds - Jacob (02/05/2026 13:00)",
+  "team_summaries": [
+    {
+      "name": "Blazing Firebirds - Jacob",
+      "display": "Blazing Firebirds",
+      "skin_scores": [
+        14,
+        11,
+        8
+      ],
+      "total": 33,
+      "skins_won": 0,
+      "points": 1
+    },
+    {
+      "name": "Anderson Aces - Arihaan",
+      "display": "Anderson Aces",
+      "skin_scores": [
+        26,
+        39,
+        41
+      ],
+      "total": 106,
+      "skins_won": 3,
+      "points": 6
+    }
+  ],
+  "innings": [
+    {
+      "batting_team_raw": "Blazing Firebirds - Jacob",
+      "batting_team_display": "Blazing Firebirds",
+      "batters": [
+        {
+          "name": "Vernon Stewart",
+          "name_raw": "vernon stewart",
+          "runs": 5,
+          "balls_faced": 15,
+          "dismissals": 1
+        },
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "runs": 9,
+          "balls_faced": 9,
+          "dismissals": 1
+        },
+        {
+          "name": "Owen Buchan",
+          "name_raw": "owen buchan",
+          "runs": 14,
+          "balls_faced": 12,
+          "dismissals": 1
+        },
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "runs": -3,
+          "balls_faced": 12,
+          "dismissals": 3
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "runs": -3,
+          "balls_faced": 12,
+          "dismissals": 3
+        },
+        {
+          "name": "Ria Sathishkumar",
+          "name_raw": "Ria Sathishkumar",
+          "runs": 11,
+          "balls_faced": 12,
+          "dismissals": 0
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Dylan Smith",
+          "name_raw": "dylan smith",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": -1
+        },
+        {
+          "name": "Daneel Unknown",
+          "name_raw": "daneel Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 14
+        },
+        {
+          "name": "Micheal Unknown",
+          "name_raw": "Micheal Unknown",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 3
+        },
+        {
+          "name": "Jimi Pearce",
+          "name_raw": "jimi pearce",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 1
+        },
+        {
+          "name": "Riley Unknown",
+          "name_raw": "Riley Unknown",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 14
+        },
+        {
+          "name": "Arihaan Bhushan",
+          "name_raw": "arihaan bhushan",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 2
+        }
+      ]
+    },
+    {
+      "batting_team_raw": "Anderson Aces - Arihaan",
+      "batting_team_display": "Anderson Aces",
+      "batters": [
+        {
+          "name": "Riley Unknown",
+          "name_raw": "Riley Unknown",
+          "runs": 9,
+          "balls_faced": 12,
+          "dismissals": 1
+        },
+        {
+          "name": "Arihaan Bhushan",
+          "name_raw": "arihaan bhushan",
+          "runs": 17,
+          "balls_faced": 12,
+          "dismissals": 0
+        },
+        {
+          "name": "Micheal Unknown",
+          "name_raw": "Micheal Unknown",
+          "runs": 17,
+          "balls_faced": 10,
+          "dismissals": 1
+        },
+        {
+          "name": "Jimi Pearce",
+          "name_raw": "jimi pearce",
+          "runs": 22,
+          "balls_faced": 14,
+          "dismissals": 0
+        },
+        {
+          "name": "Daneel Unknown",
+          "name_raw": "daneel Unknown",
+          "runs": 23,
+          "balls_faced": 12,
+          "dismissals": 0
+        },
+        {
+          "name": "Dylan Smith",
+          "name_raw": "dylan smith",
+          "runs": 18,
+          "balls_faced": 12,
+          "dismissals": 1
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 13
+        },
+        {
+          "name": "Vernon Stewart",
+          "name_raw": "vernon stewart",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 11
+        },
+        {
+          "name": "Ria Sathishkumar",
+          "name_raw": "Ria Sathishkumar",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 4
+        },
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 21
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 23
+        },
+        {
+          "name": "Owen Buchan",
+          "name_raw": "owen buchan",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 34
+        }
+      ]
+    }
+  ]
+}

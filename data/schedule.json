@@ -1,0 +1,336 @@
+{
+  "generated_at_utc": "2026-06-01T03:10:04.274202+00:00",
+  "games": {
+    "2026-04-25": {
+      "partnerships": [
+        [
+          "Jack",
+          "Vernon"
+        ],
+        [
+          "Fletcher",
+          "Will"
+        ],
+        [
+          "Jacob",
+          "Owen"
+        ]
+      ],
+      "bowling_order": [
+        "Jacob",
+        "Vernon",
+        "Jack",
+        "Owen",
+        "Fletcher",
+        "Will"
+      ],
+      "unavailable": [
+        "Anvaya",
+        "Ria",
+        "Liam"
+      ],
+      "rotation": [],
+      "stand_ins": [
+        "Fletcher Tulloch"
+      ],
+      "captain": "Jacob",
+      "potd": "Vernon"
+    },
+    "2026-05-02": {
+      "partnerships": [
+        [
+          "Vernon",
+          "Jack"
+        ],
+        [
+          "Owen",
+          "Jacob"
+        ],
+        [
+          "Will",
+          "Ria"
+        ]
+      ],
+      "bowling_order": [
+        "Jack",
+        "Vernon",
+        "Ria",
+        "Jacob",
+        "Will",
+        "Owen"
+      ],
+      "unavailable": [
+        "Anvaya",
+        "Liam"
+      ],
+      "rotation": [],
+      "stand_ins": [],
+      "captain": "Vernon",
+      "potd": "Will"
+    },
+    "2026-05-09": {
+      "partnerships": [
+        [
+          "Ria",
+          "Anvaya"
+        ],
+        [
+          "Jack",
+          "Vernon"
+        ],
+        [
+          "Liam",
+          "Jacob"
+        ]
+      ],
+      "bowling_order": [
+        "Vernon",
+        "Liam",
+        "Ria",
+        "Jacob",
+        "Anvaya",
+        "Jack"
+      ],
+      "unavailable": [],
+      "rotation": [
+        "Owen",
+        "Will"
+      ],
+      "stand_ins": [],
+      "captain": "Jack",
+      "potd": "Ria"
+    },
+    "2026-05-16": {
+      "partnerships": [
+        [
+          "Jacob",
+          "Owen"
+        ],
+        [
+          "Anvaya",
+          "Ria"
+        ],
+        [
+          "Liam",
+          "Will"
+        ]
+      ],
+      "bowling_order": [
+        "Ria",
+        "Will",
+        "Anvaya",
+        "Jacob",
+        "Liam",
+        "Owen"
+      ],
+      "unavailable": [],
+      "rotation": [
+        "Jack",
+        "Vernon"
+      ],
+      "stand_ins": [],
+      "captain": "Owen",
+      "potd": "Jacob"
+    },
+    "2026-05-23": {
+      "partnerships": [
+        [
+          "Jacob",
+          "Owen"
+        ],
+        [
+          "Ria",
+          "Anvaya"
+        ],
+        [
+          "Vernon",
+          "Jack"
+        ]
+      ],
+      "bowling_order": [
+        "Jack",
+        "Anvaya",
+        "Vernon",
+        "Ria",
+        "Jacob",
+        "Owen"
+      ],
+      "unavailable": [
+        "Liam"
+      ],
+      "rotation": [
+        "Will"
+      ],
+      "stand_ins": [],
+      "captain": "Anvaya",
+      "potd": "Owen"
+    },
+    "2026-05-30": {
+      "partnerships": [
+        [
+          "Jacob",
+          "Anvaya"
+        ],
+        [
+          "Vernon",
+          "Jack"
+        ],
+        [
+          "Vivaan",
+          "Will"
+        ]
+      ],
+      "bowling_order": [
+        "Vivaan",
+        "Anvaya",
+        "Vernon",
+        "Jacob",
+        "Will",
+        "Jack"
+      ],
+      "unavailable": [
+        "Owen",
+        "Ria",
+        "Liam"
+      ],
+      "rotation": [],
+      "stand_ins": [
+        "Vivaan Narwal"
+      ],
+      "captain": "Will",
+      "potd": "Anvaya"
+    },
+    "2026-06-06": {
+      "partnerships": [
+        [
+          "Jacob",
+          "Owen"
+        ],
+        [
+          "Jack",
+          "Anvaya"
+        ],
+        [
+          "Liam",
+          "Will"
+        ]
+      ],
+      "bowling_order": [
+        "Anvaya",
+        "Liam",
+        "Will",
+        "Jacob",
+        "Jack",
+        "Owen"
+      ],
+      "unavailable": [
+        "Ria"
+      ],
+      "rotation": [
+        "Vernon"
+      ],
+      "stand_ins": [],
+      "captain": "Jacob"
+    },
+    "2026-06-13": {
+      "unavailable": [
+        "Jack",
+        "Anvaya"
+      ],
+      "rotation": [],
+      "stand_ins": []
+    },
+    "2026-06-20": {
+      "unavailable": [
+        "Jacob"
+      ],
+      "rotation": [
+        "Will"
+      ],
+      "stand_ins": []
+    },
+    "2026-06-27": {
+      "unavailable": [],
+      "rotation": [
+        "Jack",
+        "Vernon"
+      ],
+      "stand_ins": []
+    },
+    "2026-07-18": {
+      "unavailable": [
+        "Jacob",
+        "Owen",
+        "Ria"
+      ],
+      "rotation": [],
+      "stand_ins": []
+    },
+    "2026-07-25": {
+      "unavailable": [
+        "Jacob"
+      ],
+      "rotation": [
+        "Anvaya"
+      ],
+      "stand_ins": []
+    },
+    "2026-08-01": {
+      "unavailable": [
+        "Jacob"
+      ],
+      "rotation": [
+        "Will"
+      ],
+      "stand_ins": []
+    },
+    "2026-08-08": {
+      "unavailable": [],
+      "rotation": [
+        "Liam",
+        "Vernon"
+      ],
+      "stand_ins": []
+    },
+    "2026-08-15": {
+      "unavailable": [],
+      "rotation": [
+        "Jack",
+        "Owen"
+      ],
+      "stand_ins": []
+    },
+    "2026-08-22": {
+      "unavailable": [],
+      "rotation": [
+        "Anvaya",
+        "Jacob"
+      ],
+      "stand_ins": []
+    },
+    "2026-08-29": {
+      "unavailable": [],
+      "rotation": [
+        "Jack",
+        "Vernon"
+      ],
+      "stand_ins": []
+    },
+    "2026-09-05": {
+      "unavailable": [],
+      "rotation": [
+        "Liam",
+        "Owen"
+      ],
+      "stand_ins": []
+    },
+    "2026-09-12": {
+      "unavailable": [],
+      "rotation": [
+        "Ria",
+        "Will"
+      ],
+      "stand_ins": []
+    }
+  }
+}

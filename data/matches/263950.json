@@ -1,0 +1,223 @@
+{
+  "fixture_id": 263950,
+  "title": "Hutt Park - Blazing Firebirds - Jacob vs Oompa Loompas - Keanu (30/05/2026 12:00)",
+  "team_summaries": [
+    {
+      "name": "Blazing Firebirds - Jacob",
+      "display": "Blazing Firebirds",
+      "skin_scores": [
+        30,
+        41,
+        39
+      ],
+      "total": 110,
+      "skins_won": 3,
+      "points": 6
+    },
+    {
+      "name": "Oompa Loompas - Keanu",
+      "display": "Oompa Loompas",
+      "skin_scores": [
+        5,
+        29,
+        12
+      ],
+      "total": 46,
+      "skins_won": 0,
+      "points": 1
+    }
+  ],
+  "innings": [
+    {
+      "batting_team_raw": "Blazing Firebirds - Jacob",
+      "batting_team_display": "Blazing Firebirds",
+      "batters": [
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "runs": 13,
+          "balls_faced": 17,
+          "dismissals": 2
+        },
+        {
+          "name": "Anvaya Unknown",
+          "name_raw": "anvaya Unknown",
+          "runs": 17,
+          "balls_faced": 7,
+          "dismissals": 0
+        },
+        {
+          "name": "Vernon Unknown",
+          "name_raw": "vernon Unknown",
+          "runs": 27,
+          "balls_faced": 14,
+          "dismissals": 1
+        },
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "runs": 14,
+          "balls_faced": 10,
+          "dismissals": 1
+        },
+        {
+          "name": "Vivaan Unknown",
+          "name_raw": "vivaan Unknown",
+          "runs": 25,
+          "balls_faced": 14,
+          "dismissals": 1
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "runs": 14,
+          "balls_faced": 10,
+          "dismissals": 1
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Coen Unknown",
+          "name_raw": "coen Unknown",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 17
+        },
+        {
+          "name": "Kianansh Dubariya",
+          "name_raw": "Kianansh dubariya",
+          "overs": 1,
+          "wickets": 1,
+          "runs_conceded": 1
+        },
+        {
+          "name": "Sidanth Unknown",
+          "name_raw": "Sidanth Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 29
+        },
+        {
+          "name": "Ollie Unknown",
+          "name_raw": "ollie Unknown",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 10
+        },
+        {
+          "name": "Karan Bakshi",
+          "name_raw": "Karan Bakshi",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 10
+        },
+        {
+          "name": "Zoya Quazi",
+          "name_raw": "Zoya quazi",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 23
+        },
+        {
+          "name": "Kiaansh Dubariya",
+          "name_raw": "Kiaansh dubariya",
+          "overs": 1,
+          "wickets": 0,
+          "runs_conceded": 20
+        }
+      ]
+    },
+    {
+      "batting_team_raw": "Oompa Loompas - Keanu",
+      "batting_team_display": "Oompa Loompas",
+      "batters": [
+        {
+          "name": "Ollie Unknown",
+          "name_raw": "ollie Unknown",
+          "runs": 10,
+          "balls_faced": 12,
+          "dismissals": 0
+        },
+        {
+          "name": "Coen Unknown",
+          "name_raw": "coen Unknown",
+          "runs": -5,
+          "balls_faced": 12,
+          "dismissals": 3
+        },
+        {
+          "name": "Kiaansh Dubariya",
+          "name_raw": "Kiaansh dubariya",
+          "runs": 12,
+          "balls_faced": 12,
+          "dismissals": 0
+        },
+        {
+          "name": "Sidanth Unknown",
+          "name_raw": "Sidanth Unknown",
+          "runs": 17,
+          "balls_faced": 12,
+          "dismissals": 0
+        },
+        {
+          "name": "Zoya Quazi",
+          "name_raw": "Zoya quazi",
+          "runs": 2,
+          "balls_faced": 18,
+          "dismissals": 2
+        },
+        {
+          "name": "Karan Bakshi",
+          "name_raw": "Karan Bakshi",
+          "runs": 10,
+          "balls_faced": 6,
+          "dismissals": 0
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Vivaan Unknown",
+          "name_raw": "vivaan Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 10
+        },
+        {
+          "name": "Anvaya Unknown",
+          "name_raw": "anvaya Unknown",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 10
+        },
+        {
+          "name": "Vernon Unknown",
+          "name_raw": "vernon Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 13
+        },
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "overs": 2,
+          "wickets": 3,
+          "runs_conceded": -7
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 21
+        },
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": -1
+        }
+      ]
+    }
+  ]
+}

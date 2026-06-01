@@ -1,0 +1,223 @@
+{
+  "fixture_id": 263826,
+  "title": "Hutt Park - Blazing Firebirds - Jacob vs Renegades - Toby (16/05/2026 12:00)",
+  "team_summaries": [
+    {
+      "name": "Blazing Firebirds - Jacob",
+      "display": "Blazing Firebirds",
+      "skin_scores": [
+        28,
+        -16,
+        -7
+      ],
+      "total": 5,
+      "skins_won": 0,
+      "points": 1
+    },
+    {
+      "name": "Renegades - Toby",
+      "display": "Renegades",
+      "skin_scores": [
+        29,
+        37,
+        39
+      ],
+      "total": 105,
+      "skins_won": 3,
+      "points": 6
+    }
+  ],
+  "innings": [
+    {
+      "batting_team_raw": "Blazing Firebirds - Jacob",
+      "batting_team_display": "Blazing Firebirds",
+      "batters": [
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "runs": 20,
+          "balls_faced": 17,
+          "dismissals": 0
+        },
+        {
+          "name": "Owen Buchan",
+          "name_raw": "owen buchan",
+          "runs": 8,
+          "balls_faced": 7,
+          "dismissals": 0
+        },
+        {
+          "name": "Anvaya Unknown",
+          "name_raw": "anvaya Unknown",
+          "runs": -9,
+          "balls_faced": 14,
+          "dismissals": 4
+        },
+        {
+          "name": "Ria Sathish Kumar",
+          "name_raw": "Ria Sathish kumar",
+          "runs": -7,
+          "balls_faced": 10,
+          "dismissals": 2
+        },
+        {
+          "name": "Liam Laing",
+          "name_raw": "liam laing",
+          "runs": -15,
+          "balls_faced": 14,
+          "dismissals": 5
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "runs": 8,
+          "balls_faced": 10,
+          "dismissals": 1
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Toby Moore",
+          "name_raw": "Toby Moore",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 12
+        },
+        {
+          "name": "Rasul Khonkaduwa",
+          "name_raw": "Rasul Khonkaduwa",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 6
+        },
+        {
+          "name": "Krishav Unknown",
+          "name_raw": "Krishav Unknown",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 2
+        },
+        {
+          "name": "James Turnbull",
+          "name_raw": "James Turnbull",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 14
+        },
+        {
+          "name": "Sandev Amarasinghe",
+          "name_raw": "Sandev Amarasinghe",
+          "overs": 1,
+          "wickets": 1,
+          "runs_conceded": -3
+        },
+        {
+          "name": "Ethan Lowe",
+          "name_raw": "Ethan Lowe",
+          "overs": 2,
+          "wickets": 7,
+          "runs_conceded": -30
+        },
+        {
+          "name": "Sandav Amarasinghe",
+          "name_raw": "Sandav Amarasinghe",
+          "overs": 1,
+          "wickets": 1,
+          "runs_conceded": 4
+        }
+      ]
+    },
+    {
+      "batting_team_raw": "Renegades - Toby",
+      "batting_team_display": "Renegades",
+      "batters": [
+        {
+          "name": "Toby Moore",
+          "name_raw": "Toby Moore",
+          "runs": 15,
+          "balls_faced": 16,
+          "dismissals": 0
+        },
+        {
+          "name": "James Turnbull",
+          "name_raw": "James Turnbull",
+          "runs": 14,
+          "balls_faced": 8,
+          "dismissals": 0
+        },
+        {
+          "name": "Rasul Khonkaduwa",
+          "name_raw": "Rasul Khonkaduwa",
+          "runs": 17,
+          "balls_faced": 9,
+          "dismissals": 0
+        },
+        {
+          "name": "Krishav Unknown",
+          "name_raw": "Krishav Unknown",
+          "runs": 20,
+          "balls_faced": 15,
+          "dismissals": 1
+        },
+        {
+          "name": "Ethan Lowe",
+          "name_raw": "Ethan Lowe",
+          "runs": 10,
+          "balls_faced": 9,
+          "dismissals": 1
+        },
+        {
+          "name": "Sandav Amarasinghe",
+          "name_raw": "Sandav Amarasinghe",
+          "runs": 29,
+          "balls_faced": 15,
+          "dismissals": 0
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Ria Sathish Kumar",
+          "name_raw": "Ria Sathish kumar",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 19
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 17
+        },
+        {
+          "name": "Anvaya Unknown",
+          "name_raw": "anvaya Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 22
+        },
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 13
+        },
+        {
+          "name": "Liam Laing",
+          "name_raw": "liam laing",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 19
+        },
+        {
+          "name": "Owen Buchan",
+          "name_raw": "owen buchan",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 15
+        }
+      ]
+    }
+  ]
+}

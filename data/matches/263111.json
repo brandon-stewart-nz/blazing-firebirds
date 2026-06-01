@@ -1,0 +1,216 @@
+{
+  "fixture_id": 263111,
+  "title": "Hutt Park - Gus vs Blazing Firebirds - Jacob (25/04/2026 13:55)",
+  "team_summaries": [
+    {
+      "name": "Jacob Brown",
+      "display": "Jacob Brown",
+      "skin_scores": [
+        17,
+        13,
+        6
+      ],
+      "total": 36,
+      "skins_won": 0,
+      "points": 1
+    },
+    {
+      "name": "Gus",
+      "display": "Gus",
+      "skin_scores": [
+        44,
+        48,
+        11
+      ],
+      "total": 103,
+      "skins_won": 3,
+      "points": 6
+    }
+  ],
+  "innings": [
+    {
+      "batting_team_raw": "Jacob Brown",
+      "batting_team_display": "Jacob Brown",
+      "batters": [
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "runs": 7,
+          "balls_faced": 13,
+          "dismissals": 1
+        },
+        {
+          "name": "Vernon Stewart",
+          "name_raw": "vernon stewart",
+          "runs": 10,
+          "balls_faced": 11,
+          "dismissals": 1
+        },
+        {
+          "name": "Fletcher Tulloch",
+          "name_raw": "fletcher tulloch",
+          "runs": 5,
+          "balls_faced": 19,
+          "dismissals": 2
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "runs": 8,
+          "balls_faced": 5,
+          "dismissals": 0
+        },
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "runs": 8,
+          "balls_faced": 14,
+          "dismissals": 2
+        },
+        {
+          "name": "Owen Buchan",
+          "name_raw": "owen buchan",
+          "runs": -2,
+          "balls_faced": 10,
+          "dismissals": 2
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Freddie Shaw",
+          "name_raw": "freddie shaw",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 13
+        },
+        {
+          "name": "Henry Sliper",
+          "name_raw": "henry sliper",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 5
+        },
+        {
+          "name": "Daarsh Patel",
+          "name_raw": "daarsh patel",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 1
+        },
+        {
+          "name": "Hugo Richards",
+          "name_raw": "hugo richards",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 3
+        },
+        {
+          "name": "Sumit Huluguda",
+          "name_raw": "sumit huluguda",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 8
+        },
+        {
+          "name": "Gus Borden",
+          "name_raw": "gus borden",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 6
+        }
+      ]
+    },
+    {
+      "batting_team_raw": "Gus",
+      "batting_team_display": "Gus",
+      "batters": [
+        {
+          "name": "Gus Borden",
+          "name_raw": "gus borden",
+          "runs": 21,
+          "balls_faced": 10,
+          "dismissals": 0
+        },
+        {
+          "name": "Henry Sliper",
+          "name_raw": "henry sliper",
+          "runs": 23,
+          "balls_faced": 14,
+          "dismissals": 1
+        },
+        {
+          "name": "Freddie Shaw",
+          "name_raw": "freddie shaw",
+          "runs": 34,
+          "balls_faced": 13,
+          "dismissals": 1
+        },
+        {
+          "name": "Hugo Richards",
+          "name_raw": "hugo richards",
+          "runs": 14,
+          "balls_faced": 11,
+          "dismissals": 1
+        },
+        {
+          "name": "Daarsh Patel",
+          "name_raw": "daarsh patel",
+          "runs": -2,
+          "balls_faced": 11,
+          "dismissals": 3
+        },
+        {
+          "name": "Sumit Huluguda",
+          "name_raw": "sumit huluguda",
+          "runs": 13,
+          "balls_faced": 13,
+          "dismissals": 1
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 23
+        },
+        {
+          "name": "Vernon Stewart",
+          "name_raw": "vernon stewart",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 5
+        },
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 23
+        },
+        {
+          "name": "Owen Buchan",
+          "name_raw": "owen buchan",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 13
+        },
+        {
+          "name": "Fletcher Tulloch",
+          "name_raw": "fletcher tulloch",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 17
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 22
+        }
+      ]
+    }
+  ]
+}

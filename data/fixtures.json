@@ -1,0 +1,132 @@
+{
+  "generated_at_nz": "2026-06-01T15:09:50.845321+12:00",
+  "fixtures": [
+    {
+      "date_str": "Saturday 25 Apr 2026",
+      "time": "13:55",
+      "court": "Court 2",
+      "home": {
+        "id": 11311,
+        "name": "'Smashing Sataras' - Gus",
+        "display": "'Smashing Sataras'"
+      },
+      "away": {
+        "id": 11361,
+        "name": "Blazing Firebirds - Jacob",
+        "display": "Blazing Firebirds"
+      },
+      "home_skins": 103,
+      "away_skins": 36,
+      "played": true,
+      "fixture_id": 263111,
+      "is_grading": true,
+      "scoresheet_complete": true
+    },
+    {
+      "date_str": "Saturday 02 May 2026",
+      "time": "13:00",
+      "court": "Court 2",
+      "home": {
+        "id": 11300,
+        "name": "Anderson Aces - Arihaan",
+        "display": "Anderson Aces"
+      },
+      "away": {
+        "id": 11361,
+        "name": "Blazing Firebirds - Jacob",
+        "display": "Blazing Firebirds"
+      },
+      "home_skins": 106,
+      "away_skins": 33,
+      "played": true,
+      "fixture_id": 263265,
+      "is_grading": true,
+      "scoresheet_complete": true
+    },
+    {
+      "date_str": "Saturday 09 May 2026",
+      "time": "13:00",
+      "court": "Court 2",
+      "home": {
+        "id": 11361,
+        "name": "Blazing Firebirds - Jacob",
+        "display": "Blazing Firebirds"
+      },
+      "away": {
+        "id": 11294,
+        "name": "Brooklyn Allrounders - Ifan",
+        "display": "Brooklyn Allrounders"
+      },
+      "home_skins": 79,
+      "away_skins": 58,
+      "played": true,
+      "fixture_id": 263465,
+      "is_grading": true,
+      "scoresheet_complete": true
+    },
+    {
+      "date_str": "Saturday 16 May 2026",
+      "time": "12:00",
+      "court": "Court 2",
+      "home": {
+        "id": 11361,
+        "name": "Blazing Firebirds - Jacob",
+        "display": "Blazing Firebirds"
+      },
+      "away": {
+        "id": 11357,
+        "name": "Renegades - Toby",
+        "display": "Renegades"
+      },
+      "home_skins": 5,
+      "away_skins": 105,
+      "played": true,
+      "fixture_id": 263826,
+      "is_grading": false,
+      "scoresheet_complete": true
+    },
+    {
+      "date_str": "Saturday 23 May 2026",
+      "time": "12:00",
+      "court": "Court 3",
+      "home": {
+        "id": 11361,
+        "name": "Blazing Firebirds - Jacob",
+        "display": "Blazing Firebirds"
+      },
+      "away": {
+        "id": 11297,
+        "name": "BYC - Freddie",
+        "display": "BYC"
+      },
+      "home_skins": 58,
+      "away_skins": 79,
+      "played": true,
+      "fixture_id": 263875,
+      "is_grading": false,
+      "scoresheet_complete": true
+    },
+    {
+      "date_str": "Saturday 30 May 2026",
+      "time": "12:00",
+      "court": "Court 2",
+      "home": {
+        "id": 11361,
+        "name": "Blazing Firebirds - Jacob",
+        "display": "Blazing Firebirds"
+      },
+      "away": {
+        "id": 11292,
+        "name": "Oompa Loompas - Keanu",
+        "display": "Oompa Loompas"
+      },
+      "home_skins": 110,
+      "away_skins": 46,
+      "played": true,
+      "fixture_id": 263950,
+      "is_grading": false,
+      "scoresheet_complete": true
+    }
+  ],
+  "next_game": null
+}
