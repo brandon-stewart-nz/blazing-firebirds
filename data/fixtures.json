@@ -1,5 +1,5 @@
 {
-  "generated_at_nz": "2026-06-01T19:00:22.079275+12:00",
+  "generated_at_nz": "2026-06-01T19:31:32.340373+12:00",
   "fixtures": [
     {
       "date_str": "Saturday 25 Apr 2026",
@@ -20,7 +20,8 @@
       "played": true,
       "fixture_id": 263111,
       "is_grading": true,
-      "scoresheet_complete": true
+      "scoresheet_complete": true,
+      "result_final": true
     },
     {
       "date_str": "Saturday 02 May 2026",
@@ -41,7 +42,8 @@
       "played": true,
       "fixture_id": 263265,
       "is_grading": true,
-      "scoresheet_complete": true
+      "scoresheet_complete": true,
+      "result_final": true
     },
     {
       "date_str": "Saturday 09 May 2026",
@@ -62,7 +64,8 @@
       "played": true,
       "fixture_id": 263465,
       "is_grading": true,
-      "scoresheet_complete": true
+      "scoresheet_complete": true,
+      "result_final": true
     },
     {
       "date_str": "Saturday 16 May 2026",
@@ -83,7 +86,8 @@
       "played": true,
       "fixture_id": 263826,
       "is_grading": false,
-      "scoresheet_complete": true
+      "scoresheet_complete": true,
+      "result_final": true
     },
     {
       "date_str": "Saturday 23 May 2026",
@@ -104,7 +108,8 @@
       "played": true,
       "fixture_id": 263875,
       "is_grading": false,
-      "scoresheet_complete": true
+      "scoresheet_complete": true,
+      "result_final": true
     },
     {
       "date_str": "Saturday 30 May 2026",
@@ -125,7 +130,8 @@
       "played": true,
       "fixture_id": 263950,
       "is_grading": false,
-      "scoresheet_complete": true
+      "scoresheet_complete": true,
+      "result_final": true
     }
   ],
   "next_game": null
