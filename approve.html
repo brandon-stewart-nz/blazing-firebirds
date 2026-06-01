@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Blazing Firebirds</title>
+  <style>
+    :root {
+      --gold: #E5B340; --gold-deep: #C49327;
+      --teal: #1A4D58; --teal-deep: #0E353D;
+      --cream: #F5EFE0; --cream-warm: #FAF6EA;
+      --ink: #14171A; --ink-soft: #4A4F56; --red: #C8392E;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--cream); color: var(--ink); line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 520px; margin: 0 auto; padding: 30px 20px 60px; }
+    .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; }
+    .brand img { width: 42px; height: 42px; display: block; }
+    .brand span { font-weight: 800; font-size: 19px; color: var(--teal-deep); letter-spacing: .2px; }
+    .card {
+      background: #fff; border-radius: 18px; padding: 26px 24px;
+      box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 10px 34px rgba(14,53,61,.10);
+      border-top: 5px solid var(--gold);
+    }
+    h1 { font-size: 24px; line-height: 1.25; margin: 0 0 12px; color: var(--teal-deep); }
+    p { font-size: 17px; margin: 0 0 14px; }
+    .muted { color: var(--ink-soft); font-size: 14px; }
+    .btn {
+      display: block; width: 100%; max-width: 380px; margin: 24px auto 0;
+      padding: 18px 20px; border: 0; border-radius: 13px;
+      font-size: 18px; font-weight: 800; text-align: center; cursor: pointer;
+      font-family: inherit;
+    }
+    .btn.go { background: var(--gold); color: var(--ink); }
+    .btn.go:active { background: var(--gold-deep); }
+    .btn.neutral { background: #ECE7DA; color: var(--ink); }
+    .btn:disabled { opacity: .6; }
+    .check { font-size: 40px; line-height: 1; color: var(--teal); margin-bottom: 6px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand"><img src="icon.svg" alt=""><span>Blazing Firebirds</span></div>
+    <div class="card">
+      <div id="prompt">
+        <h1 id="title">…</h1>
+        <p id="body">…</p>
+        <button class="btn go" id="actionBtn" type="button">…</button>
+        <p class="muted" id="hint" style="text-align:center;margin-top:16px;">Didn’t mean to? Just close this page — nothing happens.</p>
+      </div>
+      <div id="done" class="hidden">
+        <div class="check">✓</div>
+        <h1 id="doneTitle">…</h1>
+        <p id="doneBody">…</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // The dashboard's webhook (same /exec the app already uses). The approve
+    // action is authorised by the single-use token in the link, not a secret,
+    // so it's safe to call from here. We fire it no-cors (the response is opaque)
+    // — the "fixed and back up" email is the definitive confirmation.
+    var EXEC = "https://script.google.com/macros/s/AKfycbyHf7RsP-jZZdI4eOqV3Bw-Egk85mULHw4Kr_32xzH3wLiF6gC1A-yQGl93QcdZPpk10Q/exec";
+    var q = new URLSearchParams(location.search);
+    var token = q.get("token") || "";
+    var doParam = (q.get("do") || "approve").toLowerCase();
+
+    var COPY = {
+      approve: {
+        title: "Approve the fix?",
+        body: "This deploys the fix and restarts your Blazing Firebirds dashboard.",
+        btn: "Yes, deploy it ✓", btnClass: "go", action: "confirm_approve",
+        doneTitle: "Approved — thank you!",
+        doneBody: "A confirmation email — “fixed and back up” — is on its way to you. You can close this page."
+      },
+      hold: {
+        title: "Keep it paused?",
+        body: "No changes will be made — the dashboard stays safely paused on the last good scores.",
+        btn: "Yes, keep paused", btnClass: "neutral", action: "hold",
+        doneTitle: "Kept paused",
+        doneBody: "Nothing was changed. Re-open the email and tap Approve whenever you’re ready."
+      },
+      reject: {
+        title: "Discard this fix?",
+        body: "The proposed fix will be set aside and the dashboard stays paused. Claude will take another look.",
+        btn: "Yes, discard it", btnClass: "neutral", action: "reject",
+        doneTitle: "Discarded",
+        doneBody: "The fix has been set aside and the dashboard stays paused. Claude will rethink it."
+      }
+    };
+    var c = COPY[doParam] || COPY.approve;
+    var $ = function (id) { return document.getElementById(id); };
+
+    if (!token) {
+      $("title").textContent = "Nothing to do here";
+      $("body").textContent = "This page handles the buttons in the Blazing Firebirds watchdog emails.";
+      $("actionBtn").classList.add("hidden");
+      $("hint").classList.add("hidden");
+    } else {
+      $("title").textContent = c.title;
+      $("body").textContent = c.body;
+      var btn = $("actionBtn");
+      btn.textContent = c.btn;
+      btn.className = "btn " + c.btnClass;
+      btn.addEventListener("click", function () {
+        btn.disabled = true;
+        btn.textContent = "Working…";
+        var url = EXEC + "?action=" + encodeURIComponent(c.action) + "&token=" + encodeURIComponent(token);
+        // Side effect (state change + confirmation email) happens server-side
+        // regardless of the opaque response, so resolve either way.
+        fetch(url, { mode: "no-cors" }).then(finish, finish);
+        function finish() {
+          $("prompt").classList.add("hidden");
+          $("doneTitle").textContent = c.doneTitle;
+          $("doneBody").textContent = c.doneBody;
+          $("done").classList.remove("hidden");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
