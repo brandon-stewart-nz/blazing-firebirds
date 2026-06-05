@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-05T20:14:35.357670+00:00",
+  "generated_at_utc": "2026-06-05T21:00:34.947518+00:00",
   "games": {
     "2026-04-25": {
       "partnerships": [
@@ -204,7 +204,7 @@
       "partnerships": [
         [
           "Jacob",
-          "Owen"
+          "Vernon"
         ],
         [
           "Jack",
@@ -221,12 +221,12 @@
         "Will",
         "Jacob",
         "Jack",
-        "Owen"
+        "Vernon"
       ],
       "unavailable": [
         "Ria",
         "Liam",
-        "Vernon"
+        "Owen"
       ],
       "rotation": [],
       "stand_ins": [
