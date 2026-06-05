@@ -1,5 +1,5 @@
 {
-  "generated_at_nz": "2026-06-05T19:00:25.824766+12:00",
+  "generated_at_nz": "2026-06-05T20:00:23.114464+12:00",
   "players": [
     {
       "name": "Jacob Brown",
@@ -824,6 +824,19 @@
           }
         }
       ]
+    },
+    {
+      "name": "Conor Mudge",
+      "totals": {
+        "innings_batted": 0,
+        "runs": 0,
+        "balls_faced": 0,
+        "dismissals": 0,
+        "overs_bowled": 0,
+        "wickets": 0,
+        "runs_conceded": 0
+      },
+      "matches": []
     }
   ]
 }
