@@ -99,12 +99,20 @@ function jerseyNumber(name) {
   return Object.prototype.hasOwnProperty.call(ROSTER, key) ? ROSTER[key] : null;
 }
 
-function displayName(name) {
-  const key = playerKey(name);
-  const resolved = (NAME_OVERRIDES[key] ?? name ?? "")
+function displayName(name, { opponent = false } = {}) {
+  // Strip the scorer's "Unknown" placeholder surname; keep the rest verbatim.
+  const stripped = (name ?? "")
     .split(/\s+/)
     .filter(token => token && token.toLowerCase() !== "unknown")
     .join(" ");
+  // Opposition players are shown exactly as Spawtz recorded them — never folded
+  // onto our roster (their Liam is not our Liam) and never given one of our
+  // stand-ins' full names. A placeholder "Unknown" surname is dropped, so only
+  // their first name shows; a real opposition surname is shown as-is.
+  if (opponent) return stripped;
+
+  const key = playerKey(name);
+  const resolved = NAME_OVERRIDES[key] ?? stripped;
   // A stand-in's full name lives only in the schedule sheet (the source of
   // truth); the scoresheet usually has just their first name. If this is a
   // surname-less stand-in (not a core player) and the sheet knows their full
@@ -112,7 +120,10 @@ function displayName(name) {
   // it stays first-name-only by design.
   if (resolved && !resolved.includes(" ")) {
     const fk = firstNameKey(resolved);
-    if (!ROSTER_KEYS.has(fk) && STANDIN_NAMES[fk]) return STANDIN_NAMES[fk];
+    if (!ROSTER_KEYS.has(fk)) {
+      const full = standinFullName(fk);
+      if (full) return full;
+    }
   }
   return resolved;
 }
@@ -133,6 +144,21 @@ function refreshStandinNames() {
     }
   }
   STANDIN_NAMES = map;
+}
+
+// Resolve a stand-in's full sheet name from their first-name key. Exact match
+// wins; failing that, a one-letter difference is accepted as a scorer's
+// misspelling of the SAME stand-in (sheet "Conor" vs scoresheet "Connor"), so
+// the sheet's full name still restores instead of the dashboard falling back to
+// the misspelled bare first name. The fuzzy step is deliberately tight (edit
+// distance 1) so two genuinely different stand-ins are never merged.
+function standinFullName(fk) {
+  if (!fk) return null;
+  if (STANDIN_NAMES[fk]) return STANDIN_NAMES[fk];
+  for (const k in STANDIN_NAMES) {
+    if (levenshtein(k, fk) <= 1) return STANDIN_NAMES[k];
+  }
+  return null;
 }
 
 const state = {
@@ -739,11 +765,11 @@ async function renderUpcoming(app, fid, from) {
       : plannedBowlingTableHtml(bowlingOrder, captainName, fid)}
     <h3 class="subhead">${escapeHtml(oppName)} batting</h3>
     ${oppInnings
-      ? battingTableHtml(oppInnings.batters)
+      ? battingTableHtml(oppInnings.batters, { opponent: true })
       : `<div class="upcoming-shell"><p class="upcoming-shell__hint">Batting to be updated</p></div>`}
     <h3 class="subhead">${escapeHtml(oppName)} bowling</h3>
     ${fbInnings
-      ? bowlingTableHtml(fbInnings.bowlers)
+      ? bowlingTableHtml(fbInnings.bowlers, { opponent: true })
       : `<div class="upcoming-shell"><p class="upcoming-shell__hint">Bowling to be updated</p></div>`}`}
   `;
   wireRowNavigation(app);
@@ -1187,12 +1213,12 @@ async function renderMatch(app, fid, from) {
 
     ${oppInnings ? `
       <h3 class="subhead">${escapeHtml(oppName)} batting</h3>
-      ${battingTableHtml(oppInnings.batters)}
+      ${battingTableHtml(oppInnings.batters, { opponent: true })}
     ` : ""}
 
     ${fbInnings ? `
       <h3 class="subhead">${escapeHtml(oppName)} bowling</h3>
-      ${bowlingTableHtml(fbInnings.bowlers)}
+      ${bowlingTableHtml(fbInnings.bowlers, { opponent: true })}
     ` : ""}
   `;
 
@@ -1307,7 +1333,7 @@ function potdCardHtml(iso, fbInnings, oppInnings, matchId) {
 
 function battingTableHtml(batters, opts = {}) {
   if (!batters || !batters.length) return "<p>No batting data.</p>";
-  const { linkPlayers = false, matchId = null, captain = "" } = opts;
+  const { linkPlayers = false, matchId = null, captain = "", opponent = false } = opts;
   const captainKey = captain ? playerKey(captain) : "";
 
   let body = "";
@@ -1332,7 +1358,7 @@ function battingTableHtml(batters, opts = {}) {
       const isCap = captainKey && playerKey(b.name) === captainKey;
       body += `
         <tr ${rowLinkAttrs(b.name, linkPlayers, matchId)}>
-          <td>${escapeHtml(displayName(b.name) + (isCap ? " (c)" : ""))}</td>
+          <td>${escapeHtml(displayName(b.name, { opponent }) + (isCap ? " (c)" : ""))}</td>
           <td class="num">${b.runs}</td>
           <td class="num">${b.balls_faced}</td>
           <td class="num">${b.dismissals}</td>
@@ -1351,7 +1377,7 @@ function battingTableHtml(batters, opts = {}) {
 
 function bowlingTableHtml(bowlers, opts = {}) {
   if (!bowlers || !bowlers.length) return "<p>No bowling data.</p>";
-  const { linkPlayers = false, matchId = null, captain = "" } = opts;
+  const { linkPlayers = false, matchId = null, captain = "", opponent = false } = opts;
   const captainKey = captain ? playerKey(captain) : "";
   return `
     <div class="table-card">
@@ -1362,7 +1388,7 @@ function bowlingTableHtml(bowlers, opts = {}) {
             const isCap = captainKey && playerKey(b.name) === captainKey;
             return `
             <tr ${rowLinkAttrs(b.name, linkPlayers, matchId)}>
-              <td>${escapeHtml(displayName(b.name) + (isCap ? " (c)" : ""))}</td>
+              <td>${escapeHtml(displayName(b.name, { opponent }) + (isCap ? " (c)" : ""))}</td>
               <td class="num">${b.overs}</td>
               <td class="num">${b.wickets}</td>
               <td class="num">${b.runs_conceded}</td>
