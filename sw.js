@@ -84,16 +84,22 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const targetUrl = (event.notification.data && event.notification.data.url) || "./";
+  const target = new URL(targetUrl, self.location.origin);
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
-      // Focus an existing window if the dashboard is already open.
+      // If a dashboard window is already open, navigate it to the target
+      // (e.g. the match scorecard) and focus it — focus alone would leave it
+      // sitting on whatever page it was already showing.
       for (const client of clients) {
-        const url = new URL(client.url);
-        if (url.pathname === new URL(targetUrl, self.location.origin).pathname) {
-          return client.focus();
+        if (new URL(client.url).pathname === target.pathname) {
+          const go = "navigate" in client
+            ? Promise.resolve(client.navigate(target.href)).catch(() => client)
+            : Promise.resolve(client);
+          return go.then((c) => (c || client).focus());
         }
       }
-      return self.clients.openWindow(targetUrl);
+      // Otherwise open a fresh window straight to the target URL.
+      return self.clients.openWindow(target.href);
     })
   );
 });
