@@ -1,0 +1,216 @@
+{
+  "fixture_id": 264006,
+  "title": "Hutt Park - Blazing Firebirds - Jacob vs Team Thunderboltz - Liam (06/06/2026 12:00)",
+  "team_summaries": [
+    {
+      "name": "Blazing Firebirds - Jacob",
+      "display": "Blazing Firebirds",
+      "skin_scores": [
+        44,
+        42,
+        34
+      ],
+      "total": 120,
+      "skins_won": 2,
+      "points": 5
+    },
+    {
+      "name": "Team Thunderboltz - Liam",
+      "display": "Team Thunderboltz",
+      "skin_scores": [
+        14,
+        7,
+        46
+      ],
+      "total": 67,
+      "skins_won": 1,
+      "points": 2
+    }
+  ],
+  "innings": [
+    {
+      "batting_team_raw": "Blazing Firebirds - Jacob",
+      "batting_team_display": "Blazing Firebirds",
+      "batters": [
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "runs": 29,
+          "balls_faced": 14,
+          "dismissals": 0
+        },
+        {
+          "name": "Anvaya Unknown",
+          "name_raw": "anvaya Unknown",
+          "runs": 15,
+          "balls_faced": 10,
+          "dismissals": 0
+        },
+        {
+          "name": "Vernon Stewart",
+          "name_raw": "vernon stewart",
+          "runs": 28,
+          "balls_faced": 16,
+          "dismissals": 0
+        },
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "runs": 14,
+          "balls_faced": 8,
+          "dismissals": 1
+        },
+        {
+          "name": "Connor Unknown",
+          "name_raw": "connor Unknown",
+          "runs": 18,
+          "balls_faced": 10,
+          "dismissals": 0
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "runs": 16,
+          "balls_faced": 14,
+          "dismissals": 1
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Liam Unknown",
+          "name_raw": "liam Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 21
+        },
+        {
+          "name": "Krish Singh",
+          "name_raw": "Krish Singh",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 21
+        },
+        {
+          "name": "Rehaan Unknown",
+          "name_raw": "rehaan Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 21
+        },
+        {
+          "name": "Parth Gandhi",
+          "name_raw": "parth gandhi",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 11
+        },
+        {
+          "name": "Clive Williams",
+          "name_raw": "Clive Williams",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 29
+        },
+        {
+          "name": "Heyansh Unknown",
+          "name_raw": "heyansh Unknown",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 17
+        }
+      ]
+    },
+    {
+      "batting_team_raw": "Team Thunderboltz - Liam",
+      "batting_team_display": "Team Thunderboltz",
+      "batters": [
+        {
+          "name": "Rehaan Unknown",
+          "name_raw": "rehaan Unknown",
+          "runs": 4,
+          "balls_faced": 13,
+          "dismissals": 2
+        },
+        {
+          "name": "Clive Williams",
+          "name_raw": "Clive Williams",
+          "runs": 10,
+          "balls_faced": 11,
+          "dismissals": 1
+        },
+        {
+          "name": "Heyansh Unknown",
+          "name_raw": "heyansh Unknown",
+          "runs": 8,
+          "balls_faced": 12,
+          "dismissals": 1
+        },
+        {
+          "name": "Krish Singh",
+          "name_raw": "Krish Singh",
+          "runs": -1,
+          "balls_faced": 12,
+          "dismissals": 2
+        },
+        {
+          "name": "Parth Gandhi",
+          "name_raw": "parth gandhi",
+          "runs": 27,
+          "balls_faced": 15,
+          "dismissals": 0
+        },
+        {
+          "name": "Liam Unknown",
+          "name_raw": "liam Unknown",
+          "runs": 19,
+          "balls_faced": 9,
+          "dismissals": 0
+        }
+      ],
+      "bowlers": [
+        {
+          "name": "Anvaya Unknown",
+          "name_raw": "anvaya Unknown",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 16
+        },
+        {
+          "name": "Connor Unknown",
+          "name_raw": "connor Unknown",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 7
+        },
+        {
+          "name": "Will Eltringham",
+          "name_raw": "will eltringham",
+          "overs": 2,
+          "wickets": 0,
+          "runs_conceded": 26
+        },
+        {
+          "name": "Jacob Brown",
+          "name_raw": "jacob brown",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 5
+        },
+        {
+          "name": "Vernon Stewart",
+          "name_raw": "vernon stewart",
+          "overs": 2,
+          "wickets": 1,
+          "runs_conceded": 13
+        },
+        {
+          "name": "Jack Butler",
+          "name_raw": "jack butler",
+          "overs": 2,
+          "wickets": 2,
+          "runs_conceded": 0
+        }
+      ]
+    }
+  ]
+}

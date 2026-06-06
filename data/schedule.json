@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-06T02:30:35.830491+00:00",
+  "generated_at_utc": "2026-06-06T02:32:09.324869+00:00",
   "games": {
     "2026-04-25": {
       "partnerships": [
@@ -207,17 +207,17 @@
           "Anvaya"
         ],
         [
-          "Jack",
-          "Vernon"
+          "Vernon",
+          "Jack"
         ],
         [
-          "Conor",
+          "Connor",
           "Will"
         ]
       ],
       "bowling_order": [
         "Anvaya",
-        "Conor",
+        "Connor",
         "Will",
         "Jacob",
         "Vernon",
@@ -230,7 +230,7 @@
       ],
       "rotation": [],
       "stand_ins": [
-        "Conor Mudge"
+        "Connor"
       ],
       "captain": "Jacob",
       "potd": "Jack"
