@@ -842,7 +842,7 @@ function plannedBattingTableHtml(partnerships, captain = "", fixtureId = null) {
     const linkB = origB ? rowLinkAttrs(origB, true, fixtureId, "upcoming") : "";
     body += `
       <tr class="partnership-header">
-        <td colspan="8">
+        <td colspan="6">
           <div class="partnership-inner">
             <span class="partnership-tag">${ordinals[i]} partnership</span>
             <span class="partnership-runs">
@@ -852,8 +852,8 @@ function plannedBattingTableHtml(partnerships, captain = "", fixtureId = null) {
           </div>
         </td>
       </tr>
-      <tr ${linkA}><td>${cellA}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>
-      <tr ${linkB}><td>${cellB}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>`;
+      <tr ${linkA}><td>${cellA}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>
+      <tr ${linkB}><td>${cellB}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>`;
   }
   return `
     <div class="table-card">
@@ -862,10 +862,8 @@ function plannedBattingTableHtml(partnerships, captain = "", fixtureId = null) {
           <th>Batters (in order)</th>
           <th class="num-h">R</th>
           <th class="num-h">B</th>
-          <th class="num-h dk-only">3s</th>
-          <th class="num-h dk-only">4s</th>
-          <th class="num-h dk-only">5s</th>
-          <th class="num-h dk-only">6s</th>
+          <th class="num-h dk-only" title="balls scoring 4 or 5">4+</th>
+          <th class="num-h dk-only" title="balls scoring 6 or more">6+</th>
           <th class="num-h">SR</th>
         </tr></thead>
         <tbody>${body}</tbody>
@@ -1381,7 +1379,7 @@ function battingTableHtml(batters, opts = {}) {
     const ordinal = ["1st", "2nd", "3rd", "4th", "5th"][pairNum - 1] || `${pairNum}th`;
     body += `
       <tr class="partnership-header">
-        <td colspan="8">
+        <td colspan="6">
           <div class="partnership-inner">
             <span class="partnership-tag">${escapeHtml(ordinal)} partnership</span>
             <span class="partnership-runs">
@@ -1398,9 +1396,7 @@ function battingTableHtml(batters, opts = {}) {
           <td>${escapeHtml(displayName(b.name, { opponent }) + (isCap ? " (c)" : ""))}</td>
           <td class="num">${b.runs}</td>
           <td class="num">${b.balls_faced}</td>
-          <td class="num dk-only">${b.threes ?? 0}</td>
-          <td class="num dk-only">${b.fours ?? 0}</td>
-          <td class="num dk-only">${b.fives ?? 0}</td>
+          <td class="num dk-only">${(b.fours ?? 0) + (b.fives ?? 0)}</td>
           <td class="num dk-only">${b.sixes ?? 0}</td>
           <td class="num">${strikeRate(b.runs, b.balls_faced)}</td>
         </tr>`;
@@ -1414,10 +1410,8 @@ function battingTableHtml(batters, opts = {}) {
           <th>Batters (in order)</th>
           <th class="num-h">R</th>
           <th class="num-h">B</th>
-          <th class="num-h dk-only">3s</th>
-          <th class="num-h dk-only">4s</th>
-          <th class="num-h dk-only">5s</th>
-          <th class="num-h dk-only">6s</th>
+          <th class="num-h dk-only" title="balls scoring 4 or 5">4+</th>
+          <th class="num-h dk-only" title="balls scoring 6 or more">6+</th>
           <th class="num-h">SR</th>
         </tr></thead>
         <tbody>${body}</tbody>
