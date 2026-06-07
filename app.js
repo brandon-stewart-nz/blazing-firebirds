@@ -842,7 +842,7 @@ function plannedBattingTableHtml(partnerships, captain = "", fixtureId = null) {
     const linkB = origB ? rowLinkAttrs(origB, true, fixtureId, "upcoming") : "";
     body += `
       <tr class="partnership-header">
-        <td colspan="4">
+        <td colspan="8">
           <div class="partnership-inner">
             <span class="partnership-tag">${ordinals[i]} partnership</span>
             <span class="partnership-runs">
@@ -852,13 +852,22 @@ function plannedBattingTableHtml(partnerships, captain = "", fixtureId = null) {
           </div>
         </td>
       </tr>
-      <tr ${linkA}><td>${cellA}</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
-      <tr ${linkB}><td>${cellB}</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>`;
+      <tr ${linkA}><td>${cellA}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>
+      <tr ${linkB}><td>${cellB}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>`;
   }
   return `
     <div class="table-card">
-      <table class="table table--partnerships">
-        <thead><tr><th>Batters (in order)</th><th class="num-h">Runs</th><th class="num-h">Balls</th><th class="num-h">Outs</th></tr></thead>
+      <table class="table table--partnerships table--scorecard">
+        <thead><tr>
+          <th>Batters (in order)</th>
+          <th class="num-h">R</th>
+          <th class="num-h">B</th>
+          <th class="num-h dk-only">3s</th>
+          <th class="num-h dk-only">4s</th>
+          <th class="num-h dk-only">5s</th>
+          <th class="num-h dk-only">6s</th>
+          <th class="num-h">SR</th>
+        </tr></thead>
         <tbody>${body}</tbody>
       </table>
     </div>`;
@@ -882,12 +891,19 @@ function plannedBowlingTableHtml(bowlingOrder, captain = "", fixtureId = null) {
     const suffix = (captainKey && orig && playerKey(orig) === captainKey) ? " (c)" : "";
     const cell = display ? escapeHtml(display + suffix) : "—";
     const link = orig ? rowLinkAttrs(orig, true, fixtureId, "upcoming") : "";
-    return `<tr ${link}><td>${cell}</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>`;
+    return `<tr ${link}><td>${cell}</td><td class="num">—</td><td class="num">—</td><td class="num dk-only">—</td><td class="num dk-only">—</td><td class="num">—</td></tr>`;
   }).join("");
   return `
     <div class="table-card">
-      <table class="table">
-        <thead><tr><th>Bowlers (in order)</th><th class="num-h">Overs</th><th class="num-h">Wkts</th><th class="num-h">Given</th></tr></thead>
+      <table class="table table--scorecard">
+        <thead><tr>
+          <th>Bowlers (in order)</th>
+          <th class="num-h">W</th>
+          <th class="num-h">R</th>
+          <th class="num-h dk-only">NB</th>
+          <th class="num-h dk-only">WD</th>
+          <th class="num-h">ER</th>
+        </tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>`;
