@@ -1,5 +1,5 @@
 {
-  "generated_at_nz": "2026-06-07T21:26:42.805369+12:00",
+  "generated_at_nz": "2026-06-07T21:40:15.796196+12:00",
   "fixtures": [
     {
       "date_str": "Saturday 25 Apr 2026",
@@ -147,8 +147,8 @@
         "name": "Team Thunderboltz - Liam",
         "display": "Team Thunderboltz"
       },
-      "home_skins": 120,
-      "away_skins": 67,
+      "home_skins": 100,
+      "away_skins": 50,
       "played": true,
       "fixture_id": 264006,
       "is_grading": false,
