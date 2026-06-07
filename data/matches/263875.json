@@ -37,42 +37,66 @@
           "name_raw": "Oahran Duncan",
           "runs": 7,
           "balls_faced": 9,
-          "dismissals": 1
+          "dismissals": 1,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Tom Burlace",
           "name_raw": "Tom Burlace",
           "runs": 27,
-          "balls_faced": 15,
-          "dismissals": 0
+          "balls_faced": 12,
+          "dismissals": 0,
+          "threes": 2,
+          "fours": 1,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Hugh Whittington",
           "name_raw": "Hugh Whittington",
           "runs": 18,
-          "balls_faced": 12,
-          "dismissals": 0
+          "balls_faced": 7,
+          "dismissals": 0,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Ted Couchman",
           "name_raw": "Ted Couchman",
           "runs": 1,
           "balls_faced": 12,
-          "dismissals": 1
+          "dismissals": 1,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Freddie Gibson",
           "name_raw": "Freddie Gibson",
           "runs": 17,
-          "balls_faced": 14,
-          "dismissals": 1
+          "balls_faced": 9,
+          "dismissals": 1,
+          "threes": 2,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Raife Unknown",
           "name_raw": "raife Unknown",
           "runs": 9,
-          "balls_faced": 10,
-          "dismissals": 1
+          "balls_faced": 9,
+          "dismissals": 1,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         }
       ],
       "bowlers": [
@@ -80,43 +104,61 @@
           "name": "Jack Butler",
           "name_raw": "jack butler",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 6
+          "runs_conceded": 6,
+          "no_balls": 0,
+          "wides": 0
         },
         {
           "name": "Anuya Metikurke",
           "name_raw": "anuya metikurke",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 14
+          "runs_conceded": 14,
+          "no_balls": 0,
+          "wides": 0
         },
         {
           "name": "Vernon Stewart",
           "name_raw": "vernon stewart",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 14
+          "runs_conceded": 14,
+          "no_balls": 0,
+          "wides": 4
         },
         {
           "name": "Ria Sathish Kumar",
           "name_raw": "Ria Sathish kumar",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 17
+          "runs_conceded": 17,
+          "no_balls": 0,
+          "wides": 1
         },
         {
           "name": "Jacob Brown",
           "name_raw": "jacob brown",
           "overs": 2,
+          "maidens": 0,
           "wickets": 2,
-          "runs_conceded": 5
+          "runs_conceded": 5,
+          "no_balls": 0,
+          "wides": 5
         },
         {
           "name": "Owen Buchan",
           "name_raw": "owen buchan",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 23
+          "runs_conceded": 23,
+          "no_balls": 0,
+          "wides": 4
         }
       ]
     },
@@ -128,43 +170,67 @@
           "name": "Jacob Brown",
           "name_raw": "jacob brown",
           "runs": 20,
-          "balls_faced": 16,
-          "dismissals": 1
+          "balls_faced": 13,
+          "dismissals": 1,
+          "threes": 3,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Owen Buchan",
           "name_raw": "owen buchan",
           "runs": 13,
-          "balls_faced": 8,
-          "dismissals": 0
+          "balls_faced": 6,
+          "dismissals": 0,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Ria Sathish Kumar",
           "name_raw": "Ria Sathish kumar",
           "runs": 3,
-          "balls_faced": 15,
-          "dismissals": 1
+          "balls_faced": 14,
+          "dismissals": 1,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Anuya Metikurke",
           "name_raw": "anuya metikurke",
           "runs": 11,
-          "balls_faced": 9,
-          "dismissals": 1
+          "balls_faced": 6,
+          "dismissals": 1,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Vernon Stewart",
           "name_raw": "vernon stewart",
           "runs": 9,
-          "balls_faced": 15,
-          "dismissals": 2
+          "balls_faced": 13,
+          "dismissals": 2,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Jack Butler",
           "name_raw": "jack butler",
           "runs": 2,
           "balls_faced": 9,
-          "dismissals": 2
+          "dismissals": 2,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         }
       ],
       "bowlers": [
@@ -172,43 +238,61 @@
           "name": "Freddie Gibson",
           "name_raw": "Freddie Gibson",
           "overs": 2,
+          "maidens": 0,
           "wickets": 2,
-          "runs_conceded": 3
+          "runs_conceded": 3,
+          "no_balls": 0,
+          "wides": 1
         },
         {
           "name": "Ted Couchman",
           "name_raw": "Ted Couchman",
           "overs": 2,
+          "maidens": 1,
           "wickets": 1,
-          "runs_conceded": 10
+          "runs_conceded": 10,
+          "no_balls": 0,
+          "wides": 3
         },
         {
           "name": "Raife Unknown",
           "name_raw": "raife Unknown",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 24
+          "runs_conceded": 24,
+          "no_balls": 0,
+          "wides": 0
         },
         {
           "name": "Oahran Duncan",
           "name_raw": "Oahran Duncan",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 15
+          "runs_conceded": 15,
+          "no_balls": 0,
+          "wides": 3
         },
         {
           "name": "Tom Burlace",
           "name_raw": "Tom Burlace",
           "overs": 2,
+          "maidens": 0,
           "wickets": 2,
-          "runs_conceded": 0
+          "runs_conceded": 0,
+          "no_balls": 0,
+          "wides": 0
         },
         {
           "name": "Hugh Whittington",
           "name_raw": "Hugh Whittington",
           "overs": 2,
+          "maidens": 0,
           "wickets": 2,
-          "runs_conceded": 6
+          "runs_conceded": 6,
+          "no_balls": 0,
+          "wides": 4
         }
       ]
     }

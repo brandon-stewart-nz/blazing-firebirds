@@ -1348,6 +1348,10 @@ function potdCardHtml(iso, fbInnings, oppInnings, matchId) {
     </a>`;
 }
 
+// Strike rate = runs / balls * 100 (rounded). Indoor scores can be negative
+// (a wicket is -5), so SR/ER can be too — shown as-is.
+const strikeRate = (r, b) => (b ? String(Math.round((r / b) * 100)) : "—");
+
 function battingTableHtml(batters, opts = {}) {
   if (!batters || !batters.length) return "<p>No batting data.</p>";
   const { linkPlayers = false, matchId = null, captain = "", opponent = false } = opts;
@@ -1361,7 +1365,7 @@ function battingTableHtml(batters, opts = {}) {
     const ordinal = ["1st", "2nd", "3rd", "4th", "5th"][pairNum - 1] || `${pairNum}th`;
     body += `
       <tr class="partnership-header">
-        <td colspan="4">
+        <td colspan="8">
           <div class="partnership-inner">
             <span class="partnership-tag">${escapeHtml(ordinal)} partnership</span>
             <span class="partnership-runs">
@@ -1378,19 +1382,35 @@ function battingTableHtml(batters, opts = {}) {
           <td>${escapeHtml(displayName(b.name, { opponent }) + (isCap ? " (c)" : ""))}</td>
           <td class="num">${b.runs}</td>
           <td class="num">${b.balls_faced}</td>
-          <td class="num">${b.dismissals}</td>
+          <td class="num dk-only">${b.threes ?? 0}</td>
+          <td class="num dk-only">${b.fours ?? 0}</td>
+          <td class="num dk-only">${b.fives ?? 0}</td>
+          <td class="num dk-only">${b.sixes ?? 0}</td>
+          <td class="num">${strikeRate(b.runs, b.balls_faced)}</td>
         </tr>`;
     }
   }
 
   return `
     <div class="table-card">
-      <table class="table table--partnerships">
-        <thead><tr><th>Batters (in order)</th><th class="num-h">Runs</th><th class="num-h">Balls</th><th class="num-h">Outs</th></tr></thead>
+      <table class="table table--partnerships table--scorecard">
+        <thead><tr>
+          <th>Batters (in order)</th>
+          <th class="num-h">R</th>
+          <th class="num-h">B</th>
+          <th class="num-h dk-only">3s</th>
+          <th class="num-h dk-only">4s</th>
+          <th class="num-h dk-only">5s</th>
+          <th class="num-h dk-only">6s</th>
+          <th class="num-h">SR</th>
+        </tr></thead>
         <tbody>${body}</tbody>
       </table>
     </div>`;
 }
+
+// Economy rate = runs conceded / overs.
+const economyRate = (r, o) => (o ? (r / o).toFixed(1) : "—");
 
 function bowlingTableHtml(bowlers, opts = {}) {
   if (!bowlers || !bowlers.length) return "<p>No bowling data.</p>";
@@ -1398,8 +1418,17 @@ function bowlingTableHtml(bowlers, opts = {}) {
   const captainKey = captain ? playerKey(captain) : "";
   return `
     <div class="table-card">
-      <table class="table">
-        <thead><tr><th>Bowlers (in order)</th><th class="num-h">Overs</th><th class="num-h">Wkts</th><th class="num-h">Given</th></tr></thead>
+      <table class="table table--scorecard">
+        <thead><tr>
+          <th>Bowlers (in order)</th>
+          <th class="num-h">O</th>
+          <th class="num-h dk-only">M</th>
+          <th class="num-h">R</th>
+          <th class="num-h">W</th>
+          <th class="num-h">ER</th>
+          <th class="num-h dk-only">NB</th>
+          <th class="num-h dk-only">WD</th>
+        </tr></thead>
         <tbody>
           ${bowlers.map(b => {
             const isCap = captainKey && playerKey(b.name) === captainKey;
@@ -1407,8 +1436,12 @@ function bowlingTableHtml(bowlers, opts = {}) {
             <tr ${rowLinkAttrs(b.name, linkPlayers, matchId)}>
               <td>${escapeHtml(displayName(b.name, { opponent }) + (isCap ? " (c)" : ""))}</td>
               <td class="num">${b.overs}</td>
-              <td class="num">${b.wickets}</td>
+              <td class="num dk-only">${b.maidens ?? 0}</td>
               <td class="num">${b.runs_conceded}</td>
+              <td class="num">${b.wickets}</td>
+              <td class="num">${economyRate(b.runs_conceded, b.overs)}</td>
+              <td class="num dk-only">${b.no_balls ?? 0}</td>
+              <td class="num dk-only">${b.wides ?? 0}</td>
             </tr>`;
           }).join("")}
         </tbody>

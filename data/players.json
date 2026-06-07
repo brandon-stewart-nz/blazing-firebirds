@@ -1,12 +1,12 @@
 {
-  "generated_at_nz": "2026-06-07T15:08:27.048179+12:00",
+  "generated_at_nz": "2026-06-07T15:57:01.811156+12:00",
   "players": [
     {
       "name": "Jacob Brown",
       "totals": {
         "innings_batted": 7,
         "runs": 103,
-        "balls_faced": 105,
+        "balls_faced": 83,
         "dismissals": 10,
         "overs_bowled": 14,
         "wickets": 8,
@@ -21,15 +21,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": 8,
-            "balls_faced": 14,
-            "dismissals": 2
+            "balls_faced": 11,
+            "dismissals": 2,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 23
+            "runs_conceded": 23,
+            "no_balls": 0,
+            "wides": 5
           }
         },
         {
@@ -40,15 +47,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": -3,
-            "balls_faced": 12,
-            "dismissals": 3
+            "balls_faced": 11,
+            "dismissals": 3,
+            "threes": 0,
+            "fours": 1,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 21
+            "runs_conceded": 21,
+            "no_balls": 0,
+            "wides": 0
           }
         },
         {
@@ -59,15 +73,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": 16,
-            "balls_faced": 15,
-            "dismissals": 2
+            "balls_faced": 12,
+            "dismissals": 2,
+            "threes": 0,
+            "fours": 2,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 12
+            "runs_conceded": 12,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -78,15 +99,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": 20,
-            "balls_faced": 17,
-            "dismissals": 0
+            "balls_faced": 15,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 1,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 13
+            "runs_conceded": 13,
+            "no_balls": 1,
+            "wides": 4
           }
         },
         {
@@ -97,15 +125,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": 20,
-            "balls_faced": 16,
-            "dismissals": 1
+            "balls_faced": 13,
+            "dismissals": 1,
+            "threes": 3,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 5
+            "runs_conceded": 5,
+            "no_balls": 0,
+            "wides": 5
           }
         },
         {
@@ -116,15 +151,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": 13,
-            "balls_faced": 17,
-            "dismissals": 2
+            "balls_faced": 11,
+            "dismissals": 2,
+            "threes": 0,
+            "fours": 0,
+            "fives": 1,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 3,
-            "runs_conceded": -7
+            "runs_conceded": -7,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -135,15 +177,22 @@
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "runs": 29,
-            "balls_faced": 14,
-            "dismissals": 0
+            "balls_faced": 10,
+            "dismissals": 0,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jacob Brown",
             "name_raw": "jacob brown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 5
+            "runs_conceded": 5,
+            "no_balls": 0,
+            "wides": 4
           }
         }
       ]
@@ -153,7 +202,7 @@
       "totals": {
         "innings_batted": 6,
         "runs": 95,
-        "balls_faced": 84,
+        "balls_faced": 66,
         "dismissals": 6,
         "overs_bowled": 12,
         "wickets": 6,
@@ -168,15 +217,22 @@
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "runs": 10,
-            "balls_faced": 11,
-            "dismissals": 1
+            "balls_faced": 8,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 5
+            "runs_conceded": 5,
+            "no_balls": 0,
+            "wides": 0
           }
         },
         {
@@ -187,15 +243,22 @@
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "runs": 5,
-            "balls_faced": 15,
-            "dismissals": 1
+            "balls_faced": 14,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 11
+            "runs_conceded": 11,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -206,15 +269,22 @@
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "runs": 16,
-            "balls_faced": 13,
-            "dismissals": 1
+            "balls_faced": 10,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 14
+            "runs_conceded": 14,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -225,15 +295,22 @@
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "runs": 9,
-            "balls_faced": 15,
-            "dismissals": 2
+            "balls_faced": 13,
+            "dismissals": 2,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 14
+            "runs_conceded": 14,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -244,15 +321,22 @@
             "name": "Vernon Unknown",
             "name_raw": "vernon Unknown",
             "runs": 27,
-            "balls_faced": 14,
-            "dismissals": 1
+            "balls_faced": 8,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 1,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vernon Unknown",
             "name_raw": "vernon Unknown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 13
+            "runs_conceded": 13,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -263,15 +347,22 @@
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "runs": 28,
-            "balls_faced": 16,
-            "dismissals": 0
+            "balls_faced": 13,
+            "dismissals": 0,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vernon Stewart",
             "name_raw": "vernon stewart",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 13
+            "runs_conceded": 13,
+            "no_balls": 0,
+            "wides": 3
           }
         }
       ]
@@ -281,7 +372,7 @@
       "totals": {
         "innings_batted": 6,
         "runs": 60,
-        "balls_faced": 60,
+        "balls_faced": 51,
         "dismissals": 8,
         "overs_bowled": 12,
         "wickets": 4,
@@ -296,15 +387,22 @@
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "runs": 7,
-            "balls_faced": 13,
-            "dismissals": 1
+            "balls_faced": 10,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 23
+            "runs_conceded": 23,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -315,15 +413,22 @@
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "runs": 9,
-            "balls_faced": 9,
-            "dismissals": 1
+            "balls_faced": 8,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 13
+            "runs_conceded": 13,
+            "no_balls": 0,
+            "wides": 2
           }
         },
         {
@@ -334,15 +439,22 @@
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "runs": 14,
-            "balls_faced": 11,
-            "dismissals": 2
+            "balls_faced": 7,
+            "dismissals": 2,
+            "threes": 0,
+            "fours": 2,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 6
+            "runs_conceded": 6,
+            "no_balls": 0,
+            "wides": 1
           }
         },
         {
@@ -354,14 +466,21 @@
             "name_raw": "jack butler",
             "runs": 2,
             "balls_faced": 9,
-            "dismissals": 2
+            "dismissals": 2,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 6
+            "runs_conceded": 6,
+            "no_balls": 0,
+            "wides": 0
           }
         },
         {
@@ -372,15 +491,22 @@
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "runs": 14,
-            "balls_faced": 10,
-            "dismissals": 1
+            "balls_faced": 9,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 1,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": -1
+            "runs_conceded": -1,
+            "no_balls": 0,
+            "wides": 1
           }
         },
         {
@@ -392,14 +518,21 @@
             "name_raw": "jack butler",
             "runs": 14,
             "balls_faced": 8,
-            "dismissals": 1
+            "dismissals": 1,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Jack Butler",
             "name_raw": "jack butler",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 0
+            "runs_conceded": 0,
+            "no_balls": 0,
+            "wides": 2
           }
         }
       ]
@@ -409,7 +542,7 @@
       "totals": {
         "innings_batted": 5,
         "runs": 43,
-        "balls_faced": 51,
+        "balls_faced": 36,
         "dismissals": 6,
         "overs_bowled": 10,
         "wickets": 2,
@@ -424,15 +557,22 @@
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "runs": 8,
-            "balls_faced": 5,
-            "dismissals": 0
+            "balls_faced": 2,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 22
+            "runs_conceded": 22,
+            "no_balls": 0,
+            "wides": 2
           }
         },
         {
@@ -443,15 +583,22 @@
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "runs": -3,
-            "balls_faced": 12,
-            "dismissals": 3
+            "balls_faced": 10,
+            "dismissals": 3,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 23
+            "runs_conceded": 23,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -462,15 +609,22 @@
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "runs": 8,
-            "balls_faced": 10,
-            "dismissals": 1
+            "balls_faced": 8,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 17
+            "runs_conceded": 17,
+            "no_balls": 0,
+            "wides": 5
           }
         },
         {
@@ -481,15 +635,22 @@
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "runs": 14,
-            "balls_faced": 10,
-            "dismissals": 1
+            "balls_faced": 6,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 1,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 21
+            "runs_conceded": 21,
+            "no_balls": 0,
+            "wides": 7
           }
         },
         {
@@ -500,15 +661,22 @@
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "runs": 16,
-            "balls_faced": 14,
-            "dismissals": 1
+            "balls_faced": 10,
+            "dismissals": 1,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Will Eltringham",
             "name_raw": "will eltringham",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 26
+            "runs_conceded": 26,
+            "no_balls": 2,
+            "wides": 4
           }
         }
       ]
@@ -518,7 +686,7 @@
       "totals": {
         "innings_batted": 5,
         "runs": 42,
-        "balls_faced": 50,
+        "balls_faced": 38,
         "dismissals": 5,
         "overs_bowled": 10,
         "wickets": 4,
@@ -533,15 +701,22 @@
             "name": "Anuya Metikurke",
             "name_raw": "anuya metikurke",
             "runs": 8,
-            "balls_faced": 10,
-            "dismissals": 0
+            "balls_faced": 7,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Anuya Metikurke",
             "name_raw": "anuya metikurke",
             "overs": 2,
+            "maidens": 0,
             "wickets": 3,
-            "runs_conceded": -4
+            "runs_conceded": -4,
+            "no_balls": 0,
+            "wides": 0
           }
         },
         {
@@ -552,15 +727,22 @@
             "name": "Anvaya Unknown",
             "name_raw": "anvaya Unknown",
             "runs": -9,
-            "balls_faced": 14,
-            "dismissals": 4
+            "balls_faced": 12,
+            "dismissals": 4,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Anvaya Unknown",
             "name_raw": "anvaya Unknown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 22
+            "runs_conceded": 22,
+            "no_balls": 0,
+            "wides": 2
           }
         },
         {
@@ -571,15 +753,22 @@
             "name": "Anuya Metikurke",
             "name_raw": "anuya metikurke",
             "runs": 11,
-            "balls_faced": 9,
-            "dismissals": 1
+            "balls_faced": 6,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Anuya Metikurke",
             "name_raw": "anuya metikurke",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 14
+            "runs_conceded": 14,
+            "no_balls": 0,
+            "wides": 0
           }
         },
         {
@@ -590,15 +779,22 @@
             "name": "Anvaya Unknown",
             "name_raw": "anvaya Unknown",
             "runs": 17,
-            "balls_faced": 7,
-            "dismissals": 0
+            "balls_faced": 4,
+            "dismissals": 0,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Anvaya Unknown",
             "name_raw": "anvaya Unknown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 10
+            "runs_conceded": 10,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -609,15 +805,22 @@
             "name": "Anvaya Unknown",
             "name_raw": "anvaya Unknown",
             "runs": 15,
-            "balls_faced": 10,
-            "dismissals": 0
+            "balls_faced": 9,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Anvaya Unknown",
             "name_raw": "anvaya Unknown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 16
+            "runs_conceded": 16,
+            "no_balls": 0,
+            "wides": 4
           }
         }
       ]
@@ -627,7 +830,7 @@
       "totals": {
         "innings_batted": 4,
         "runs": 33,
-        "balls_faced": 37,
+        "balls_faced": 27,
         "dismissals": 3,
         "overs_bowled": 8,
         "wickets": 3,
@@ -642,15 +845,22 @@
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "runs": -2,
-            "balls_faced": 10,
-            "dismissals": 2
+            "balls_faced": 8,
+            "dismissals": 2,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 13
+            "runs_conceded": 13,
+            "no_balls": 0,
+            "wides": 4
           }
         },
         {
@@ -661,15 +871,22 @@
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "runs": 14,
-            "balls_faced": 12,
-            "dismissals": 1
+            "balls_faced": 6,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 34
+            "runs_conceded": 34,
+            "no_balls": 0,
+            "wides": 5
           }
         },
         {
@@ -681,14 +898,21 @@
             "name_raw": "owen buchan",
             "runs": 8,
             "balls_faced": 7,
-            "dismissals": 0
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 15
+            "runs_conceded": 15,
+            "no_balls": 0,
+            "wides": 2
           }
         },
         {
@@ -699,15 +923,22 @@
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "runs": 13,
-            "balls_faced": 8,
-            "dismissals": 0
+            "balls_faced": 6,
+            "dismissals": 0,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Owen Buchan",
             "name_raw": "owen buchan",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 23
+            "runs_conceded": 23,
+            "no_balls": 0,
+            "wides": 4
           }
         }
       ]
@@ -717,7 +948,7 @@
       "totals": {
         "innings_batted": 1,
         "runs": 25,
-        "balls_faced": 14,
+        "balls_faced": 10,
         "dismissals": 1,
         "overs_bowled": 2,
         "wickets": 0,
@@ -732,15 +963,22 @@
             "name": "Vivaan Unknown",
             "name_raw": "vivaan Unknown",
             "runs": 25,
-            "balls_faced": 14,
-            "dismissals": 1
+            "balls_faced": 10,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 3,
+            "fives": 1,
+            "sixes": 0
           },
           "bowling": {
             "name": "Vivaan Unknown",
             "name_raw": "vivaan Unknown",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 10
+            "runs_conceded": 10,
+            "no_balls": 0,
+            "wides": 1
           }
         }
       ]
@@ -750,7 +988,7 @@
       "totals": {
         "innings_batted": 1,
         "runs": 18,
-        "balls_faced": 10,
+        "balls_faced": 8,
         "dismissals": 0,
         "overs_bowled": 2,
         "wickets": 1,
@@ -765,15 +1003,22 @@
             "name": "Connor Unknown",
             "name_raw": "connor Unknown",
             "runs": 18,
-            "balls_faced": 10,
-            "dismissals": 0
+            "balls_faced": 8,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 2,
+            "sixes": 0
           },
           "bowling": {
             "name": "Connor Unknown",
             "name_raw": "connor Unknown",
             "overs": 2,
+            "maidens": 1,
             "wickets": 1,
-            "runs_conceded": 7
+            "runs_conceded": 7,
+            "no_balls": 0,
+            "wides": 2
           }
         }
       ]
@@ -783,7 +1028,7 @@
       "totals": {
         "innings_batted": 4,
         "runs": 15,
-        "balls_faced": 51,
+        "balls_faced": 43,
         "dismissals": 4,
         "overs_bowled": 8,
         "wickets": 3,
@@ -798,15 +1043,22 @@
             "name": "Ria Sathishkumar",
             "name_raw": "Ria Sathishkumar",
             "runs": 11,
-            "balls_faced": 12,
-            "dismissals": 0
+            "balls_faced": 9,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Ria Sathishkumar",
             "name_raw": "Ria Sathishkumar",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 4
+            "runs_conceded": 4,
+            "no_balls": 0,
+            "wides": 0
           }
         },
         {
@@ -817,15 +1069,22 @@
             "name": "Ria Sathish Kumar",
             "name_raw": "Ria Sathish kumar",
             "runs": 8,
-            "balls_faced": 14,
-            "dismissals": 1
+            "balls_faced": 10,
+            "dismissals": 1,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Ria Sathish Kumar",
             "name_raw": "Ria Sathish kumar",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 20
+            "runs_conceded": 20,
+            "no_balls": 0,
+            "wides": 1
           }
         },
         {
@@ -837,14 +1096,21 @@
             "name_raw": "Ria Sathish kumar",
             "runs": -7,
             "balls_faced": 10,
-            "dismissals": 2
+            "dismissals": 2,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Ria Sathish Kumar",
             "name_raw": "Ria Sathish kumar",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 19
+            "runs_conceded": 19,
+            "no_balls": 0,
+            "wides": 1
           }
         },
         {
@@ -855,15 +1121,22 @@
             "name": "Ria Sathish Kumar",
             "name_raw": "Ria Sathish kumar",
             "runs": 3,
-            "balls_faced": 15,
-            "dismissals": 1
+            "balls_faced": 14,
+            "dismissals": 1,
+            "threes": 0,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Ria Sathish Kumar",
             "name_raw": "Ria Sathish kumar",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 17
+            "runs_conceded": 17,
+            "no_balls": 0,
+            "wides": 1
           }
         }
       ]
@@ -873,7 +1146,7 @@
       "totals": {
         "innings_batted": 1,
         "runs": 5,
-        "balls_faced": 19,
+        "balls_faced": 15,
         "dismissals": 2,
         "overs_bowled": 2,
         "wickets": 2,
@@ -888,15 +1161,22 @@
             "name": "Fletcher Tulloch",
             "name_raw": "fletcher tulloch",
             "runs": 5,
-            "balls_faced": 19,
-            "dismissals": 2
+            "balls_faced": 15,
+            "dismissals": 2,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Fletcher Tulloch",
             "name_raw": "fletcher tulloch",
             "overs": 2,
+            "maidens": 0,
             "wickets": 2,
-            "runs_conceded": 17
+            "runs_conceded": 17,
+            "no_balls": 0,
+            "wides": 0
           }
         }
       ]
@@ -906,7 +1186,7 @@
       "totals": {
         "innings_batted": 2,
         "runs": 2,
-        "balls_faced": 23,
+        "balls_faced": 20,
         "dismissals": 5,
         "overs_bowled": 4,
         "wickets": 1,
@@ -921,15 +1201,22 @@
             "name": "Liam Laing",
             "name_raw": "liam laing",
             "runs": 17,
-            "balls_faced": 9,
-            "dismissals": 0
+            "balls_faced": 8,
+            "dismissals": 0,
+            "threes": 0,
+            "fours": 0,
+            "fives": 1,
+            "sixes": 0
           },
           "bowling": {
             "name": "Liam Laing",
             "name_raw": "liam laing",
             "overs": 2,
+            "maidens": 0,
             "wickets": 1,
-            "runs_conceded": 10
+            "runs_conceded": 10,
+            "no_balls": 0,
+            "wides": 2
           }
         },
         {
@@ -940,15 +1227,22 @@
             "name": "Liam Laing",
             "name_raw": "liam laing",
             "runs": -15,
-            "balls_faced": 14,
-            "dismissals": 5
+            "balls_faced": 12,
+            "dismissals": 5,
+            "threes": 1,
+            "fours": 0,
+            "fives": 0,
+            "sixes": 0
           },
           "bowling": {
             "name": "Liam Laing",
             "name_raw": "liam laing",
             "overs": 2,
+            "maidens": 0,
             "wickets": 0,
-            "runs_conceded": 19
+            "runs_conceded": 19,
+            "no_balls": 0,
+            "wides": 3
           }
         }
       ]

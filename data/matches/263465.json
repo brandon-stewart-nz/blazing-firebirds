@@ -36,43 +36,67 @@
           "name": "Ria Sathish Kumar",
           "name_raw": "Ria Sathish kumar",
           "runs": 8,
-          "balls_faced": 14,
-          "dismissals": 1
+          "balls_faced": 10,
+          "dismissals": 1,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Anuya Metikurke",
           "name_raw": "anuya metikurke",
           "runs": 8,
-          "balls_faced": 10,
-          "dismissals": 0
+          "balls_faced": 7,
+          "dismissals": 0,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Jack Butler",
           "name_raw": "jack butler",
           "runs": 14,
-          "balls_faced": 11,
-          "dismissals": 2
+          "balls_faced": 7,
+          "dismissals": 2,
+          "threes": 0,
+          "fours": 2,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Vernon Stewart",
           "name_raw": "vernon stewart",
           "runs": 16,
-          "balls_faced": 13,
-          "dismissals": 1
+          "balls_faced": 10,
+          "dismissals": 1,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Liam Laing",
           "name_raw": "liam laing",
           "runs": 17,
-          "balls_faced": 9,
-          "dismissals": 0
+          "balls_faced": 8,
+          "dismissals": 0,
+          "threes": 0,
+          "fours": 0,
+          "fives": 1,
+          "sixes": 0
         },
         {
           "name": "Jacob Brown",
           "name_raw": "jacob brown",
           "runs": 16,
-          "balls_faced": 15,
-          "dismissals": 2
+          "balls_faced": 12,
+          "dismissals": 2,
+          "threes": 0,
+          "fours": 2,
+          "fives": 0,
+          "sixes": 0
         }
       ],
       "bowlers": [
@@ -80,43 +104,61 @@
           "name": "Rafe Mann",
           "name_raw": "Rafe mann",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 17
+          "runs_conceded": 17,
+          "no_balls": 0,
+          "wides": 1
         },
         {
           "name": "Mali Unknown",
           "name_raw": "Mali Unknown",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 10
+          "runs_conceded": 10,
+          "no_balls": 0,
+          "wides": 5
         },
         {
           "name": "Oliver Fye",
           "name_raw": "oliver fye",
           "overs": 2,
+          "maidens": 1,
           "wickets": 2,
-          "runs_conceded": 2
+          "runs_conceded": 2,
+          "no_balls": 0,
+          "wides": 2
         },
         {
           "name": "Ifan Medcalf",
           "name_raw": "Ifan medcalf",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 10
+          "runs_conceded": 10,
+          "no_balls": 0,
+          "wides": 2
         },
         {
           "name": "Luke Taylor",
           "name_raw": "Luke Taylor",
           "overs": 2,
+          "maidens": 0,
           "wickets": 2,
-          "runs_conceded": 9
+          "runs_conceded": 9,
+          "no_balls": 0,
+          "wides": 2
         },
         {
           "name": "Max Croke",
           "name_raw": "Max croke",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 31
+          "runs_conceded": 31,
+          "no_balls": 0,
+          "wides": 6
         }
       ]
     },
@@ -128,43 +170,67 @@
           "name": "Rafe Mann",
           "name_raw": "Rafe mann",
           "runs": 17,
-          "balls_faced": 12,
-          "dismissals": 1
+          "balls_faced": 9,
+          "dismissals": 1,
+          "threes": 0,
+          "fours": 1,
+          "fives": 1,
+          "sixes": 0
         },
         {
           "name": "Luke Taylor",
           "name_raw": "Luke Taylor",
           "runs": 17,
-          "balls_faced": 12,
-          "dismissals": 0
+          "balls_faced": 9,
+          "dismissals": 0,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Oliver Fye",
           "name_raw": "oliver fye",
           "runs": 15,
-          "balls_faced": 14,
-          "dismissals": 1
+          "balls_faced": 11,
+          "dismissals": 1,
+          "threes": 1,
+          "fours": 0,
+          "fives": 1,
+          "sixes": 0
         },
         {
           "name": "Max Croke",
           "name_raw": "Max croke",
           "runs": -8,
           "balls_faced": 10,
-          "dismissals": 2
+          "dismissals": 2,
+          "threes": 0,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Ifan Medcalf",
           "name_raw": "Ifan medcalf",
           "runs": 12,
-          "balls_faced": 11,
-          "dismissals": 1
+          "balls_faced": 9,
+          "dismissals": 1,
+          "threes": 2,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         },
         {
           "name": "Mali Unknown",
           "name_raw": "Mali Unknown",
           "runs": 5,
-          "balls_faced": 13,
-          "dismissals": 2
+          "balls_faced": 12,
+          "dismissals": 2,
+          "threes": 1,
+          "fours": 0,
+          "fives": 0,
+          "sixes": 0
         }
       ],
       "bowlers": [
@@ -172,43 +238,61 @@
           "name": "Vernon Stewart",
           "name_raw": "vernon stewart",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 14
+          "runs_conceded": 14,
+          "no_balls": 0,
+          "wides": 4
         },
         {
           "name": "Liam Laing",
           "name_raw": "liam laing",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 10
+          "runs_conceded": 10,
+          "no_balls": 0,
+          "wides": 2
         },
         {
           "name": "Ria Sathish Kumar",
           "name_raw": "Ria Sathish kumar",
           "overs": 2,
+          "maidens": 0,
           "wickets": 0,
-          "runs_conceded": 20
+          "runs_conceded": 20,
+          "no_balls": 0,
+          "wides": 1
         },
         {
           "name": "Jacob Brown",
           "name_raw": "jacob brown",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 12
+          "runs_conceded": 12,
+          "no_balls": 0,
+          "wides": 4
         },
         {
           "name": "Anuya Metikurke",
           "name_raw": "anuya metikurke",
           "overs": 2,
+          "maidens": 0,
           "wickets": 3,
-          "runs_conceded": -4
+          "runs_conceded": -4,
+          "no_balls": 0,
+          "wides": 0
         },
         {
           "name": "Jack Butler",
           "name_raw": "jack butler",
           "overs": 2,
+          "maidens": 0,
           "wickets": 1,
-          "runs_conceded": 6
+          "runs_conceded": 6,
+          "no_balls": 0,
+          "wides": 1
         }
       ]
     }
