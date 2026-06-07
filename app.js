@@ -1422,7 +1422,6 @@ function bowlingTableHtml(bowlers, opts = {}) {
         <thead><tr>
           <th>Bowlers (in order)</th>
           <th class="num-h">O</th>
-          <th class="num-h dk-only">M</th>
           <th class="num-h">R</th>
           <th class="num-h">W</th>
           <th class="num-h">ER</th>
@@ -1436,7 +1435,6 @@ function bowlingTableHtml(bowlers, opts = {}) {
             <tr ${rowLinkAttrs(b.name, linkPlayers, matchId)}>
               <td>${escapeHtml(displayName(b.name, { opponent }) + (isCap ? " (c)" : ""))}</td>
               <td class="num">${b.overs}</td>
-              <td class="num dk-only">${b.maidens ?? 0}</td>
               <td class="num">${b.runs_conceded}</td>
               <td class="num">${b.wickets}</td>
               <td class="num">${economyRate(b.runs_conceded, b.overs)}</td>
