@@ -1346,22 +1346,19 @@ button.record__cell[data-active="true"] .record__label {
   }
 }
 
-/* Player match-by-match — responsive stat columns.
-   DESKTOP keeps the original Runs · Wickets · Given (untouched base widths).
-   MOBILE (<=480px) swaps to a compact R · B, where B is one cricket-style
-   bowling figure (wickets/runs conceded), the year drops off the date, and the
-   opponent reclaims the freed width. The mobile R/B cells are placed BEFORE the
-   Runs/Wickets/Given cells in the DOM so Given stays the table's :last-child on
-   desktop (keeping its original wide treatment); only one stat set is ever
-   shown — the other is display:none. */
+/* Player match-by-match — Date · 🏆 · Opponent · R · SR · W · ER, echoing the
+   fixture-day scorecard conventions (abbreviated headers + the same tooltips).
+   Auto layout so the four stat columns size to content and the opponent takes
+   the rest (wrapping to max 2 lines when long); the year drops off the date on
+   mobile so all four stats fit. */
+.table.table--player-matches { table-layout: auto; }
 .table--player-matches th {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* Keep the cell a real table-cell (so it fills the row height); clamp the
-   name on an inner span instead — -webkit-box on the <td> itself breaks
-   table-cell layout. */
+/* Keep the cell a real table-cell (so it fills the row height); clamp the name
+   on an inner span — -webkit-box on the <td> itself breaks table-cell layout. */
 .table--player-matches td.opp { white-space: normal; }
 .table--player-matches .opp-text {
   display: -webkit-box;
@@ -1370,17 +1367,15 @@ button.record__cell[data-active="true"] .record__label {
   overflow: hidden;
   line-height: 1.2;
 }
-.table--player-matches .mb-col { display: none; }   /* desktop: hide R / B */
-
+.table.table--player-matches .num,
+.table.table--player-matches .num-h { width: auto; padding-left: 8px; padding-right: 8px; }
 @media (max-width: 480px) {
-  .table--player-matches .dk-col { display: none; } /* mobile: hide Runs / Wickets / Given */
-  .table--player-matches .mb-col { display: table-cell; }
-  .table--player-matches .date-col { width: 66px; }
+  .table--player-matches .date-col { width: 64px; }
   .table--player-matches .yr { display: none; }
   .table--player-matches .potd-cell,
-  .table--player-matches .potd-h { width: 30px; }
-  .table.table--player-matches .col-r { width: 38px; padding-left: 4px; }
-  .table.table--player-matches .col-b { width: 58px; padding-right: 8px; }
+  .table--player-matches .potd-h { width: 28px; }
+  .table.table--player-matches .num,
+  .table.table--player-matches .num-h { padding-left: 5px; padding-right: 5px; }
 }
 
 /* Match scorecard — dense stat tables. Narrow numeric columns so the full set

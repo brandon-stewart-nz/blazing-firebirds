@@ -1116,11 +1116,10 @@ function renderPlayer(app, key, from) {
             <th class="date-col">Date</th>
             <th class="potd-h" aria-label="Player of the Day"></th>
             <th>Opponent</th>
-            <th class="num-h mb-col col-r" data-tip="Runs scored" aria-label="Runs scored">R</th>
-            <th class="num-h mb-col col-b" data-tip="Bowling — wickets / runs conceded" aria-label="Bowling — wickets per runs conceded">B</th>
-            <th class="num-h dk-col">Runs</th>
-            <th class="num-h dk-col">Wickets</th>
-            <th class="num-h dk-col">Conceded</th>
+            <th class="num-h" data-tip="Runs scored" aria-label="Runs scored">R</th>
+            <th class="num-h" data-tip="Strike rate — runs ÷ balls × 100" aria-label="Strike rate, runs divided by balls times 100">SR</th>
+            <th class="num-h" data-tip="Wickets taken" aria-label="Wickets taken">W</th>
+            <th class="num-h" data-tip="Economy rate — runs ÷ overs" aria-label="Economy rate, runs divided by overs">ER</th>
           </tr>
         </thead>
         <tbody>
@@ -1133,21 +1132,21 @@ function renderPlayer(app, key, from) {
               const dateCell = yy
                 ? `${dd}/${mm}<span class="yr">/${yy}</span>`
                 : escapeHtml(dmy);
-              // Desktop shows Runs / Wickets / Conceded; mobile collapses bowling
-              // into one cricket-style figure (wickets / runs conceded).
-              const w = m.bowling?.wickets, rc = m.bowling?.runs_conceded;
-              const runs = m.batting?.runs ?? "—";
-              const bowl = (w == null && rc == null) ? "—" : `${w ?? 0}/${rc ?? 0}`;
+              // Per-game key stats, mirroring the scorecard: R, SR (batting),
+              // W, ER (bowling). SR/ER need balls/overs; "—" when not available.
+              const bRuns = m.batting?.runs, bBalls = m.batting?.balls_faced;
+              const wk = m.bowling?.wickets, rc = m.bowling?.runs_conceded, ov = m.bowling?.overs;
+              const srCell = (bRuns != null && bBalls) ? strikeRate(bRuns, bBalls) : "—";
+              const erCell = (rc != null && ov) ? economyRate(rc, ov) : "—";
               return `
               <tr class="player-row" data-fixture-id="${m.fixture_id}">
                 <td class="date-col">${dateCell}</td>
                 <td class="potd-cell">${isPotdForMatch(key, m) ? trophyIconHtml() : ""}</td>
                 <td class="opp"><span class="opp-text">${escapeHtml(m.vs ?? "")}</span></td>
-                <td class="num mb-col col-r">${runs}</td>
-                <td class="num mb-col col-b">${bowl}</td>
-                <td class="num dk-col">${runs}</td>
-                <td class="num dk-col">${w ?? "—"}</td>
-                <td class="num dk-col">${rc ?? "—"}</td>
+                <td class="num">${bRuns ?? "—"}</td>
+                <td class="num">${srCell}</td>
+                <td class="num">${wk ?? "—"}</td>
+                <td class="num">${erCell}</td>
               </tr>`;
             }).join("")}
         </tbody>
