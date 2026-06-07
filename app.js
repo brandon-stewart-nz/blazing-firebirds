@@ -1039,6 +1039,31 @@ function playerCardHtml(p) {
 
 // --- Player view -----------------------------------------------------
 
+// Best single-game batting (most runs; ties → more recent) and bowling (most
+// wickets, then fewest runs conceded; ties → more recent), for the hero chips.
+function bestBattingMatch(matches) {
+  let best = null;
+  for (const m of matches || []) {
+    const r = m.batting?.runs;
+    if (r == null) continue;
+    const fid = m.fixture_id ?? 0;
+    if (!best || r > best.r || (r === best.r && fid > best.fid)) best = { r, fid, vs: m.vs };
+  }
+  return best;
+}
+function bestBowlingMatch(matches) {
+  let best = null;
+  for (const m of matches || []) {
+    const w = m.bowling?.wickets;
+    if (w == null) continue;
+    const rc = m.bowling?.runs_conceded ?? 0;
+    const fid = m.fixture_id ?? 0;
+    if (!best || w > best.w || (w === best.w && rc < best.rc)
+        || (w === best.w && rc === best.rc && fid > best.fid)) best = { w, rc, fid, vs: m.vs };
+  }
+  return best;
+}
+
 function renderPlayer(app, key, from) {
   let player = state.players.players.find(p => playerKey(p.name) === key);
   if (!player) player = state.players.players.find(p => firstNameKey(p.name) === firstNameKey(key));
@@ -1061,6 +1086,24 @@ function renderPlayer(app, key, from) {
 
   const back = backTargetFor(from, "", "Back to Squad");
 
+  // Personal-best chips for the hero box (each links to its game).
+  const hsBest = bestBattingMatch(player.matches);
+  const bbBest = bestBowlingMatch(player.matches);
+  const cleanOpp = (vs) => escapeHtml((vs || "").replace(/^['"]+|['"]+$/g, "").trim());
+  const hlChip = (fid, label, valueHtml, vs) =>
+    `<a class="hl" href="#${escapeHtml(makeHash(`match/${fid}`, `player/${encodeURIComponent(key)}`))}">
+        <span class="hl__chev" aria-hidden="true">›</span>
+        <span class="hl__label">${label}</span>
+        <span class="hl__val">${valueHtml}</span>
+        <span class="hl__ctx">vs ${cleanOpp(vs)}</span>
+      </a>`;
+  const hlChips = [];
+  if (hsBest) hlChips.push(hlChip(hsBest.fid, "High score batting",
+    `${hsBest.r} <span class="hl__unit">runs</span>`, hsBest.vs));
+  if (bbBest) hlChips.push(hlChip(bbBest.fid, "Best bowling",
+    `${bbBest.w}/${bbBest.rc} <span class="hl__unit">(wickets / runs)</span>`, bbBest.vs));
+  const highlightsHtml = hlChips.length ? `<div class="hl-row">${hlChips.join("")}</div>` : "";
+
   app.innerHTML = `
     <a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>
     <div class="detail-header">
@@ -1070,6 +1113,7 @@ function renderPlayer(app, key, from) {
         <div class="detail-header__sub">${player.matches.length} match${player.matches.length === 1 ? "" : "es"} played for ${TEAM_DISPLAY}</div>
         ${parentsLine}
       </div>
+      ${highlightsHtml}
     </div>
 
     <h3 class="subhead">Batting</h3>
