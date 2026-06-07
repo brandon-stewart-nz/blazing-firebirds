@@ -1065,23 +1065,32 @@ function renderPlayer(app, key, from) {
             <th class="date-col">Date</th>
             <th class="potd-h" aria-label="Player of the Day"></th>
             <th>Opponent</th>
-            <th class="num-h">Runs</th>
-            <th class="num-h">Wickets</th>
-            <th class="num-h">Given</th>
+            <th class="num-h" title="Runs">R</th>
+            <th class="num-h" title="Bowling — wickets / runs conceded">B</th>
           </tr>
         </thead>
         <tbody>
           ${[...player.matches]
             .sort((a, b) => (b.fixture_id ?? 0) - (a.fixture_id ?? 0))
-            .map(m => `
+            .map(m => {
+              const dmy = formatDateDMY(m.date_str);
+              const [dd, mm, yy] = dmy.split("/");
+              // Year wrapped in a span so CSS can drop it on narrow phones.
+              const dateCell = yy
+                ? `${dd}/${mm}<span class="yr">/${yy}</span>`
+                : escapeHtml(dmy);
+              // Bowling as one cricket-style figure: wickets / runs conceded.
+              const w = m.bowling?.wickets, rc = m.bowling?.runs_conceded;
+              const bowl = (w == null && rc == null) ? "—" : `${w ?? 0}/${rc ?? 0}`;
+              return `
               <tr class="player-row" data-fixture-id="${m.fixture_id}">
-                <td class="date-col">${escapeHtml(formatDateDMY(m.date_str))}</td>
+                <td class="date-col">${dateCell}</td>
                 <td class="potd-cell">${isPotdForMatch(key, m) ? trophyIconHtml() : ""}</td>
-                <td>${escapeHtml(m.vs ?? "")}</td>
+                <td class="opp">${escapeHtml(m.vs ?? "")}</td>
                 <td class="num">${m.batting?.runs ?? "—"}</td>
-                <td class="num">${m.bowling?.wickets ?? "—"}</td>
-                <td class="num">${m.bowling?.runs_conceded ?? "—"}</td>
-              </tr>`).join("")}
+                <td class="num">${bowl}</td>
+              </tr>`;
+            }).join("")}
         </tbody>
       </table>
     </div>`}
