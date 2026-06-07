@@ -1065,8 +1065,11 @@ function renderPlayer(app, key, from) {
             <th class="date-col">Date</th>
             <th class="potd-h" aria-label="Player of the Day"></th>
             <th>Opponent</th>
-            <th class="num-h" title="Runs">R</th>
-            <th class="num-h" title="Bowling — wickets / runs conceded">B</th>
+            <th class="num-h mb-col col-r" title="Runs">R</th>
+            <th class="num-h mb-col col-b" title="Bowling — wickets / runs conceded">B</th>
+            <th class="num-h dk-col">Runs</th>
+            <th class="num-h dk-col">Wickets</th>
+            <th class="num-h dk-col">Given</th>
           </tr>
         </thead>
         <tbody>
@@ -1079,16 +1082,21 @@ function renderPlayer(app, key, from) {
               const dateCell = yy
                 ? `${dd}/${mm}<span class="yr">/${yy}</span>`
                 : escapeHtml(dmy);
-              // Bowling as one cricket-style figure: wickets / runs conceded.
+              // Desktop shows Runs / Wickets / Given; mobile collapses bowling
+              // into one cricket-style figure (wickets / runs conceded).
               const w = m.bowling?.wickets, rc = m.bowling?.runs_conceded;
+              const runs = m.batting?.runs ?? "—";
               const bowl = (w == null && rc == null) ? "—" : `${w ?? 0}/${rc ?? 0}`;
               return `
               <tr class="player-row" data-fixture-id="${m.fixture_id}">
                 <td class="date-col">${dateCell}</td>
                 <td class="potd-cell">${isPotdForMatch(key, m) ? trophyIconHtml() : ""}</td>
                 <td class="opp">${escapeHtml(m.vs ?? "")}</td>
-                <td class="num">${m.batting?.runs ?? "—"}</td>
-                <td class="num">${bowl}</td>
+                <td class="num mb-col col-r">${runs}</td>
+                <td class="num mb-col col-b">${bowl}</td>
+                <td class="num dk-col">${runs}</td>
+                <td class="num dk-col">${w ?? "—"}</td>
+                <td class="num dk-col">${rc ?? "—"}</td>
               </tr>`;
             }).join("")}
         </tbody>
