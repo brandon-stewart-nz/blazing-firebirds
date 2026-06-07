@@ -1106,12 +1106,14 @@ function renderPlayer(app, key, from) {
 
   app.innerHTML = `
     <a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>
-    <div class="detail-header">
-      <div class="detail-header__avatar">${escapeHtml(avatarText)}</div>
-      <div>
-        <div class="detail-header__name">${escapeHtml(shown)}</div>
-        <div class="detail-header__sub">${player.matches.length} match${player.matches.length === 1 ? "" : "es"} played for ${TEAM_DISPLAY}</div>
-        ${parentsLine}
+    <div class="detail-header detail-header--player">
+      <div class="detail-header__main">
+        <div class="detail-header__avatar">${escapeHtml(avatarText)}</div>
+        <div>
+          <div class="detail-header__name">${escapeHtml(shown)}</div>
+          <div class="detail-header__sub">${player.matches.length} match${player.matches.length === 1 ? "" : "es"} played for ${TEAM_DISPLAY}</div>
+          ${parentsLine}
+        </div>
       </div>
       ${highlightsHtml}
     </div>

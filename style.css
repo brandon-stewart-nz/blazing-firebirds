@@ -1378,6 +1378,8 @@ button.record__cell[data-active="true"] .record__label {
   }
   .detail-header__avatar { width: 52px; height: 52px; font-size: 20px; }
   .detail-header__name { font-size: 22px; }
+  /* Player hero: avatar beside name on desktop (via __main), stacked on mobile. */
+  .detail-header--player .detail-header__main { flex-direction: column; align-items: flex-start; gap: 12px; }
   .detail-header__name .badge {
     position: absolute;
     top: 14px;
