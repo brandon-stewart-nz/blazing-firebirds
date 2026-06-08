@@ -166,6 +166,7 @@ const state = {
   fixtures: null,
   players: null,
   schedule: null,
+  standings: null,
   matchCache: new Map(),
   resultsVisible: 3,
   resultsFilter: "played", // "played" | "won" | "lost"
@@ -182,6 +183,7 @@ const CACHE_KEYS = {
   fixtures: "firebirds.cache.fixtures",
   players: "firebirds.cache.players",
   schedule: "firebirds.cache.schedule",
+  standings: "firebirds.cache.standings",
   notifyState: "firebirds.notify_state",
 };
 
@@ -316,11 +318,13 @@ async function init() {
   const cachedFixtures = readCachedJson(CACHE_KEYS.fixtures);
   const cachedPlayers = readCachedJson(CACHE_KEYS.players);
   const cachedSchedule = readCachedJson(CACHE_KEYS.schedule);
+  const cachedStandings = readCachedJson(CACHE_KEYS.standings);
   if (cachedTeam && cachedFixtures && cachedPlayers) {
     state.team = cachedTeam;
     state.fixtures = cachedFixtures;
     state.players = cachedPlayers;
     state.schedule = cachedSchedule || null;
+    state.standings = cachedStandings || null;
     refreshStandinNames();
     updateMetaStrip();
     render();
@@ -355,21 +359,24 @@ async function refresh() {
 }
 
 async function loadData() {
-  const [team, fixtures, players, schedule] = await Promise.all([
+  const [team, fixtures, players, schedule, standings] = await Promise.all([
     fetchJson("data/team.json"),
     fetchJson("data/fixtures.json"),
     fetchJson("data/players.json"),
     fetchJson("data/schedule.json").catch(() => null),
+    fetchJson("data/standings.json").catch(() => null),
   ]);
   state.team = team;
   state.fixtures = fixtures;
   state.players = players;
   state.schedule = schedule;
+  state.standings = standings;
   refreshStandinNames();
   writeCachedJson(CACHE_KEYS.team, team);
   writeCachedJson(CACHE_KEYS.fixtures, fixtures);
   writeCachedJson(CACHE_KEYS.players, players);
   if (schedule) writeCachedJson(CACHE_KEYS.schedule, schedule);
+  if (standings) writeCachedJson(CACHE_KEYS.standings, standings);
   lastFetchAt = Date.now();
   updateMetaStrip();
   render();
@@ -476,6 +483,8 @@ function render(skipScroll) {
   } else if (path.startsWith("upcoming/")) {
     const fid = parseInt(path.slice("upcoming/".length), 10);
     renderUpcoming(app, fid, from);
+  } else if (path === "standings") {
+    renderStandings(app, from);
   } else {
     renderHome(app);
   }
@@ -569,6 +578,73 @@ function renderHome(app) {
   wirePlayerClicks(app);
   wireInstallChip(app);
   wireNotifyChip(app);
+}
+
+// --- Leaderboard view ------------------------------------------------
+// Full division ladder from data/standings.json. Our row is highlighted;
+// reached from the home record card's 4th cell.
+function renderStandings(app, from) {
+  const back = backTargetFor(from, "", "Back to Home");
+  const standings = state.standings;
+  const teams = standings?.teams || [];
+  const divName = standings?.division_name || "Division";
+
+  if (!teams.length) {
+    const msg = navigator.onLine
+      ? "Leaderboard not available yet."
+      : "Currently offline — Please check your connection";
+    app.innerHTML = `
+      <a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>
+      <div class="loading">${msg}</div>`;
+    return;
+  }
+
+  const rows = teams.map(t => {
+    const diff = t.difference > 0 ? `+${t.difference}` : `${t.difference}`;
+    return `
+      <tr class="${t.is_us ? "ladder-row--us" : ""}">
+        <td class="num ladder-pos">${t.position}</td>
+        <td class="ladder-team">${escapeHtml(t.name)}${t.is_us ? ' <span class="ladder-you">You</span>' : ""}</td>
+        <td class="num">${t.played}</td>
+        <td class="num">${t.won}</td>
+        <td class="num">${t.lost}</td>
+        <td class="num dk-only">${t.drawn}</td>
+        <td class="num dk-only">${t.skins_for}</td>
+        <td class="num dk-only">${t.skins_against}</td>
+        <td class="num dk-only">${diff}</td>
+        <td class="num ladder-pts">${t.points}</td>
+      </tr>`;
+  }).join("");
+
+  app.innerHTML = `
+    <a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>
+    <div class="detail-header detail-header--player">
+      <div class="detail-header__main">
+        <div>
+          <div class="detail-header__name">Leaderboard</div>
+          <div class="detail-header__sub">${escapeHtml(divName)} · ${teams.length} teams</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <table class="table table--ladder">
+        <thead>
+          <th class="num-h" data-tip="Ladder position" aria-label="Ladder position">#</th>
+          <th class="ladder-team-h">Team</th>
+          <th class="num-h" data-tip="Played" aria-label="Played">P</th>
+          <th class="num-h" data-tip="Won" aria-label="Won">W</th>
+          <th class="num-h" data-tip="Lost" aria-label="Lost">L</th>
+          <th class="num-h dk-only" data-tip="Drawn" aria-label="Drawn">D</th>
+          <th class="num-h dk-only" data-tip="Runs (skins) for" aria-label="Runs for">F</th>
+          <th class="num-h dk-only" data-tip="Runs (skins) against" aria-label="Runs against">A</th>
+          <th class="num-h dk-only" data-tip="Run difference" aria-label="Run difference">Dif</th>
+          <th class="num-h" data-tip="Points" aria-label="Points">Pts</th>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
 }
 
 function filteredResults(fixtures, filter) {
@@ -945,6 +1021,13 @@ function plannedBowlingTableHtml(bowlingOrder, captain = "", fixtureId = null) {
 }
 
 
+function ordinal(n) {
+  if (n == null || n <= 0) return "—";
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
 function recordHtml(record) {
   if (!record) return "";
   const filter = state.resultsFilter;
@@ -956,15 +1039,20 @@ function recordHtml(record) {
         <div class="record__label">${label}</div>
       </button>`;
   };
+  // 4th cell: our ladder position — taps through to the full division table.
+  const pos = state.team?.standings_row?.position;
+  const teamCount = state.standings?.teams?.length;
+  const ladderCell = `
+      <a class="record__cell record__cell--link" href="#standings" aria-label="View the Division 8 leaderboard">
+        <div class="record__num">${ordinal(pos)}</div>
+        <div class="record__label">Ladder${teamCount ? ` of ${teamCount}` : ""} ›</div>
+      </a>`;
   return `
     <div class="record">
       ${cell("played", record.played, "Played")}
       ${cell("won", record.won, "Won")}
       ${cell("lost", record.lost, "Lost")}
-      <div class="record__cell record__cell--static">
-        <div class="record__num">${record.skins_for}</div>
-        <div class="record__label">Runs for</div>
-      </div>
+      ${ladderCell}
     </div>`;
 }
 

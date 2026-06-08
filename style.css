@@ -1534,3 +1534,65 @@ button.record__cell[data-active="true"] .record__label {
   color: var(--muted);
   font-size: 13px;
 }
+
+/* --- Ladder / leaderboard ------------------------------------------ */
+
+/* Home record card: the 4th cell is an <a> linking to the leaderboard. */
+a.record__cell--link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+a.record__cell--link:hover { border-color: var(--teal-soft); }
+a.record__cell--link:active { transform: translateY(1px); }
+a.record__cell--link .record__num { color: var(--gold-deep); }
+
+/* Leaderboard table — auto layout (10 columns), tighter than the default. */
+.table.table--ladder { table-layout: auto; }
+.table.table--ladder .num,
+.table.table--ladder .num-h {
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.table--ladder .ladder-pos { font-weight: 700; color: var(--teal); width: 1%; }
+.table--ladder .ladder-pts,
+.table--ladder .num-h:last-child { font-weight: 700; }
+.table--ladder .ladder-pts { color: var(--gold-deep); }
+.table--ladder .ladder-team,
+.table--ladder .ladder-team-h {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table--ladder .ladder-team { font-weight: 600; color: var(--teal-deep); }
+
+/* Our row stands out — gold wash + a left accent bar. */
+.table--ladder tr.ladder-row--us td {
+  background: rgba(229, 179, 64, 0.16);
+}
+.table--ladder tr.ladder-row--us .ladder-pos {
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+.table--ladder tr.ladder-row--us .ladder-team { color: var(--teal-deep); }
+.ladder-you {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--teal-deep);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+@media (max-width: 560px) {
+  .table--ladder .dk-only { display: none; }
+}
