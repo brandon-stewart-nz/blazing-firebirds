@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-08T08:00:41.959970+00:00",
+  "generated_at_utc": "2026-06-08T08:47:35.477140+00:00",
   "games": {
     "2026-04-25": {
       "partnerships": [
@@ -268,20 +268,6 @@
       "captain": "Ria"
     },
     "2026-06-20": {
-      "partnerships": [
-        [
-          "",
-          ""
-        ],
-        [
-          "",
-          ""
-        ],
-        [
-          "Vernon",
-          ""
-        ]
-      ],
       "unavailable": [
         "Jacob"
       ],

@@ -1709,11 +1709,17 @@ function resultCardHtml(f) {
 }
 
 function sortedSquad(players) {
-  // Rostered players first (alphabetical by first name), stand-ins last.
+  // Core players first, stand-ins last — the split is roster-based (we know our own
+  // squad), not games-based like other teams (sortedTeamSquad). Within each block,
+  // order by most games played → least (ties: more runs, then name).
   return [...players].sort((a, b) => {
     const aStandin = jerseyNumber(a.name) == null;
     const bStandin = jerseyNumber(b.name) == null;
     if (aStandin !== bStandin) return aStandin ? 1 : -1;
+    const ag = a.matches?.length ?? 0, bg = b.matches?.length ?? 0;
+    if (ag !== bg) return bg - ag;
+    const ar = a.totals?.runs ?? 0, br = b.totals?.runs ?? 0;
+    if (ar !== br) return br - ar;
     return playerKey(a.name).localeCompare(playerKey(b.name));
   });
 }
