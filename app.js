@@ -818,11 +818,10 @@ function teamRecordHtml(data) {
       </button>`;
   };
   const pos = data.standings_row?.position;
-  const teamCount = state.standings?.teams?.length;
   const ladder = `
       <a class="record__cell record__cell--link" href="#standings" aria-label="View the leaderboard">
         <div class="record__num">${ordinal(pos)}</div>
-        <div class="record__label">Ladder${teamCount ? ` of ${teamCount}` : ""} ›</div>
+        <div class="record__label">Ladder ›</div>
       </a>`;
   return `<div class="record">${cell("played", rec.played, "Played")}${cell("won", rec.won, "Won")}${cell("lost", rec.lost, "Lost")}${ladder}</div>`;
 }
@@ -1665,7 +1664,7 @@ function recordHtml(record) {
   const ladderCell = `
       <a class="record__cell record__cell--link" href="#standings" aria-label="View the Division 8 leaderboard">
         <div class="record__num">${ordinal(pos)}</div>
-        <div class="record__label">Ladder${teamCount ? ` of ${teamCount}` : ""} ›</div>
+        <div class="record__label">Ladder ›</div>
       </a>`;
   return `
     <div class="record">
