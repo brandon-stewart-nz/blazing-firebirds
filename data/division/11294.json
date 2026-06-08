@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-06-08T05:53:14.572605+00:00",
-  "generated_at_nz": "2026-06-08T17:53:10.230002+12:00",
+  "generated_at_utc": "2026-06-08T06:00:39.105444+00:00",
+  "generated_at_nz": "2026-06-08T18:00:34.707791+12:00",
   "division_name": "Division 8",
   "team": {
     "id": 11294,
@@ -1097,13 +1097,13 @@
     {
       "name": "Max Croke",
       "totals": {
-        "innings_batted": 9,
-        "runs": 10,
-        "balls_faced": 113,
-        "dismissals": 17,
-        "overs_bowled": 18,
-        "wickets": 6,
-        "runs_conceded": 147
+        "innings_batted": 6,
+        "runs": -16,
+        "balls_faced": 76,
+        "dismissals": 13,
+        "overs_bowled": 12,
+        "wickets": 4,
+        "runs_conceded": 121
       },
       "matches": [
         {
