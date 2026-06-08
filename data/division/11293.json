@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-06-08T06:21:01.746575+00:00",
-  "generated_at_nz": "2026-06-08T18:20:57.801275+12:00",
+  "generated_at_utc": "2026-06-08T06:36:17.946913+00:00",
+  "generated_at_nz": "2026-06-08T18:36:13.617325+12:00",
   "division_name": "Division 8",
   "team": {
     "id": 11293,
@@ -27,8 +27,8 @@
     "won": 2,
     "lost": 5,
     "drawn": 0,
-    "skins_for": 434,
-    "skins_against": 413
+    "skins_for": 451,
+    "skins_against": 433
   },
   "next_game": null,
   "fixtures": [
@@ -172,8 +172,8 @@
         "name": "Team Thunderboltz - Liam",
         "display": "Team Thunderboltz"
       },
-      "home_skins": 100,
-      "away_skins": 50,
+      "home_skins": 120,
+      "away_skins": 67,
       "played": true,
       "fixture_id": 264006,
       "scoresheet_complete": true,
