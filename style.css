@@ -33,6 +33,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
@@ -40,6 +41,26 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* App-shell: lock the document so it never scrolls or rubber-bands as a whole
+   (which is what exposed the background band above the static header / below
+   the footer). The header is a fixed flex item; all content lives in
+   .scroll-pane, which is the single scroller and bounces nicely at its own
+   edges — revealing its own cream background, so nothing peeks past the
+   header/footer. Applies to the website, the installed PWA, and the native
+   app alike. */
+body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.scroll-pane {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--paper);
 }
 
 /* Disable iOS double-tap-to-zoom. Applied to every element because iOS Safari
@@ -59,8 +80,7 @@ a {
 /* --- Header ---------------------------------------------------------- */
 
 .header {
-  position: sticky;
-  top: 0;
+  flex: 0 0 auto;
   z-index: 10;
   background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
   color: var(--cream);
@@ -1518,6 +1538,10 @@ button.record__cell[data-active="true"] .record__label {
 .footer {
   text-align: center;
   padding: 10px 16px 24px;
+  /* Clear the iOS home indicator when running edge-to-edge (native app / PWA).
+     env() falls back to 0 in browsers without a safe area, so the website is
+     unaffected. */
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
   color: var(--muted);
   font-size: 13px;
 }

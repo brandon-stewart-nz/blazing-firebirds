@@ -507,7 +507,12 @@ function render(skipScroll) {
   clearTimeout(heroFlipTimer);  // re-armed by the home / upcoming view when a hero is shown
   const { path, from } = parseHash();
   const app = document.getElementById("app");
-  if (!skipScroll) window.scrollTo(0, 0);
+  if (!skipScroll) {
+    // The app-shell .scroll-pane is the single scroller; scroll it to the top
+    // on navigation (window.scrollTo is a no-op now the document is locked).
+    document.querySelector(".scroll-pane")?.scrollTo(0, 0);
+    window.scrollTo(0, 0);
+  }
   if (path.startsWith("player/")) {
     const key = decodeURIComponent(path.slice("player/".length));
     renderPlayer(app, key, from);
@@ -2577,40 +2582,20 @@ function showIOSInstallOverlay() {
     </div>
   `;
   document.body.appendChild(overlay);
-  // Freeze background scroll while the overlay is open. `overflow: hidden`
-  // on body isn't enough on iOS — Chrome iOS in particular still scrolls
-  // the page underneath. The reliable cross-iOS trick is to pin the body
-  // with position:fixed at -scrollY, then scroll back to that position on
-  // close so the user lands where they were.
-  //
-  // Using direct inline-style manipulation (not a CSS class) so the
-  // teardown is unambiguous — iOS Chrome was occasionally retaining the
-  // locked state when we removed a class while a CSS custom property
-  // (--scroll-lock-top) was still set as inline style.
-  const lockedScrollY = window.scrollY;
-  const prev = {
-    position: document.body.style.position,
-    top: document.body.style.top,
-    left: document.body.style.left,
-    right: document.body.style.right,
-    width: document.body.style.width,
-    overflow: document.body.style.overflow,
-  };
-  document.body.style.position = "fixed";
-  document.body.style.top = `-${lockedScrollY}px`;
-  document.body.style.left = "0";
-  document.body.style.right = "0";
-  document.body.style.width = "100%";
-  document.body.style.overflow = "hidden";
+  // Freeze the app-shell scroll pane while the overlay is open. It's an inner
+  // scroller (not the document body), so a plain overflow:hidden reliably
+  // freezes it on iOS — no position:fixed body-pin needed. Restore the prior
+  // overflow and scroll position on close so the user lands where they were.
+  const pane = document.querySelector(".scroll-pane");
+  const lockedScrollTop = pane ? pane.scrollTop : 0;
+  const prevOverflow = pane ? pane.style.overflow : "";
+  if (pane) pane.style.overflow = "hidden";
   const close = () => {
     overlay.remove();
-    document.body.style.position = prev.position;
-    document.body.style.top = prev.top;
-    document.body.style.left = prev.left;
-    document.body.style.right = prev.right;
-    document.body.style.width = prev.width;
-    document.body.style.overflow = prev.overflow;
-    window.scrollTo(0, lockedScrollY);
+    if (pane) {
+      pane.style.overflow = prevOverflow;
+      pane.scrollTop = lockedScrollTop;
+    }
   };
   overlay.querySelector(".install-overlay__close").addEventListener("click", close);
   overlay.querySelector(".install-overlay__backdrop").addEventListener("click", close);
