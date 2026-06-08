@@ -6,6 +6,22 @@
 const TEAM_ID = 11361;
 const TEAM_DISPLAY = "Blazing Firebirds";
 
+// Where data JSON lives. On the web (GitHub Pages) the data sits beside the
+// app, so relative paths resolve correctly and DATA_BASE stays "". Inside the
+// native app (Capacitor wrapper) the shell is bundled locally and served from
+// capacitor://localhost, so data must be fetched from the live Pages origin
+// instead. Detection is a no-op on the website (window.Capacitor is undefined).
+const IS_NATIVE_APP =
+  (typeof window !== "undefined" &&
+    window.Capacitor &&
+    typeof window.Capacitor.isNativePlatform === "function" &&
+    window.Capacitor.isNativePlatform()) ||
+  (typeof location !== "undefined" && location.protocol === "capacitor:");
+const DATA_BASE = IS_NATIVE_APP
+  ? "https://brandon-stewart-nz.github.io/blazing-firebirds/"
+  : "";
+const dataUrl = (path) => DATA_BASE + path;
+
 // Web Push config. WEBHOOK_URL is the same Apps Script endpoint that handles
 // calendar events; it routes by the `action` field in the JSON payload.
 // Set WEBHOOK_URL to the script.google.com /exec URL once deployed — until
@@ -260,10 +276,12 @@ window.addEventListener("hashchange", () => render());
 //     the chip immediately; tapping opens an overlay telling them to use
 //     Share → Add to Home Screen.
 // The chip stays hidden when the app is already running standalone (so
-// the installed PWA never sees it).
+// the installed PWA never sees it) — and inside the native app wrapper,
+// where "Add to Home Screen" is meaningless (it's already an installed app).
 const isStandalonePWA =
   window.matchMedia("(display-mode: standalone)").matches ||
-  window.navigator.standalone === true;
+  window.navigator.standalone === true ||
+  IS_NATIVE_APP;
 const isIOSDevice =
   /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 // Share-button location on iOS: Safari is the only mainstream iOS browser
@@ -392,7 +410,7 @@ async function loadData() {
 }
 
 async function fetchJson(path) {
-  const r = await fetch(path, { cache: "no-store" });
+  const r = await fetch(dataUrl(path), { cache: "no-store" });
   if (!r.ok) throw new Error(`${path}: ${r.status}`);
   return r.json();
 }
@@ -752,7 +770,7 @@ async function loadDivisionTeam(teamId) {
   const ck = `firebirds.cache.div.${teamId}`;
   let data = null;
   try {
-    const r = await fetch(`data/division/${teamId}.json`, { cache: "no-store" });
+    const r = await fetch(dataUrl(`data/division/${teamId}.json`), { cache: "no-store" });
     if (r.ok) data = await r.json();
   } catch (e) { /* offline — fall back to cache */ }
   if (!data) data = readCachedJson(ck);
