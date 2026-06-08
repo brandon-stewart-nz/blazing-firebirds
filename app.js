@@ -171,6 +171,11 @@ const state = {
   matchCache: new Map(),
   resultsVisible: 3,
   resultsFilter: "played", // "played" | "won" | "lost"
+  // Per-team-page results filter/pagination (mirrors the home ones). Reset
+  // when navigating to a different team (teamFilterFor tracks which team they apply to).
+  teamVisible: 3,
+  teamFilter: "played",
+  teamFilterFor: null,
 };
 
 // --- localStorage cache --------------------------------------------
@@ -803,8 +808,15 @@ function teamHeroHtml(next, teamId) {
 function teamRecordHtml(data) {
   const rec = data.record;
   if (!rec) return "";
-  const cell = (num, label) =>
-    `<div class="record__cell record__cell--static"><div class="record__num">${num}</div><div class="record__label">${label}</div></div>`;
+  const filter = state.teamFilter;
+  const cell = (key, num, label) => {
+    const active = filter === key ? ' data-active="true"' : "";
+    return `
+      <button type="button" class="record__cell" data-filter="${key}"${active}>
+        <div class="record__num">${num}</div>
+        <div class="record__label">${label}</div>
+      </button>`;
+  };
   const pos = data.standings_row?.position;
   const teamCount = state.standings?.teams?.length;
   const ladder = `
@@ -812,7 +824,27 @@ function teamRecordHtml(data) {
         <div class="record__num">${ordinal(pos)}</div>
         <div class="record__label">Ladder${teamCount ? ` of ${teamCount}` : ""} ›</div>
       </a>`;
-  return `<div class="record">${cell(rec.played, "Played")}${cell(rec.won, "Won")}${cell(rec.lost, "Lost")}${ladder}</div>`;
+  return `<div class="record">${cell("played", rec.played, "Played")}${cell("won", rec.won, "Won")}${cell("lost", rec.lost, "Lost")}${ladder}</div>`;
+}
+
+function teamFilteredResults(fixtures, teamId, filter) {
+  const played = (fixtures || []).filter(f => f.played && f.scoresheet_complete);
+  if (filter === "won") return played.filter(f => teamSideOf(f, teamId).skins > teamOppOf(f, teamId).skins);
+  if (filter === "lost") return played.filter(f => teamSideOf(f, teamId).skins < teamOppOf(f, teamId).skins);
+  return played;
+}
+
+function teamResultsListHtml(played, teamId, visible) {
+  if (!played.length) {
+    const msg = state.teamFilter === "won" ? "No wins yet"
+      : state.teamFilter === "lost" ? "No losses yet" : "No matches yet";
+    return `<div class="result-card"><div><div class="result-card__opp">${msg}</div></div></div>`;
+  }
+  const reversed = played.slice().reverse();   // newest first
+  const shown = reversed.slice(0, visible);
+  const hasMore = reversed.length > visible;
+  return shown.map(f => teamResultCardHtml(f, teamId)).join("") +
+    (hasMore ? `<button type="button" class="show-more-btn" data-action="show-more">Show more</button>` : "");
 }
 
 function teamResultCardHtml(f, teamId) {
@@ -874,14 +906,26 @@ async function renderTeam(app, teamId, from) {
     app.innerHTML = `${backHtml}<div class="loading">${msg}</div>`;
     return;
   }
+  // Reset the results filter/page only when arriving at a DIFFERENT team — not
+  // on an in-place re-render driven by a filter tap or "Show more".
+  if (state.teamFilterFor !== teamId) {
+    state.teamFilter = "played";
+    state.teamVisible = 3;
+    state.teamFilterFor = teamId;
+  }
+  paintTeam(app, data, teamId, from);
+}
+
+// Synchronous paint — re-run for filter taps / show-more with no reload flash.
+function paintTeam(app, data, teamId, from) {
   const next = data.next_game;
   scheduleHeroFlip(next ? parseSpawtzDate(next.date_str, next.time) : null);
-  const played = (data.fixtures || [])
-    .filter(f => f.played && f.scoresheet_complete)
-    .sort((a, b) => (b.fixture_id ?? 0) - (a.fixture_id ?? 0));
+  const filtered = teamFilteredResults(data.fixtures, teamId, state.teamFilter);
   const pos = data.standings_row?.position;
+  const backHash = from || "standings";
+  const backLabel = from ? "Back" : "Back to Leaderboard";
   app.innerHTML = `
-    ${backHtml}
+    <a class="back" href="#${escapeHtml(backHash)}">‹ ${escapeHtml(backLabel)}</a>
     <div class="detail-header detail-header--player">
       <div class="detail-header__main">
         <div class="detail-header__avatar">${escapeHtml(teamInitials(data.team.name))}</div>
@@ -895,20 +939,37 @@ async function renderTeam(app, teamId, from) {
     ${teamRecordHtml(data)}
     <section class="section">
       <h2 class="section-title">Results</h2>
-      <div class="results">${played.length ? played.map(f => teamResultCardHtml(f, teamId)).join("") : `<p class="empty-note">No results yet.</p>`}</div>
+      <div class="results">${teamResultsListHtml(filtered, teamId, state.teamVisible)}</div>
     </section>
     <section class="section">
       <h2 class="section-title">Squad</h2>
       <div class="squad">${(data.players || []).map(p => teamPlayerCardHtml(p, teamId)).join("")}</div>
     </section>
   `;
-  app.querySelectorAll(".result-card[data-fixture-id]").forEach(el => {
+  wireTeamResultClicks(app, teamId);
+  app.querySelectorAll(".record__cell[data-filter]").forEach(el => {
+    el.addEventListener("click", () => {
+      const f = el.getAttribute("data-filter");
+      if (f === state.teamFilter) return;
+      state.teamFilter = f;
+      state.teamVisible = 3;
+      paintTeam(app, data, teamId, from);
+    });
+  });
+  const moreBtn = app.querySelector('[data-action="show-more"]');
+  if (moreBtn) moreBtn.addEventListener("click", () => {
+    state.teamVisible += 3;
+    paintTeam(app, data, teamId, from);
+  });
+}
+
+function wireTeamResultClicks(scope, teamId) {
+  scope.querySelectorAll(".result-card[data-fixture-id]").forEach(el => {
     const fid = el.getAttribute("data-fixture-id");
     if (!fid) return;
     el.addEventListener("click", () => { window.location.hash = makeHash(`match/${fid}`, `team/${teamId}`); });
   });
 }
-
 // --- Team player page -------------------------------------------------
 
 async function renderTeamPlayer(app, teamId, key, from) {
@@ -1110,8 +1171,15 @@ async function renderNeutralMatch(app, fid, from) {
   // without one we fall back to scoresheet order + display names.
   let home, away, homeInn, awayInn, homeSum, awaySum;
   if (fixture) {
-    home = { id: fixture.home.id, name: fixture.home.display, skins: fixture.home_skins };
-    away = { id: fixture.away.id, name: fixture.away.display, skins: fixture.away_skins };
+    // Lead with the team whose page we came from — their name goes first in the
+    // title, not whoever Spawtz happened to list as the home side.
+    let h = fixture.home, a = fixture.away, hs = fixture.home_skins, as = fixture.away_skins;
+    if (hintId != null && a.id === hintId) {
+      [h, a] = [a, h];
+      [hs, as] = [as, hs];
+    }
+    home = { id: h.id, name: h.display, skins: hs };
+    away = { id: a.id, name: a.display, skins: as };
     let idx = summaries.findIndex(s => s.total === home.skins);
     if (idx < 0) idx = 0;
     homeSum = summaries[idx] || null;
