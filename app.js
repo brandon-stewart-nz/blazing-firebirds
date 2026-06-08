@@ -873,6 +873,20 @@ function teamResultCardHtml(f, teamId) {
     </div>`;
 }
 
+// Other-team squad order mirrors ours (regulars first, fill-ins last) — but the
+// core/fill-in split is games played: 2+ games sort first, one-or-none sink to
+// the bottom (same threshold as the gold/grey avatar). Display-only; our own
+// home squad keeps its roster-based sortedSquad().
+function sortedTeamSquad(players) {
+  return [...players].sort((a, b) => {
+    const ag = a.matches.length, bg = b.matches.length;
+    if (ag !== bg) return bg - ag;
+    const ar = a.totals?.runs ?? 0, br = b.totals?.runs ?? 0;
+    if (ar !== br) return br - ar;
+    return plainName(a.name).localeCompare(plainName(b.name));
+  });
+}
+
 function teamPlayerCardHtml(p, teamId) {
   const t = p.totals;
   const shown = plainName(p.name);
@@ -943,7 +957,7 @@ function paintTeam(app, data, teamId, from) {
     </section>
     <section class="section">
       <h2 class="section-title">Squad</h2>
-      <div class="squad">${(data.players || []).map(p => teamPlayerCardHtml(p, teamId)).join("")}</div>
+      <div class="squad">${sortedTeamSquad(data.players || []).map(p => teamPlayerCardHtml(p, teamId)).join("")}</div>
     </section>
   `;
   wireTeamResultClicks(app, teamId);
