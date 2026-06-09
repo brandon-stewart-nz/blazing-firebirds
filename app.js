@@ -373,19 +373,32 @@ async function init() {
   // by recordActivation so opening the same tab repeatedly doesn't spam
   // the log.
   recordActivation();
+
+  // Pull-to-refresh gesture (installed PWA only) + the live-score poll. The
+  // poll self-gates: it does zero network outside the game window / offline /
+  // when the tab is hidden, so it's safe to run unconditionally.
+  initPullToRefresh();
+  setInterval(pollLiveScore, LIVE_POLL_MS);
 }
 
-async function refresh() {
+async function refresh(skipScroll) {
   if (Date.now() - lastFetchAt < 30_000) return;
   try {
-    await loadData();
+    await loadData(skipScroll);
   } catch (err) {
     // Keep the current view on a transient failure; just log.
     console.error("Refresh failed:", err);
   }
 }
 
-async function loadData() {
+// Refresh now, ignoring the 30s throttle — for the pull-to-refresh gesture and
+// the live-score poll, where the whole point is "give me the latest right now".
+function forceRefresh(skipScroll) {
+  lastFetchAt = 0;
+  return refresh(skipScroll);
+}
+
+async function loadData(skipScroll) {
   const [team, fixtures, players, schedule, standings] = await Promise.all([
     fetchJson("data/team.json"),
     fetchJson("data/fixtures.json"),
@@ -406,7 +419,7 @@ async function loadData() {
   if (standings) writeCachedJson(CACHE_KEYS.standings, standings);
   lastFetchAt = Date.now();
   updateMetaStrip();
-  render();
+  render(skipScroll);
 }
 
 async function fetchJson(path) {
@@ -501,6 +514,126 @@ function scheduleHeroFlip(dt) {
   const delay = boundary - now;
   if (delay > 24 * 60 * 60 * 1000) return;  // too far off to hold a timer
   heroFlipTimer = setTimeout(() => render(true), delay + 400);  // re-render in place at the boundary
+}
+
+// --- Live score polling ------------------------------------------------
+// The static data files are the dashboard's only score source, and nothing
+// re-fetches them while a parent simply watches the game (the hero-flip timer
+// only re-renders already-loaded data at phase boundaries). So during the game
+// window we poll a tiny data/live.json (well under 1 KB) every LIVE_POLL_MS
+// while the tab is visible and online; when its `rev` changes — a new scrape
+// landed with changed scores — we re-fetch the full data and repaint in place.
+// Outside the window, or offline/hidden, the poll does no network at all.
+const LIVE_POLL_MS = 25_000;
+let lastLiveRev = null;
+
+// The hero game's start datetime IF we're currently inside the live-polling
+// window: kickoff → +90 min (the one-hour game plus Spawtz's scoresheet lag).
+function liveWindowGameDt() {
+  const g = currentHeroGame();
+  if (!g) return null;
+  const dt = parseSpawtzDate(g.date_str, g.time);
+  if (!dt) return null;
+  const now = Date.now();
+  const start = dt.getTime();
+  const until = start + gameDurationMs() + 30 * 60 * 1000;
+  return (now >= start && now < until) ? dt : null;
+}
+
+async function pollLiveScore() {
+  if (!navigator.onLine || document.visibilityState !== "visible") return;
+  if (!liveWindowGameDt()) return;            // only fetch during the live window
+  let live;
+  try {
+    live = await fetchJson("data/live.json");
+  } catch {
+    return;                                    // not published yet / transient blip
+  }
+  const rev = live && live.rev;
+  if (!rev) return;
+  if (rev !== lastLiveRev) {
+    lastLiveRev = rev;
+    // Bust the in-memory scoresheet cache for the live game so the open match /
+    // upcoming view re-fetches the updated card, then reload + repaint in place.
+    if (live.fixture_id != null) state.matchCache.delete(live.fixture_id);
+    forceRefresh(true);
+  }
+}
+
+// --- Pull-to-refresh (installed PWA only) ------------------------------
+// A standalone PWA has no native pull-to-refresh, so add our own: pull down
+// from the top to fetch the latest scores. In a normal browser tab the
+// browser's own pull-to-refresh (a full reload) already does this, so we only
+// wire ours up when running standalone — no double gesture.
+function isStandaloneDisplay() {
+  return window.matchMedia("(display-mode: standalone)").matches
+    || window.navigator.standalone === true
+    || IS_NATIVE_APP;
+}
+
+function initPullToRefresh() {
+  const pane = document.querySelector(".scroll-pane");
+  if (!pane || !isStandaloneDisplay() || pane.dataset.ptrWired) return;
+  pane.dataset.ptrWired = "1";
+
+  const THRESHOLD = 64;     // px of (damped) pull past which a release refreshes
+  const MAX = 96;           // px the damped pull is capped at
+  const HIDDEN = -52;       // indicator's resting offset, tucked above the header
+
+  const indicator = document.createElement("div");
+  indicator.className = "ptr-indicator";
+  const spinner = document.createElement("div");
+  spinner.className = "ptr-spinner";
+  spinner.setAttribute("aria-hidden", "true");
+  indicator.appendChild(spinner);
+  document.body.appendChild(indicator);
+
+  let startY = 0, pulling = false, damped = 0, refreshing = false;
+
+  function setPull(px, animate) {
+    indicator.style.transition = animate
+      ? "transform .2s ease, opacity .2s ease" : "none";
+    indicator.style.transform = `translate(-50%, ${px}px)`;
+    indicator.style.opacity = px > HIDDEN + 8 ? "1" : "0";
+  }
+  setPull(HIDDEN, false);
+
+  pane.addEventListener("touchstart", (e) => {
+    if (refreshing || pane.scrollTop > 0 || e.touches.length !== 1) {
+      pulling = false;
+      return;
+    }
+    startY = e.touches[0].clientY;
+    pulling = true;
+    damped = 0;
+  }, { passive: true });
+
+  pane.addEventListener("touchmove", (e) => {
+    if (!pulling) return;
+    const dy = e.touches[0].clientY - startY;
+    if (dy <= 0 || pane.scrollTop > 0) { pulling = false; setPull(HIDDEN, true); return; }
+    e.preventDefault();                        // take over the gesture from the top
+    damped = Math.min(dy * 0.5, MAX);          // rubber-band resistance
+    setPull(HIDDEN + damped, false);
+    indicator.classList.toggle("ptr-indicator--ready", damped >= THRESHOLD);
+  }, { passive: false });
+
+  async function release() {
+    if (!pulling) return;
+    pulling = false;
+    if (damped >= THRESHOLD) {
+      refreshing = true;
+      indicator.classList.add("ptr-indicator--refreshing");
+      indicator.classList.remove("ptr-indicator--ready");
+      setPull(HIDDEN + 60, true);
+      try { await forceRefresh(); } catch {}
+      refreshing = false;
+      indicator.classList.remove("ptr-indicator--refreshing");
+    }
+    setPull(HIDDEN, true);
+  }
+  pane.addEventListener("touchend", release, { passive: true });
+  pane.addEventListener("touchcancel", release, { passive: true });
 }
 
 function render(skipScroll) {
