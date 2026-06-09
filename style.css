@@ -53,6 +53,16 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  /* Fill the *visible* viewport. height:100% / 100vh resolve to the LARGE
+     mobile-Safari viewport (as if the toolbars were collapsed), but a locked
+     app-shell never scrolls the document, so Safari keeps its bottom toolbar
+     shown — which strands the bottom of the scroll-pane (the last squad cards +
+     footer) behind that toolbar. 100dvh is the dynamic viewport with the visible
+     toolbars subtracted, so the pane ends exactly at the toolbar's top edge.
+     Falls back to the height:100% set above where dvh is unsupported; in the
+     installed PWA / native webview there are no toolbars, so 100dvh == full
+     screen (no change there). */
+  height: 100dvh;
   overflow: hidden;
 }
 
