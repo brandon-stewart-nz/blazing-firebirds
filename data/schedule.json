@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-09T10:00:34.473380+00:00",
+  "generated_at_utc": "2026-06-09T11:02:16.593436+00:00",
   "games": {
     "2026-04-25": {
       "partnerships": [
@@ -243,19 +243,19 @@
         ],
         [
           "Ria",
-          "Will"
+          "Liam"
         ],
         [
           "Vernon",
-          "Liam"
+          "Will"
         ]
       ],
       "bowling_order": [
-        "Jacob",
-        "Liam",
         "Will",
-        "Vernon",
         "Ria",
+        "Jacob",
+        "Vernon",
+        "Liam",
         "Owen"
       ],
       "unavailable": [
