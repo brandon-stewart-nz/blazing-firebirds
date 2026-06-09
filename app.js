@@ -662,10 +662,16 @@ function setBrand(name, hash) {
   }
 }
 
-// Resolve the name + home target the header should show for the current route:
-// a division team's own name + team home on its pages (team landing / player /
-// upcoming), otherwise us + our home.
+// Resolve the name + home target the header should show for the current route.
+// The banner carries the page's own title, the same way the team pages moved
+// their name into it: "Leaderboard / Division 8" on the ladder (its in-page
+// title is dropped), a division team's own name + team home on its pages
+// (team landing / player / upcoming), otherwise us + our home.
 function brandTarget(path) {
+  if (path === "standings") {
+    const div = state.standings?.division_name || "Division";
+    return { name: `Leaderboard ${div}`, hash: "#standings" };
+  }
   if (path.startsWith("team/")) {
     const tid = parseInt(path.split("/")[1], 10);
     if (tid !== TEAM_ID && isDivisionTeam(tid)) {
@@ -812,7 +818,6 @@ function renderStandings(app, from) {
   const back = backTargetFor(from, "", "Back to Home");
   const standings = state.standings;
   const teams = standings?.teams || [];
-  const divName = standings?.division_name || "Division";
 
   if (!teams.length) {
     const msg = navigator.onLine
@@ -826,7 +831,9 @@ function renderStandings(app, from) {
 
   const rows = teams.map(t => {
     const diff = t.difference > 0 ? `+${t.difference}` : `${t.difference}`;
-    const target = t.is_us ? "" : `team/${t.team_id}`;
+    // Every row is clickable — including ours: navigating to our own team id
+    // is redirected to home by renderTeam, so our row opens our dashboard.
+    const target = `team/${t.team_id}`;
     return `
       <tr class="ladder-row${t.is_us ? " ladder-row--us" : ""}" data-target-hash="${escapeHtml(target)}">
         <td class="num ladder-pos">${t.position}</td>
@@ -844,14 +851,6 @@ function renderStandings(app, from) {
 
   app.innerHTML = `
     <a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>
-    <div class="detail-header detail-header--player">
-      <div class="detail-header__main">
-        <div>
-          <div class="detail-header__name">Leaderboard</div>
-          <div class="detail-header__sub">${escapeHtml(divName)}</div>
-        </div>
-      </div>
-    </div>
 
     <div class="table-card">
       <table class="table table--ladder">
