@@ -636,9 +636,39 @@ function initPullToRefresh() {
   pane.addEventListener("touchcancel", release, { passive: true });
 }
 
+// The site-wide header doubles as the team banner: it shows "Blazing Firebirds"
+// on our own views and swaps to the team's own name on another team's pages —
+// same display font, and a two-word name stacks (first word as the small gold
+// eyebrow, the rest as the large cream line) exactly like our brand. A one-word
+// name (e.g. "BYC") just shows the single large line. Because the header now
+// carries the team's identity, the team pages drop their own in-page name header.
+function setBrand(name) {
+  const host = document.getElementById("brand-text");
+  if (!host) return;
+  const words = String(name || "").trim().split(/\s+/).filter(Boolean);
+  const top = words.length >= 2 ? words[0] : "";
+  const bottom = words.length >= 2 ? words.slice(1).join(" ") : (words[0] || "");
+  host.innerHTML =
+    (top ? `<span class="brand-text__top">${escapeHtml(top)}</span>` : "") +
+    `<span class="brand-text__bottom">${escapeHtml(bottom)}</span>`;
+  const brand = document.querySelector(".brand");
+  if (brand) brand.setAttribute("aria-label", `${name} — Blazing Firebirds home`);
+}
+
+// Resolve which name the header should show for the current route: a division
+// team's own name on its pages (team landing / player / upcoming), otherwise us.
+function brandForPath(path) {
+  if (path.startsWith("team/")) {
+    const tid = parseInt(path.split("/")[1], 10);
+    if (tid !== TEAM_ID && isDivisionTeam(tid)) return divTeamName(tid);
+  }
+  return "Blazing Firebirds";
+}
+
 function render(skipScroll) {
   clearTimeout(heroFlipTimer);  // re-armed by the home / upcoming view when a hero is shown
   const { path, from } = parseHash();
+  setBrand(brandForPath(path));
   const app = document.getElementById("app");
   if (!skipScroll) {
     // The app-shell .scroll-pane is the single scroller; scroll it to the top
@@ -1097,15 +1127,6 @@ function paintTeam(app, data, teamId, from) {
   const backLabel = from ? "Back" : "Back to Leaderboard";
   app.innerHTML = `
     <a class="back" href="#${escapeHtml(backHash)}">‹ ${escapeHtml(backLabel)}</a>
-    <div class="detail-header detail-header--player">
-      <div class="detail-header__main">
-        <div class="detail-header__avatar">${escapeHtml(teamInitials(data.team.name))}</div>
-        <div>
-          <div class="detail-header__name">${escapeHtml(data.team.name)}</div>
-          <div class="detail-header__sub">${escapeHtml(data.division_name || "Division")}</div>
-        </div>
-      </div>
-    </div>
     ${teamHeroHtml(next, teamId)}
     ${teamRecordHtml(data)}
     <section class="section">
