@@ -115,18 +115,30 @@ a {
   z-index: 10;
   background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
   color: var(--cream);
-  padding: 20px 28px;
+  padding: 20px 0;
   /* Extend the teal background up under the iOS status bar / notch when
      installed as a PWA. env() falls back to 0 on browsers that don't
-     report a safe area. */
+     report a safe area. The horizontal content gutter lives on .header__inner
+     so the brand + meta align with the centred .app column; only the notch
+     safe-area inset sits on the bar itself. */
   padding-top: calc(20px + env(safe-area-inset-top));
-  padding-left: calc(28px + env(safe-area-inset-left));
-  padding-right: calc(28px + env(safe-area-inset-right));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  border-bottom: 3px solid var(--gold);
+}
+
+/* Constrain the header's content to the same centred column as .app (max-width
+   980px + matching 18px gutter) so the brand and meta strip line up vertically
+   with the page content instead of stretching to the browser edges. The teal
+   bar itself still spans full width. */
+.header__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 3px solid var(--gold);
 }
 
 .brand {
@@ -1411,6 +1423,7 @@ button.record__cell[data-active="true"] .record__label {
 
 @media (max-width: 600px) {
   .app { padding: 16px 14px 20px; }
+  .header__inner { padding: 0 14px; }
   .hero { padding: 22px 18px; border-radius: 5px; }
   .hero__date { font-size: 24px; }
   .hero__opp { font-size: 22px; }
