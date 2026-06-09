@@ -642,7 +642,11 @@ function initPullToRefresh() {
 // eyebrow, the rest as the large cream line) exactly like our brand. A one-word
 // name (e.g. "BYC") just shows the single large line. Because the header now
 // carries the team's identity, the team pages drop their own in-page name header.
-function setBrand(name) {
+// The banner is also the "home" link for whoever it's showing: on our views it
+// goes to our home, and on another team's pages it goes to THAT team's home —
+// hopping between teams is done via the ladder, so the banner never reaches back
+// past the current team's home page.
+function setBrand(name, hash) {
   const host = document.getElementById("brand-text");
   if (!host) return;
   const words = String(name || "").trim().split(/\s+/).filter(Boolean);
@@ -652,23 +656,30 @@ function setBrand(name) {
     (top ? `<span class="brand-text__top">${escapeHtml(top)}</span>` : "") +
     `<span class="brand-text__bottom">${escapeHtml(bottom)}</span>`;
   const brand = document.querySelector(".brand");
-  if (brand) brand.setAttribute("aria-label", `${name} — Blazing Firebirds home`);
+  if (brand) {
+    brand.setAttribute("aria-label", `${name} — home`);
+    brand.setAttribute("href", hash || "#");
+  }
 }
 
-// Resolve which name the header should show for the current route: a division
-// team's own name on its pages (team landing / player / upcoming), otherwise us.
-function brandForPath(path) {
+// Resolve the name + home target the header should show for the current route:
+// a division team's own name + team home on its pages (team landing / player /
+// upcoming), otherwise us + our home.
+function brandTarget(path) {
   if (path.startsWith("team/")) {
     const tid = parseInt(path.split("/")[1], 10);
-    if (tid !== TEAM_ID && isDivisionTeam(tid)) return divTeamName(tid);
+    if (tid !== TEAM_ID && isDivisionTeam(tid)) {
+      return { name: divTeamName(tid), hash: `#team/${tid}` };
+    }
   }
-  return "Blazing Firebirds";
+  return { name: "Blazing Firebirds", hash: "#" };
 }
 
 function render(skipScroll) {
   clearTimeout(heroFlipTimer);  // re-armed by the home / upcoming view when a hero is shown
   const { path, from } = parseHash();
-  setBrand(brandForPath(path));
+  const bt = brandTarget(path);
+  setBrand(bt.name, bt.hash);
   const app = document.getElementById("app");
   if (!skipScroll) {
     // The app-shell .scroll-pane is the single scroller; scroll it to the top
