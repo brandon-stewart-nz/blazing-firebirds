@@ -1472,11 +1472,25 @@ async function renderNeutralMatch(app, fid, from) {
     : (fixture?.date_str || detail.date_str || "");
 
   // A "Team not in division" note above whichever side(s) aren't current
-  // division teams. Only when ids came from a real fixture — in the no-fixture
-  // deeplink fallback ids are resolved from scoresheet names (often captain
-  // nicknames) and would mis-flag a genuine side.
-  const homeNote = fixture && !isDivisionTeam(home.id) ? `<p class="match-note">Team not in division</p>` : "";
-  const awayNote = fixture && !isDivisionTeam(away.id) ? `<p class="match-note">Team not in division</p>` : "";
+  // division teams, plus the greyed "inactive" treatment for that side's tables.
+  // Only when ids came from a real fixture — in the no-fixture deeplink fallback
+  // ids are resolved from scoresheet names (often captain nicknames) and would
+  // mis-flag a genuine side. Each team's two tables are grouped into one block
+  // so the out-of-division side can be greyed (and labelled) as a unit.
+  const homeInactive = fixture && !isDivisionTeam(home.id);
+  const awayInactive = fixture && !isDivisionTeam(away.id);
+  const homeNote = homeInactive ? `<p class="match-note">Team not in division</p>` : "";
+  const awayNote = awayInactive ? `<p class="match-note">Team not in division</p>` : "";
+  const homeBlock = `
+      ${homeNote}
+      ${homeInn ? `<h3 class="subhead">${escapeHtml(home.name)} batting</h3>${battingTableHtml(homeInn.batters, { opponent: true, linkHref: homeHref })}` : ""}
+      ${awayInn ? `<h3 class="subhead">${escapeHtml(home.name)} bowling</h3>${bowlingTableHtml(awayInn.bowlers, { opponent: true, linkHref: homeHref })}` : ""}
+  `;
+  const awayBlock = `
+      ${awayNote}
+      ${awayInn ? `<h3 class="subhead">${escapeHtml(away.name)} batting</h3>${battingTableHtml(awayInn.batters, { opponent: true, linkHref: awayHref })}` : ""}
+      ${homeInn ? `<h3 class="subhead">${escapeHtml(away.name)} bowling</h3>${bowlingTableHtml(homeInn.bowlers, { opponent: true, linkHref: awayHref })}` : ""}
+  `;
 
   app.innerHTML = `
     ${backHtml}
@@ -1507,10 +1521,8 @@ async function renderNeutralMatch(app, fid, from) {
       </div>
     </div>
 
-    ${homeInn ? `${homeNote}<h3 class="subhead">${escapeHtml(home.name)} batting</h3>${battingTableHtml(homeInn.batters, { opponent: true, linkHref: homeHref })}` : ""}
-    ${awayInn ? `<h3 class="subhead">${escapeHtml(home.name)} bowling</h3>${bowlingTableHtml(awayInn.bowlers, { opponent: true, linkHref: homeHref })}` : ""}
-    ${awayInn ? `${awayNote}<h3 class="subhead">${escapeHtml(away.name)} batting</h3>${battingTableHtml(awayInn.batters, { opponent: true, linkHref: awayHref })}` : ""}
-    ${homeInn ? `<h3 class="subhead">${escapeHtml(away.name)} bowling</h3>${bowlingTableHtml(homeInn.bowlers, { opponent: true, linkHref: awayHref })}` : ""}
+    ${homeInactive ? `<div class="match-inactive">${homeBlock}</div>` : homeBlock}
+    ${awayInactive ? `<div class="match-inactive">${awayBlock}</div>` : awayBlock}
   `;
   wireRowNavigation(app);
 }
@@ -2304,11 +2316,17 @@ async function renderMatch(app, fid, from) {
   // division team; a single "Team not in division" note sits above their two
   // tables when they're not.
   const oppNote = oppOutOfDiv ? `<p class="match-note">Team not in division</p>` : "";
-  const oppTables = (oppInnings || fbInnings) ? `
+  const oppInner = `
       ${oppNote}
       ${oppInnings ? `<h3 class="subhead">${escapeHtml(oppName)} batting</h3>${battingTableHtml(oppInnings.batters, { opponent: true, linkHref: oppHref })}` : ""}
       ${fbInnings ? `<h3 class="subhead">${escapeHtml(oppName)} bowling</h3>${bowlingTableHtml(fbInnings.bowlers, { opponent: true, linkHref: oppHref })}` : ""}
-    ` : "";
+  `;
+  // Out-of-division opponents render in the greyed "inactive" treatment; an
+  // in-division opponent's tables stay in the normal palette (and stay
+  // clickable). Only wrap when inactive so in-division layout is untouched.
+  const oppTables = (oppInnings || fbInnings)
+    ? (oppOutOfDiv ? `<div class="match-inactive">${oppInner}</div>` : oppInner)
+    : "";
 
   app.innerHTML = `
     ${backHtml}

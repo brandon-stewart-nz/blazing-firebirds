@@ -1710,14 +1710,29 @@ a.record__cell--link .record__num { color: var(--gold-deep); }
   padding: 8px 2px;
 }
 
-/* Subtle one-line qualifier above an out-of-division team's stat tables on a
-   scorecard. Tucks right above the team's first subhead. */
+/* One-line qualifier above an out-of-division team's stat tables on a
+   scorecard. Heads the greyed-out (inactive) block below it. */
 .match-note {
-  color: var(--muted);
-  font-size: 13px;
-  margin: 22px 0 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 34px 0 0;
 }
-.match-note + .subhead { margin-top: 4px; }
+.match-note + .subhead { margin-top: 8px; }
+
+/* An out-of-division team's batting/bowling tables (and their titles) render
+   "inactive": every gold/teal/cream accent drops to a neutral grey so it's
+   clear the team isn't in the division and its rows aren't tappable — while
+   each stat stays fully legible. Visual hierarchy is preserved purely through
+   shades of grey (band darker than header, header darker than card). */
+.match-inactive .subhead { color: var(--muted); }
+.match-inactive .table-card { background: #f1f1ef; border-color: #dcdcd8; }
+.match-inactive .table th { background: #e7e7e4; color: var(--muted); }
+.match-inactive .table td { color: var(--ink-soft); border-top-color: #e4e4e1; }
+.match-inactive .table--partnerships .partnership-header td { background: #dadad6; color: var(--ink-soft); }
+.match-inactive .partnership-tag,
+.match-inactive .partnership-runs__num { color: var(--ink-soft); }
+.match-inactive .partnership-runs__label { color: var(--muted); }
 
 /* --- Pull-to-refresh indicator (installed PWA only) ---
    Position + opacity are driven inline by app.js (initPullToRefresh); these
