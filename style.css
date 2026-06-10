@@ -776,11 +776,37 @@ button.record__cell[data-active="true"] .record__label {
 .result-card--upcoming { border-left-color: var(--gold); background: #FFF8E7; }
 
 .result-card__date {
+  display: flex;
+  /* wrap-reverse: badges stay inline with the date when there's room, but on a
+     narrow card they wrap ABOVE the date (their own line on top) rather than
+     below it. */
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  gap: 6px 8px;
   font-size: 11px;
   color: var(--ink-soft);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 600;
+}
+.result-card__badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.result-card__badges .badge { margin-left: 0; }
+
+/* On phones the long date + badges don't fit on one line, and which cards wrap
+   is inconsistent right at the boundary — so force the pills onto their own
+   line ABOVE the date, uniformly, for every result card. */
+@media (max-width: 480px) {
+  .result-card__date {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .result-card__badges { order: -1; }
 }
 .result-card__opp {
   font-family: var(--font-display);

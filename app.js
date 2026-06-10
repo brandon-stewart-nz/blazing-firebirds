@@ -1047,7 +1047,7 @@ function teamResultCardHtml(f, teamId) {
   return `
     <div class="result-card ${cls}" data-fixture-id="${f.fixture_id ?? ""}">
       <div>
-        <div class="result-card__date">${escapeHtml(f.date_str ?? "")}${badge}${outOfDiv ? `<span class="badge badge--neutral">Not in Div</span>` : ""}</div>
+        <div class="result-card__date"><span class="result-card__day">${escapeHtml(f.date_str ?? "")}</span><span class="result-card__badges">${badge}${outOfDiv ? `<span class="badge badge--neutral">Not in Div</span>` : ""}</span></div>
         <div class="result-card__opp">${escapeHtml(opp.side.display)}</div>
         <div class="result-card__meta">${escapeHtml(formatTime12(f.time))} · ${escapeHtml(f.court)}${f.is_grading ? " · Grading" : ""}</div>
       </div>
@@ -1890,7 +1890,7 @@ function resultCardHtml(f) {
   return `
     <div class="result-card ${cls}" data-fixture-id="${f.fixture_id ?? ""}">
       <div>
-        <div class="result-card__date">${escapeHtml(f.date_str ?? "")}${badge}${outOfDiv ? `<span class="badge badge--neutral">Not in Div</span>` : ""}</div>
+        <div class="result-card__date"><span class="result-card__day">${escapeHtml(f.date_str ?? "")}</span><span class="result-card__badges">${badge}${outOfDiv ? `<span class="badge badge--neutral">Not in Div</span>` : ""}</span></div>
         <div class="result-card__opp">${escapeHtml(opponent)}</div>
         <div class="result-card__meta">${escapeHtml(formatTime12(f.time))} · ${escapeHtml(f.court)}${f.is_grading ? " · Grading" : ""}</div>
       </div>
