@@ -1652,7 +1652,7 @@ button.record__cell[data-active="true"] .record__label {
   .footer-short { display: inline; }
 }
 .footer p { margin: 0; }
-.footer p + p { margin-top: 4px; }
+.footer p + p { margin-top: 10px; margin-bottom: 10px; }
 
 /* "Updated X ago" — moved here from the header. First line of the footer,
    centred, a touch more prominent than the fine print, with room around it so
