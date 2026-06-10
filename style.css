@@ -174,24 +174,9 @@ a {
   text-transform: uppercase;
 }
 
-/* Right-side cluster: "updated X ago" + the share button. */
-.header__meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 0 0 auto;
-}
-
-.meta {
-  font-size: 12px;
-  color: rgba(245, 239, 224, 0.7);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
 /* Site-wide share button — shares whatever page you're currently on. A labelled
-   pill (icon + "SHARE") with a gold outline so it reads unmistakably as a button
-   to tap; white icon + text against the teal header. */
+   pill (icon + "SHARE") with a solid gold fill + dark teal text/icon so it reads
+   unmistakably as a button to tap, standing out against the teal header. */
 .share-btn {
   display: inline-flex;
   align-items: center;
@@ -199,24 +184,24 @@ a {
   gap: 6px;
   height: 36px;
   flex: 0 0 auto;
-  padding: 0 14px 0 11px;
+  padding: 0 15px 0 12px;
   border-radius: 999px;
-  background: rgba(245, 239, 224, 0.14);
-  border: 1.5px solid var(--gold);
-  color: var(--cream);
+  background: var(--gold);
+  border: none;
+  color: var(--teal-deep);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   cursor: pointer;
-  box-shadow: 0 1px 5px rgba(14, 53, 61, 0.25);
+  box-shadow: 0 2px 6px rgba(14, 53, 61, 0.28);
   transition: background 0.15s ease, transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
 }
-.share-btn:hover { background: rgba(245, 239, 224, 0.26); }
+.share-btn:hover { background: var(--gold-bright); }
 .share-btn:active { transform: scale(0.96); }
-.share-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.share-btn:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
 .share-btn__icon { width: 19px; height: 19px; flex: 0 0 auto; }
 .share-btn__label { line-height: 1; }
 
@@ -243,21 +228,23 @@ a {
   transform: translate(-50%, 0);
 }
 
+/* Offline pill shown inside the footer "updated" line — muted on the light
+   footer background (not the cream-on-teal of the old header position). */
 .meta-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 9px 3px 8px;
+  padding: 3px 10px 3px 9px;
   border-radius: 999px;
-  background: rgba(245, 239, 224, 0.12);
-  border: 1px solid rgba(245, 239, 224, 0.22);
-  color: rgba(245, 239, 224, 0.92);
-  font-size: 11px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1;
 }
-.meta-pill__icon { width: 11px; height: 11px; }
+.meta-pill__icon { width: 12px; height: 12px; }
 
 /* --- Main / app shell ----------------------------------------------- */
 
@@ -1664,7 +1651,19 @@ button.record__cell[data-active="true"] .record__label {
   .footer-long { display: none; }
   .footer-short { display: inline; }
 }
-.footer p:first-child { margin-bottom: 0; }
+.footer p { margin: 0; }
+.footer p + p { margin-top: 4px; }
+
+/* "Updated X ago" — moved here from the header. First line of the footer,
+   centred, a touch more prominent than the fine print, with room around it so
+   the data-freshness is clearly its own statement. */
+.footer-updated {
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 6px 0 18px;
+}
 .footer-fineprint {
   margin-top: 4px;
   color: var(--muted);
