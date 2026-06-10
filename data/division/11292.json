@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-06-10T09:00:46.280215+00:00",
-  "generated_at_nz": "2026-06-10T21:00:41.862892+12:00",
+  "generated_at_utc": "2026-06-10T09:03:31.977922+00:00",
+  "generated_at_nz": "2026-06-10T21:03:27.568813+12:00",
   "division_name": "Division 8",
   "team": {
     "id": 11292,
@@ -91,7 +91,7 @@
       "away_skins": 109,
       "played": true,
       "fixture_id": 263266,
-      "scoresheet_complete": false,
+      "scoresheet_complete": true,
       "is_grading": true
     },
     {
