@@ -1718,7 +1718,7 @@ a.record__cell--link .record__num { color: var(--gold-deep); }
   display: flex;
   align-items: center;
   gap: 16px;
-  margin: 32px 0 16px;
+  margin: 40px 0 20px;
   color: var(--muted);
   font-family: var(--font-display);
   font-size: 11px;
