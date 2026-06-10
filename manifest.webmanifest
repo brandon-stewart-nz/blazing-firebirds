@@ -1,6 +1,6 @@
 {
   "name": "Blazing Firebirds",
-  "short_name": "Firebirds",
+  "short_name": "Beamer",
   "description": "Auto-updating dashboard for Vernon's indoor cricket team",
   "start_url": "./",
   "scope": "./",
