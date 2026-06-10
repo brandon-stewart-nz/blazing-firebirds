@@ -7,6 +7,20 @@
   <meta name="theme-color" content="#1A4D58">
   <title>Beamer</title>
 
+  <!-- Google Analytics (GA4). Async; the inline stub queues gtag() calls in
+       dataLayer, so calls made before the script arrives (or when an
+       ad-blocker eats it) are safe no-ops. send_page_view is OFF — the hash
+       router in app.js sends a virtual page_view per route instead, so GA
+       sees clean per-screen paths (/standings, /player/vernon, /match/12345)
+       rather than one undifferentiated index.html entry. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W41MB519P8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W41MB519P8', { send_page_view: false });
+  </script>
+
   <!-- Link-preview card. Read by iMessage / WhatsApp / Slack / etc., which
        fetch the base URL only: they ignore the #hash and don't run our JS, so
        this is ONE static card shared by every link. The page-specific title

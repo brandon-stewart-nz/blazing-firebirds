@@ -224,6 +224,66 @@ function writeCachedJson(key, value) {
   } catch {}
 }
 
+// --- Analytics (GA4) --------------------------------------------------
+// gtag.js loads from index.html with automatic page_view disabled; render()
+// sends a virtual page_view per hash route instead, so GA sees one clean
+// screen path per view. trackEvent is safe to call anywhere: gtag is stubbed
+// in index.html (calls queue in dataLayer even before/without the script),
+// and anything thrown by an ad-blocker shim is swallowed — analytics must
+// never break the app.
+
+// How the app is being run — every GA report can segment installed-app users
+// from browser visitors via the app_mode user property set below.
+const APP_MODE = IS_NATIVE_APP
+  ? "native_app"
+  : (window.matchMedia("(display-mode: standalone)").matches ||
+     window.navigator.standalone === true)
+    ? "pwa"
+    : "browser";
+
+function trackEvent(name, params) {
+  try {
+    if (typeof gtag === "function") gtag("event", name, params || {});
+  } catch {}
+}
+
+try {
+  if (typeof gtag === "function") {
+    gtag("set", "user_properties", { app_mode: APP_MODE });
+  }
+} catch {}
+
+// One virtual page_view per route change. render() re-runs on every data
+// refresh / live repaint / hero flip, so consecutive repaints of the same
+// route are deduped here — only real navigation is counted.
+let lastTrackedRoute = null;
+
+function pageTitleFor(path) {
+  if (!path) return "Home";
+  if (path === "standings") return "Leaderboard";
+  if (path.startsWith("player/")) return `Player — ${decodeURIComponent(path.slice("player/".length))}`;
+  if (path.startsWith("match/")) return "Match scorecard";
+  if (path.startsWith("upcoming/")) return "Upcoming game";
+  if (path.startsWith("team/")) {
+    const parts = path.split("/");
+    if (parts[2] === "player") return "Division player";
+    if (parts[2] === "upcoming") return "Division upcoming game";
+    return "Division team";
+  }
+  return path;
+}
+
+function trackPageView(path) {
+  const route = path || "home";
+  if (route === lastTrackedRoute) return;
+  lastTrackedRoute = route;
+  trackEvent("page_view", {
+    page_path: `/${route}`,
+    page_title: pageTitleFor(path),
+    page_location: window.location.href,
+  });
+}
+
 document.addEventListener("DOMContentLoaded", init);
 // Wrap render so the HashChangeEvent isn't passed as `skipScroll` — every hash
 // navigation must scroll to the top of the new page (e.g. a player's name/header
@@ -279,10 +339,7 @@ window.addEventListener("hashchange", () => render());
 // The chip stays hidden when the app is already running standalone (so
 // the installed PWA never sees it) — and inside the native app wrapper,
 // where "Add to Home Screen" is meaningless (it's already an installed app).
-const isStandalonePWA =
-  window.matchMedia("(display-mode: standalone)").matches ||
-  window.navigator.standalone === true ||
-  IS_NATIVE_APP;
+const isStandalonePWA = APP_MODE !== "browser";
 const isIOSDevice =
   /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 // Share-button location on iOS: Safari is the only mainstream iOS browser
@@ -305,6 +362,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 window.addEventListener("appinstalled", () => {
+  trackEvent("app_installed");
   deferredInstallPrompt = null;
   document.querySelectorAll(".install-chip").forEach((el) => {
     el.hidden = true;
@@ -509,16 +567,22 @@ async function shareCurrentPage() {
   const { path, from } = parseHash();
   const name = shareTitleFor(path, from);
   const url = window.location.href;
+  // GA's recommended "share" event; item_id is the route so reports show
+  // WHICH pages people share. Tracked only after a share actually happens
+  // (a dismissed share sheet doesn't count).
+  const shared = (method) =>
+    trackEvent("share", { method, content_type: "page", item_id: `/${path || "home"}` });
   if (navigator.share) {
-    try { await navigator.share({ title: name, text: name, url }); }
+    try { await navigator.share({ title: name, text: name, url }); shared("native"); }
     catch (_) { /* user dismissed the share sheet — not an error */ }
     return;
   }
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    try { await navigator.clipboard.writeText(url); flashShareToast("Link copied"); return; }
+    try { await navigator.clipboard.writeText(url); flashShareToast("Link copied"); shared("clipboard"); return; }
     catch (_) { /* fall through to prompt */ }
   }
   window.prompt("Copy this link to share:", url);
+  shared("prompt");
 }
 
 function flashShareToast(msg) {
@@ -634,6 +698,9 @@ async function pollLiveScore() {
   if (!rev) return;
   if (rev !== lastLiveRev) {
     lastLiveRev = rev;
+    // A device that receives a live update was actively watching the game —
+    // count it, so "how many people watch live" is answerable in GA.
+    trackEvent("live_score_update", { fixture_id: String(live.fixture_id ?? "") });
     // Bust the in-memory scoresheet cache for the live game so the open match /
     // upcoming view re-fetches the updated card, then reload + repaint in place.
     if (live.fixture_id != null) state.matchCache.delete(live.fixture_id);
@@ -708,6 +775,7 @@ function brandTarget(path, from) {
 function render(skipScroll) {
   clearTimeout(heroFlipTimer);  // re-armed by the home / upcoming view when a hero is shown
   const { path, from } = parseHash();
+  trackPageView(path);
   const bt = brandTarget(path, from);
   setBrand(bt.name, bt.hash);
   const app = document.getElementById("app");
@@ -1171,6 +1239,7 @@ function paintTeam(app, data, teamId, from) {
     el.addEventListener("click", () => {
       const f = el.getAttribute("data-filter");
       if (f === state.teamFilter) return;
+      trackEvent("results_filter", { filter: f, page: "team" });
       state.teamFilter = f;
       state.teamVisible = 3;
       paintTeam(app, data, teamId, from);
@@ -1178,6 +1247,7 @@ function paintTeam(app, data, teamId, from) {
   });
   const moreBtn = app.querySelector('[data-action="show-more"]');
   if (moreBtn) moreBtn.addEventListener("click", () => {
+    trackEvent("results_show_more", { page: "team" });
     state.teamVisible += 3;
     paintTeam(app, data, teamId, from);
   });
@@ -1519,6 +1589,7 @@ function wireRecordFilters(app) {
     el.addEventListener("click", () => {
       const next = el.getAttribute("data-filter");
       if (next === state.resultsFilter) return;
+      trackEvent("results_filter", { filter: next, page: "home" });
       state.resultsFilter = next;
       state.resultsVisible = 3;
       renderHome(app);
@@ -1544,6 +1615,7 @@ function wireShowMore(scope) {
   const btn = scope.querySelector('[data-action="show-more"]');
   if (!btn) return;
   btn.addEventListener("click", () => {
+    trackEvent("results_show_more", { page: "home" });
     state.resultsVisible += 3;
     const filtered = filteredResults(state.fixtures.fixtures, state.resultsFilter);
     const container = scope.querySelector(".results");
@@ -2737,6 +2809,9 @@ function wireInstallChip(scope) {
   const btn = scope.querySelector(".install-chip");
   if (!btn) return;
   btn.addEventListener("click", async () => {
+    trackEvent("install_chip_click", {
+      platform: deferredInstallPrompt ? "native_prompt" : "ios_instructions",
+    });
     if (deferredInstallPrompt) {
       // Android / desktop Chrome / Edge path.
       const ev = deferredInstallPrompt;
@@ -2744,6 +2819,7 @@ function wireInstallChip(scope) {
       try {
         ev.prompt();
         const { outcome } = await ev.userChoice;
+        trackEvent("install_prompt_result", { outcome });
         if (outcome === "accepted") {
           btn.hidden = true;
         }
@@ -2947,8 +3023,10 @@ function wireNotifyChip(scope) {
     try {
       if (state === "on") {
         await unsubscribeFromPush();
+        trackEvent("notifications_off");
       } else {
         await subscribeToPush();
+        trackEvent("notifications_on");
       }
     } catch (err) {
       console.error("notify-chip click:", err);
@@ -2957,6 +3035,8 @@ function wireNotifyChip(scope) {
       // state. Alert for anything else (e.g. webhook unreachable).
       if (!String(err.message || err).toLowerCase().includes("permission")) {
         alert(`Couldn't update notifications: ${err.message || err}`);
+      } else {
+        trackEvent("notifications_denied");
       }
     } finally {
       inFlight = false;
