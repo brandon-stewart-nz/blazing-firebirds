@@ -1710,15 +1710,30 @@ a.record__cell--link .record__num { color: var(--gold-deep); }
   padding: 8px 2px;
 }
 
-/* One-line qualifier above an out-of-division team's stat tables on a
-   scorecard. Heads the greyed-out (inactive) block below it. */
+/* Qualifier above an out-of-division team's stat tables, styled as a centered
+   divider: the label sits between two hairlines that run to the full width, so
+   it reads as one ruled line broken by the text in the middle. Subtle but
+   intentional; heads the greyed-out (inactive) block below it. */
 .match-note {
-  color: var(--ink-soft);
-  font-size: 14px;
-  font-weight: 600;
-  margin: 34px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0 16px;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
 }
-.match-note + .subhead { margin-top: 8px; }
+.match-note::before,
+.match-note::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.match-note + .subhead { margin-top: 0; }
 
 /* An out-of-division team's batting/bowling tables (and their titles) render
    "inactive": every gold/teal/cream accent drops to a neutral grey so it's
