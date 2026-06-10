@@ -1160,14 +1160,13 @@ function teamPlayerCardHtml(p, teamId) {
 
 async function renderTeam(app, teamId, from) {
   if (teamId === TEAM_ID) { window.location.hash = ""; return; }
-  const backHash = from || "standings";
-  const backLabel = from ? "Back" : "Back to Leaderboard";
-  const backHtml = `<a class="back" href="#${escapeHtml(backHash)}">‹ ${escapeHtml(backLabel)}</a>`;
-  app.innerHTML = `${backHtml}<div class="loading">Loading team…</div>`;
+  // No back link on a team landing page — the leaderboard is reached via the
+  // record card's "Ladder ›" cell (and the banner is the team's own home).
+  app.innerHTML = `<div class="loading">Loading team…</div>`;
   const data = await loadDivisionTeam(teamId);
   if (!data) {
     const msg = navigator.onLine ? "Team not found." : "Currently offline — Please check your connection";
-    app.innerHTML = `${backHtml}<div class="loading">${msg}</div>`;
+    app.innerHTML = `<div class="loading">${msg}</div>`;
     return;
   }
   // Reset the results filter/page only when arriving at a DIFFERENT team — not
@@ -1185,10 +1184,7 @@ function paintTeam(app, data, teamId, from) {
   const next = data.next_game;
   scheduleHeroFlip(next ? parseSpawtzDate(next.date_str, next.time) : null);
   const filtered = teamFilteredResults(data.fixtures, teamId, state.teamFilter);
-  const backHash = from || "standings";
-  const backLabel = from ? "Back" : "Back to Leaderboard";
   app.innerHTML = `
-    <a class="back" href="#${escapeHtml(backHash)}">‹ ${escapeHtml(backLabel)}</a>
     ${teamHeroHtml(next, teamId)}
     ${teamRecordHtml(data)}
     <section class="section">
