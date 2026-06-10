@@ -477,14 +477,37 @@ function wireExternalLinksForIosPwa() {
   });
 }
 
-// Share the page the user is currently on. Title is the page's own banner name
-// (the team you're viewing, the leaderboard, or us) so a shared link reads
-// sensibly; the URL is the full deep link (hash route included) so it opens
-// straight to that page. Uses the native share sheet where available, else
-// copies the link to the clipboard, else falls back to a prompt.
+// The title that travels with a shared link — the *key title* of the page the
+// user is on, so the share sheet (and any app that shows the share text) reads
+// for that specific page: the player's name on a player page, "Team A vs Team B"
+// on a match, "Leaderboard — Division 8" on the ladder, otherwise the team /
+// app name. (The rich preview card's image + title come from the static OG tags
+// in index.html — those are one fixed card for every link, because link
+// crawlers ignore the #hash and don't run this JS.)
+function shareTitleFor(path, from) {
+  if (path === "standings") {
+    return `Leaderboard — ${state.standings?.division_name || "Division"}`;
+  }
+  // Most detail pages already render their key title in .detail-header__name
+  // (player name; "Team A vs Team B"). Reuse it, minus any result badge.
+  const h = document.querySelector("#app .detail-header__name");
+  if (h) {
+    const clone = h.cloneNode(true);
+    clone.querySelectorAll(".badge").forEach((b) => b.remove());
+    const t = clone.textContent.replace(/\s+/g, " ").trim();
+    if (t) return t;
+  }
+  // Home / team landing have no detail header — use the banner name.
+  return brandTarget(path, from).name || TEAM_DISPLAY;
+}
+
+// Share the page the user is currently on. The title/text is that page's key
+// title (see shareTitleFor); the URL is the full deep link (hash route included)
+// so it opens straight to that page. Uses the native share sheet where
+// available, else copies the link to the clipboard, else falls back to a prompt.
 async function shareCurrentPage() {
   const { path, from } = parseHash();
-  const name = brandTarget(path, from).name || TEAM_DISPLAY;
+  const name = shareTitleFor(path, from);
   const url = window.location.href;
   if (navigator.share) {
     try { await navigator.share({ title: name, text: name, url }); }

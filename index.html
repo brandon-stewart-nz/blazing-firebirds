@@ -7,6 +7,25 @@
   <meta name="theme-color" content="#1A4D58">
   <title>Beamer</title>
 
+  <!-- Link-preview card. Read by iMessage / WhatsApp / Slack / etc., which
+       fetch the base URL only: they ignore the #hash and don't run our JS, so
+       this is ONE static card shared by every link. The page-specific title
+       (player name, "Team A vs Team B", etc.) travels in the share text that
+       app.js sets when the share button is tapped. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Beamer">
+  <meta property="og:title" content="Beamer — Indoor Cricket">
+  <meta property="og:description" content="Live fixtures, results, the Division 8 ladder and player stats — Hutt Indoor Sports.">
+  <meta property="og:image" content="https://brandon-stewart-nz.github.io/blazing-firebirds/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1200">
+  <meta property="og:image:alt" content="Beamer — a gold cricket ball on a teal tile">
+  <meta property="og:url" content="https://brandon-stewart-nz.github.io/blazing-firebirds/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Beamer — Indoor Cricket">
+  <meta name="twitter:description" content="Live fixtures, results, the Division 8 ladder and player stats — Hutt Indoor Sports.">
+  <meta name="twitter:image" content="https://brandon-stewart-nz.github.io/blazing-firebirds/og-image.png">
+
   <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
