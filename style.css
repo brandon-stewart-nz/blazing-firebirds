@@ -1624,7 +1624,14 @@ button.record__cell[data-active="true"] .record__label {
 /* Custom tooltip for [data-tip] headers — replaces the slow, unstyled native
    title. The JS appends one .fb-tip to <body> (fixed position) so it never
    clips against the table-card's overflow:hidden. */
-[data-tip] { cursor: pointer; }
+[data-tip] {
+  cursor: pointer;
+  /* Tapping a header to see its tooltip shouldn't select/highlight the letter
+     or pop the iOS copy menu — but the tap itself still works. */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
 .fb-tip {
   position: fixed;
   z-index: 1000;
