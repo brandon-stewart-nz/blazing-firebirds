@@ -1647,15 +1647,16 @@ button.record__cell[data-active="true"] .record__label {
   transition: opacity 130ms ease, transform 130ms ease;
 }
 .fb-tip.is-visible { opacity: 1; transform: translateY(0); }
-/* upward arrow, centred on the target via the --tip-arrow offset */
+/* downward arrow at the tooltip's bottom, pointing at the target below it,
+   centred via the --tip-arrow offset (the tooltip sits above the target). */
 .fb-tip::before {
   content: "";
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   left: var(--tip-arrow, 50%);
   transform: translateX(-50%);
   border: 5px solid transparent;
-  border-bottom-color: var(--teal-deep);
+  border-top-color: var(--teal-deep);
 }
 
 /* --- Footer --------------------------------------------------------- */

@@ -233,8 +233,9 @@ window.addEventListener("hashchange", () => render());
 // --- Tooltips --------------------------------------------------------
 // On-brand tooltip for any [data-tip] element. One reused fixed-position node,
 // so it escapes the table-card's overflow:hidden and never clips; positioned
-// just below the target, clamped to the viewport, arrow tracking the target's
-// centre. Triggered by hover and keyboard focus.
+// just ABOVE the target (so a tapping finger on mobile doesn't cover it),
+// clamped to the viewport, arrow tracking the target's centre. Triggered by
+// hover and keyboard focus.
 (() => {
   let tip = null;
   function show(el) {
@@ -255,7 +256,7 @@ window.addEventListener("hashchange", () => render());
       window.innerWidth - tip.offsetWidth - pad
     ));
     tip.style.left = `${Math.round(left)}px`;
-    tip.style.top = `${Math.round(r.bottom + 9)}px`;
+    tip.style.top = `${Math.round(Math.max(pad, r.top - tip.offsetHeight - 9))}px`;
     tip.style.setProperty("--tip-arrow", `${Math.round(r.left + r.width / 2 - left)}px`);
   }
   function hide() { if (tip) tip.classList.remove("is-visible"); }
