@@ -159,6 +159,14 @@ a {
   gap: 0;
   color: var(--cream);
   transition: opacity 0.2s ease;
+  /* Kill the iOS long-press artifacts on the wordmark: the white rounded
+     tap-highlight box and the link-preview/copy callout that pop on a
+     press-and-hold (the hidden analytics toggle is a long-press, so this is
+     hit every time). Not a hover state — these are touch press-and-hold UI. */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .brand:hover { opacity: 0.85; }
 /* When the banner has no home target (the leaderboard), it's plain text — drop
