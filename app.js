@@ -246,8 +246,8 @@ const APP_MODE = IS_NATIVE_APP
 // lives in this device's localStorage, so it's scoped to exactly this
 // install. Toggle it with a URL hook: `?ga=off` opts this device out, `?ga=on`
 // opts it back in. Because the installed iOS PWA has no address bar to type
-// the param, a long-press on the header wordmark toggles the same flag in
-// place (see initAnalyticsOptOut). The choice persists across launches.
+// the param, a long-press on the Leaderboard wordmark toggles the same flag
+// in place (see wireAnalyticsOptOut). The choice persists across launches.
 const GA_OPTOUT_KEY = "firebirds.ga_optout";
 
 function gaOptedOut() {
@@ -613,13 +613,23 @@ function wireShareButton() {
 // the installed iOS PWA, which has no address bar for the `?ga=off` hook. It
 // suppresses the press's normal "go home" navigation, toggles the flag, and
 // flashes a one-line confirmation. Deliberately undiscoverable: a normal tap
-// still just goes home.
+// still just goes home. Gated to the LEADERBOARD wordmark only: the banner is
+// contextual (our name on our views, another team's on theirs, "Leaderboard /
+// Division N" on the ladder), and the toggle arms only while it reads
+// "Leaderboard …" — i.e. when the user is on the standings page.
+const norm = (s) => String(s || "").replace(/\s+/g, "").toLowerCase();
+function brandIsLeaderboard() {
+  const host = document.getElementById("brand-text");
+  return !!host && norm(host.textContent).startsWith("leaderboard");
+}
+
 function wireAnalyticsOptOut() {
   const brand = document.querySelector("a.brand");
   if (!brand) return;
   let timer = null, fired = false;
   const start = () => {
     fired = false;
+    if (!brandIsLeaderboard()) return;   // only on the Leaderboard wordmark
     timer = setTimeout(() => {
       fired = true;
       const off = !gaOptedOut();
