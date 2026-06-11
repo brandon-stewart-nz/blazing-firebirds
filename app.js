@@ -241,14 +241,47 @@ const APP_MODE = IS_NATIVE_APP
     ? "pwa"
     : "browser";
 
+// Per-device analytics opt-out — excludes ONE device (Brandon's own iPhone
+// PWA) from GA without touching anyone else who installs the app. The flag
+// lives in this device's localStorage, so it's scoped to exactly this
+// install. Toggle it with a URL hook: `?ga=off` opts this device out, `?ga=on`
+// opts it back in. Because the installed iOS PWA has no address bar to type
+// the param, a long-press on the header wordmark toggles the same flag in
+// place (see initAnalyticsOptOut). The choice persists across launches.
+const GA_OPTOUT_KEY = "firebirds.ga_optout";
+
+function gaOptedOut() {
+  try { return localStorage.getItem(GA_OPTOUT_KEY) === "1"; } catch { return false; }
+}
+
+function setGaOptOut(off) {
+  try {
+    if (off) localStorage.setItem(GA_OPTOUT_KEY, "1");
+    else localStorage.removeItem(GA_OPTOUT_KEY);
+  } catch {}
+}
+
+// Honour an explicit `?ga=on|off` hook at startup (works in any browser
+// context, and rides in via the PWA start_url too). Returns the live state.
+(function applyGaParam() {
+  try {
+    const v = new URLSearchParams(window.location.search).get("ga");
+    if (v === "off") setGaOptOut(true);
+    else if (v === "on") setGaOptOut(false);
+  } catch {}
+})();
+
+let GA_EXCLUDED = gaOptedOut();
+
 function trackEvent(name, params) {
+  if (GA_EXCLUDED) return;
   try {
     if (typeof gtag === "function") gtag("event", name, params || {});
   } catch {}
 }
 
 try {
-  if (typeof gtag === "function") {
+  if (!GA_EXCLUDED && typeof gtag === "function") {
     gtag("set", "user_properties", { app_mode: APP_MODE });
   }
 } catch {}
@@ -452,6 +485,7 @@ async function init() {
   // Wire the header share button once — it reads the current route at click
   // time, so it always shares whatever page the user is on.
   wireShareButton();
+  wireAnalyticsOptOut();
   wireExternalLinksForIosPwa();
 
   // Paint last-known data from localStorage immediately so the dashboard
@@ -572,6 +606,60 @@ function updateMetaStrip() {
 function wireShareButton() {
   const btn = document.getElementById("share-btn");
   if (btn) btn.addEventListener("click", shareCurrentPage);
+}
+
+// Hidden per-device analytics toggle. A ~1.2s long-press on the header
+// wordmark flips this device's GA opt-out — the only way to reach it inside
+// the installed iOS PWA, which has no address bar for the `?ga=off` hook. It
+// suppresses the press's normal "go home" navigation, toggles the flag, and
+// flashes a one-line confirmation. Deliberately undiscoverable: a normal tap
+// still just goes home.
+function wireAnalyticsOptOut() {
+  const brand = document.querySelector("a.brand");
+  if (!brand) return;
+  let timer = null, fired = false;
+  const start = () => {
+    fired = false;
+    timer = setTimeout(() => {
+      fired = true;
+      const off = !gaOptedOut();
+      setGaOptOut(off);
+      GA_EXCLUDED = off;
+      if (!off && typeof gtag === "function") {
+        try { gtag("set", "user_properties", { app_mode: APP_MODE }); } catch {}
+      }
+      showAnalyticsToast(off
+        ? "This device is now excluded from analytics"
+        : "This device is now included in analytics");
+    }, 1200);
+  };
+  const cancel = () => { if (timer) { clearTimeout(timer); timer = null; } };
+  brand.addEventListener("touchstart", start, { passive: true });
+  brand.addEventListener("mousedown", start);
+  ["touchend", "touchmove", "touchcancel", "mouseup", "mouseleave"].forEach((ev) =>
+    brand.addEventListener(ev, cancel));
+  // Swallow the click that follows a long-press so it doesn't navigate home.
+  brand.addEventListener("click", (e) => {
+    if (fired) { e.preventDefault(); e.stopPropagation(); fired = false; }
+  });
+}
+
+function showAnalyticsToast(text) {
+  let el = document.getElementById("ga-toast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "ga-toast";
+    el.style.cssText =
+      "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);" +
+      "z-index:9999;max-width:88%;padding:10px 16px;border-radius:999px;" +
+      "background:#134f5c;color:#fff;font-size:13px;text-align:center;" +
+      "box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;transition:opacity .2s;";
+    document.body.appendChild(el);
+  }
+  el.textContent = text;
+  requestAnimationFrame(() => { el.style.opacity = "1"; });
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.style.opacity = "0"; }, 2600);
 }
 
 // Installed iOS home-screen app ONLY: external links (e.g. the footer's "Hutt
