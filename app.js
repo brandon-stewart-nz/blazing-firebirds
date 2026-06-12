@@ -1385,6 +1385,10 @@ function paintTeam(app, data, teamId, from) {
   const filtered = teamFilteredResults(data.fixtures, teamId, state.teamFilter);
   app.innerHTML = `
     ${teamHeroHtml(next, teamId)}
+    <div class="chip-row">
+      ${installChipHtml()}
+      ${notifyChipHtml(teamId)}
+    </div>
     ${teamRecordHtml(data)}
     <section class="section">
       <h2 class="section-title">Results</h2>
@@ -1412,6 +1416,8 @@ function paintTeam(app, data, teamId, from) {
     state.teamVisible += 3;
     paintTeam(app, data, teamId, from);
   });
+  wireInstallChip(app);
+  wireNotifyChip(app);
 }
 
 function wireTeamResultClicks(scope, teamId) {
@@ -3114,14 +3120,44 @@ function pushSupported() {
   );
 }
 
-function notifyChipHtml() {
+// --- Per-team notification following ---------------------------------
+// A browser PushSubscription is origin-level — one per device, shared across
+// every team. "Following team X" is therefore a server-side row (this endpoint +
+// team_id); we mirror the set of followed teams in localStorage so each team's
+// bell shows the right state without a per-render server round-trip. Turning one
+// team off never tears down the shared subscription unless it's the last team.
+const FOLLOWED_TEAMS_KEY = "firebirds.followed_teams";
+
+function loadFollowedTeams() {
+  try {
+    const raw = localStorage.getItem(FOLLOWED_TEAMS_KEY);
+    if (raw) return new Set(JSON.parse(raw).map(String));
+  } catch {}
+  // Migration: a legacy single-team subscriber was following our team.
+  try {
+    if (localStorage.getItem(CACHE_KEYS.notifyState) === "on") {
+      return new Set([String(TEAM_ID)]);
+    }
+  } catch {}
+  return new Set();
+}
+
+function saveFollowedTeams(set) {
+  try { localStorage.setItem(FOLLOWED_TEAMS_KEY, JSON.stringify([...set])); } catch {}
+}
+
+function isFollowingTeam(teamId) {
+  return loadFollowedTeams().has(String(teamId));
+}
+
+function notifyChipHtml(teamId = TEAM_ID) {
   if (!pushSupported()) return "";
-  // Pick a best-guess initial state synchronously so the chip renders
-  // in the right shape on first paint instead of starting "loading" and
-  // flipping a moment later. refreshChipState() reconciles asynchronously.
-  //   denied → permission is revoked, no need to guess.
+  const tid = String(teamId);
+  // Pick a best-guess initial state synchronously so the chip renders in the
+  // right shape on first paint. refreshChipState() reconciles asynchronously.
+  //   denied  → permission revoked.
   //   default → permission never asked, so no active subscription.
-  //   granted → fall back to last-known cached state ("on"/"off").
+  //   granted → "on" only if this device follows THIS team.
   let initialState = "loading";
   let initialText = "Notifications off";
   try {
@@ -3131,19 +3167,14 @@ function notifyChipHtml() {
     } else if (Notification.permission === "default") {
       initialState = "off";
     } else {
-      const cached = localStorage.getItem(CACHE_KEYS.notifyState);
-      if (cached === "on") {
-        initialState = "on";
-        initialText = "Notifications on";
-      } else if (cached === "off") {
-        initialState = "off";
-      }
+      initialState = isFollowingTeam(tid) ? "on" : "off";
+      initialText = initialState === "on" ? "Notifications on" : "Notifications off";
     }
   } catch {}
   // Two SVGs live in the chip and CSS shows the one matching data-state.
   // currentColor on both so they pick up whatever text colour the chip has.
   return `
-    <button class="notify-chip" data-state="${initialState}" type="button" aria-live="polite">
+    <button class="notify-chip" data-state="${initialState}" data-team="${tid}" type="button" aria-live="polite">
       <span class="notify-chip__icon" aria-hidden="true">
         <svg class="notify-chip__bell notify-chip__bell--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
@@ -3164,6 +3195,8 @@ function notifyChipHtml() {
 function wireNotifyChip(scope) {
   const btn = scope.querySelector(".notify-chip");
   if (!btn) return;
+  // Which team this bell controls (home → our team; a team page → that team).
+  const teamId = btn.getAttribute("data-team") || String(TEAM_ID);
 
   // Render current state, then re-render after any click. Uses
   // navigator.serviceWorker.ready to make sure the SW is active before
@@ -3177,13 +3210,15 @@ function wireNotifyChip(scope) {
     try {
       const reg = await navigator.serviceWorker.ready;
       const sub = await reg.pushManager.getSubscription();
-      const resolved = sub ? "on" : "off";
-      setChip(btn, resolved, sub ? "Notifications on" : "Notifications off");
-      try { localStorage.setItem(CACHE_KEYS.notifyState, resolved); } catch {}
+      // "On" only when this device has a push subscription AND follows THIS team.
+      const following = !!sub && isFollowingTeam(teamId);
+      setChip(btn, following ? "on" : "off",
+        following ? "Notifications on" : "Notifications off");
+      // Coarse cache (any-team) — only used to migrate legacy subscribers.
+      try { localStorage.setItem(CACHE_KEYS.notifyState, sub ? "on" : "off"); } catch {}
     } catch (err) {
       console.error("notify-chip state:", err);
       setChip(btn, "off", "Notifications off");
-      try { localStorage.setItem(CACHE_KEYS.notifyState, "off"); } catch {}
     }
   }
 
@@ -3201,10 +3236,10 @@ function wireNotifyChip(scope) {
 
     try {
       if (state === "on") {
-        await unsubscribeFromPush();
+        await unsubscribeFromPush(teamId);
         trackEvent("notifications_off");
       } else {
-        await subscribeToPush();
+        await subscribeToPush(teamId);
         trackEvent("notifications_on");
       }
     } catch (err) {
@@ -3233,12 +3268,15 @@ function setChip(btn, state, text) {
   if (textEl) textEl.textContent = text;
 }
 
-async function subscribeToPush() {
+async function subscribeToPush(teamId = TEAM_ID) {
+  const tid = String(teamId);
   const permission = await Notification.requestPermission();
   if (permission !== "granted") {
     throw new Error("Permission not granted");
   }
   const reg = await navigator.serviceWorker.ready;
+  // Reuse the device's existing origin-level subscription if it has one — a
+  // device following several teams shares the single browser subscription.
   let sub = await reg.pushManager.getSubscription();
   if (!sub) {
     sub = await reg.pushManager.subscribe({
@@ -3251,24 +3289,37 @@ async function subscribeToPush() {
     subscription: sub.toJSON(),
     user_agent: navigator.userAgent,
     device_id: getDeviceId(),
+    team_id: tid,
   });
+  const followed = loadFollowedTeams();
+  followed.add(tid);
+  saveFollowedTeams(followed);
 }
 
-async function unsubscribeFromPush() {
+async function unsubscribeFromPush(teamId = TEAM_ID) {
+  const tid = String(teamId);
+  const followed = loadFollowedTeams();
+  followed.delete(tid);
+  saveFollowedTeams(followed);
   const reg = await navigator.serviceWorker.ready;
   const sub = await reg.pushManager.getSubscription();
   if (!sub) return;
   const endpoint = sub.endpoint;
-  await sub.unsubscribe();
+  // Only tear down the shared browser subscription once no teams remain — other
+  // teams the device still follows need it alive.
+  if (followed.size === 0) {
+    try { await sub.unsubscribe(); } catch {}
+  }
   try {
     await postWebhook({
       action: "unsubscribe",
       endpoint,
       device_id: getDeviceId(),
+      team_id: tid,
     });
   } catch (err) {
-    // Server-side cleanup is best-effort — the local subscription is
-    // already gone, which is the user-visible state that matters.
+    // Server-side cleanup is best-effort — the local follow state is already
+    // updated, which is the user-visible state that matters.
     console.warn("unsubscribe webhook failed:", err);
   }
 }
