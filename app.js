@@ -884,14 +884,20 @@ function shareTitleFor(path, from) {
 // so it opens straight to that page. Uses the native share sheet where
 // available, else copies the link to the clipboard, else falls back to a prompt.
 async function shareCurrentPage() {
-  const { path, from } = parseHash();
+  const parsed = parseHash();
+  // The address bar carries readable slugs (team/byc/…); shareTitleFor's team
+  // resolution (brandTarget → teamContextId) is id-based, so resolve first —
+  // same as the router does before calling renderers. Without this every page
+  // falls through to "Blazing Firebirds" because parseInt("byc") is NaN.
+  const path = resolveToIdPath(parsed.path);
+  const from = resolveToIdPath(parsed.from);
   const name = shareTitleFor(path, from);
   const url = window.location.href;
   // GA's recommended "share" event; item_id is the route so reports show
   // WHICH pages people share. Tracked only after a share actually happens
-  // (a dismissed share sheet doesn't count).
+  // (a dismissed share sheet doesn't count). Use the readable slug for GA.
   const shared = (method) =>
-    trackEvent("share", { method, content_type: "page", item_id: `/${path || "home"}` });
+    trackEvent("share", { method, content_type: "page", item_id: `/${parsed.path || "home"}` });
   if (navigator.share) {
     try { await navigator.share({ title: name, text: name, url }); shared("native"); }
     catch (_) { /* user dismissed the share sheet — not an error */ }
