@@ -2411,12 +2411,6 @@ function renderPlayer(app, key, from) {
   const num = jerseyNumber(player.name);
   const avatarText = num != null ? String(num) : initials;
 
-  const parents = parentsFor(player.name);
-  const parentLabel = parents.length === 1 ? "Parent" : "Parents";
-  const parentsLine = parents.length
-    ? `<div class="detail-header__sub">${parentLabel}: ${escapeHtml(formatList(parents))}</div>`
-    : "";
-
   const back = backTargetFor(from, makeHash(`team/${TEAM_ID}`), "Back to Squad");
 
   // Personal-best chips for the hero box (each links to its game).
@@ -2445,7 +2439,6 @@ function renderPlayer(app, key, from) {
         <div>
           <div class="detail-header__name">${escapeHtml(shown)}</div>
           <div class="detail-header__sub">${player.matches.length} match${player.matches.length === 1 ? "" : "es"} played for ${TEAM_DISPLAY}</div>
-          ${parentsLine}
         </div>
       </div>
       ${highlightsHtml}
