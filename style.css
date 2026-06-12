@@ -524,7 +524,7 @@ a {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 24px;
 }
 .chip-row:empty { display: none; }
 /* On the leaderboard the install chip is the row's only child — collapse the

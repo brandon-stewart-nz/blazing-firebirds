@@ -2,7 +2,7 @@
 // PWA behaviour, and Web Push notifications for new fixtures.
 // Bump CACHE_VERSION when shipping breaking changes to the shell.
 
-const CACHE_VERSION = "firebirds-v105";
+const CACHE_VERSION = "firebirds-v106";
 const SHELL = [
   "./",
   "index.html",
