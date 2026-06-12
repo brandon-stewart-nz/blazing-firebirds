@@ -84,7 +84,19 @@
        at the iOS home-indicator inset and the body background paints a cream band
        there. iOS never matches @media(display-mode:standalone), so
        navigator.standalone is the reliable signal. -->
-  <script>if(navigator.standalone===true||matchMedia('(display-mode: standalone)').matches){document.documentElement.classList.add('pwa-standalone');}</script>
+  <script>
+    if(navigator.standalone===true||matchMedia('(display-mode: standalone)').matches){
+      document.documentElement.classList.add('pwa-standalone');
+      // Preload the exact startup PNG for this device. The overlay uses it as its
+      // background-image so the iOS cross-dissolve blends two pixel-identical images
+      // → no ghost. PNG filename mirrors assets/gen-splash.js: W×H in physical px.
+      var _dpr=window.devicePixelRatio||1;
+      var _splashSrc='splash/apple-splash-'+Math.round(screen.width*_dpr)+'-'+Math.round(screen.height*_dpr)+'.png';
+      var _pl=document.createElement('link');_pl.rel='preload';_pl.as='image';_pl.href=_splashSrc;
+      document.head.appendChild(_pl);
+      window._splashSrc=_splashSrc;
+    }
+  </script>
   <!-- Critical first-paint colours so a PWA cold launch shows the branded shell
        (teal header on cream) the instant the WebView paints — not a white flash —
        even before style.css applies. style.css then takes over with the full
@@ -95,14 +107,16 @@
     /* In-app launch splash — installed PWA only. Picks up seamlessly from the
        native iOS launch image (gold ball on teal), holds ~2s, then a small
        script fades it out to reveal the app. Hidden entirely in a browser.
-       Explicit width/height deliberately over-constrain inset:0 (right/bottom
-       ignored per CSS2 §10.3.7) because in iOS standalone the fixed-position box
-       can stop short of the physical screen the same way dvh does — 100vh is the
-       full screen (same fix as the app shell in style.css).
-       Geometry (circle 95vw, center 50%/46%, ball 34.5% width, stops 0%/100%)
-       must stay in sync with assets/gen-splash.js or the swap glitches. */
+       The head script preloads the exact startup PNG for this device and sets
+       it as background-image so the iOS cross-dissolve blends two pixel-identical
+       images → zero ghost. The CSS gradient + inline SVG are fallback for any
+       device size not covered by a PNG.
+       Explicit width/height over-constrain inset:0 (right/bottom ignored, CSS2
+       §10.3.7) because in iOS standalone the fixed ICB can stop short of the
+       physical screen — 100vh is the full screen (same fix as the app shell). */
     #splash { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 9999; display: none;
       background: radial-gradient(circle 95vw at 50% 46%, #16474F 0%, #0E353D 100%);
+      background-size: cover; background-position: center;
       transition: opacity 0.6s ease; }
     html.pwa-standalone #splash { display: block; }
     #splash svg { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%);
@@ -130,6 +144,13 @@
     (function () {
       var s = document.getElementById("splash");
       if (!s) return;
+      // If the head script found a matching startup PNG, use it as background so
+      // the iOS cross-dissolve blends two identical images → no ghost double-ball.
+      if (window._splashSrc) {
+        s.style.backgroundImage = 'url(' + window._splashSrc + ')';
+        var svg = s.querySelector('svg');
+        if (svg) svg.style.display = 'none';
+      }
       setTimeout(function () {
         s.classList.add("is-hidden");
         setTimeout(function () { s.style.display = "none"; }, 700);
