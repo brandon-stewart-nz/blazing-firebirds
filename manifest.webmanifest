@@ -1,6 +1,6 @@
 {
-  "name": "Beamer",
-  "short_name": "Beamer",
+  "name": "Yorker",
+  "short_name": "Yorker",
   "description": "Auto-updating dashboard for Vernon's indoor cricket team",
   "start_url": "./#standings",
   "id": "./",

@@ -18,7 +18,7 @@ const IS_NATIVE_APP =
     window.Capacitor.isNativePlatform()) ||
   (typeof location !== "undefined" && location.protocol === "capacitor:");
 const DATA_BASE = IS_NATIVE_APP
-  ? "https://brandon-stewart-nz.github.io/blazing-firebirds/"
+  ? "https://yorker.app/"
   : "";
 const dataUrl = (path) => DATA_BASE + path;
 
