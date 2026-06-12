@@ -344,6 +344,130 @@ function gaFixtureOverride(fixture, kind, teamId) {
   return { path: `${prefix}/${slug}`, title };
 }
 
+// --- Human-readable URL slugs (id ⇄ slug) ---------------------------------
+// The app's hash routes use readable slugs (#team/oompa-loompas,
+// #match/byc-vs-renegades-2026-06-06) instead of opaque Spawtz ids. makeHash
+// slugifies on the way OUT (every href / navigation); the router resolves
+// slug→id on the way IN, so every renderer stays id-based and untouched. Old
+// id-based links (already-sent push deeplinks, calendar events) still resolve,
+// and canonicalizeUrl rewrites the address bar to the clean slug URL.
+
+// "Blazing Firebirds vs Renegades" on 2026-05-16 → "blazing-firebirds-vs-renegades-2026-05-16".
+// (Mirrors the slug gaFixtureOverride builds, so GA paths and real URLs match.)
+function fixtureSlug(fixture) {
+  const h = fixture?.home?.display, a = fixture?.away?.display;
+  if (!h || !a) return null;
+  const dt = parseSpawtzDate(fixture.date_str, fixture.time);
+  const iso = dt
+    ? `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`
+    : "";
+  return `${gaSlug(h)}-vs-${gaSlug(a)}${iso ? `-${iso}` : ""}`;
+}
+
+// Every fixture we currently know about — ours + any loaded division team —
+// deduped by id. Used to map a match/upcoming slug back to its fixture id.
+function allKnownFixtures() {
+  const out = [], seen = new Set();
+  const add = f => { if (f && f.fixture_id != null && !seen.has(f.fixture_id)) { seen.add(f.fixture_id); out.push(f); } };
+  (state.fixtures?.fixtures || []).forEach(add);
+  for (const dt of state.divisionTeams.values()) (dt?.fixtures || []).forEach(add);
+  return out;
+}
+
+// Reverse lookups (slug-or-id → id). A numeric segment is already an id (an old
+// link), returned as-is. Returns null when unresolvable (data not loaded yet) —
+// the router then leaves the route for the next post-refresh render to resolve.
+function teamIdFromSlugOrId(seg) {
+  if (seg == null || seg === "") return null;
+  if (/^\d+$/.test(seg)) return parseInt(seg, 10);
+  if (seg === gaSlug(TEAM_DISPLAY)) return TEAM_ID;
+  for (const t of (state.standings?.teams || [])) {
+    if (t.name && gaSlug(t.name) === seg) return t.team_id;
+  }
+  for (const [id, dt] of state.divisionTeams) {
+    if (dt?.team?.name && gaSlug(dt.team.name) === seg) return id;
+  }
+  return null;
+}
+
+function fixtureIdFromSlugOrId(seg) {
+  if (seg == null || seg === "") return null;
+  if (/^\d+$/.test(seg)) return parseInt(seg, 10);
+  for (const f of allKnownFixtures()) {
+    if (fixtureSlug(f) === seg) return f.fixture_id;
+  }
+  return null;
+}
+
+// Forward (id-or-slug → slug) for building outgoing links.
+function teamSlugOrId(seg) {
+  if (!/^\d+$/.test(String(seg))) return seg;          // already a slug
+  const id = parseInt(seg, 10);
+  if (id === TEAM_ID) return gaSlug(TEAM_DISPLAY);
+  return teamNameSlug(id) || String(id);
+}
+
+function fixtureSlugOrId(seg) {
+  if (!/^\d+$/.test(String(seg))) return seg;          // already a slug
+  const fid = parseInt(seg, 10);
+  const f = allKnownFixtures().find(x => x.fixture_id === fid);
+  return (f && fixtureSlug(f)) || String(fid);
+}
+
+// id-based path → slug-based path (used by makeHash for every outgoing link).
+// player / standings / unknown paths pass through unchanged.
+function slugifyPath(path) {
+  if (!path) return "";
+  const parts = path.split("/");
+  if (parts[0] === "team") {
+    parts[1] = teamSlugOrId(parts[1]);
+    if (parts[2] === "upcoming" && parts[3] != null) {
+      parts[3] = fixtureSlugOrId(parts.slice(3).join("/"));
+      parts.length = 4;
+    }
+    return parts.join("/");
+  }
+  if (parts[0] === "match" || parts[0] === "upcoming") {
+    return `${parts[0]}/${fixtureSlugOrId(parts.slice(1).join("/"))}`;
+  }
+  return path;
+}
+
+// slug-based path → id-based path (used by the router on the way in). A segment
+// that can't be resolved is left as-is, so the dispatch shows a loading state
+// and the next data-loaded render resolves it.
+function resolveToIdPath(path) {
+  if (!path) return "";
+  const parts = path.split("/");
+  if (parts[0] === "team") {
+    const id = teamIdFromSlugOrId(parts[1]);
+    if (id != null) parts[1] = String(id);
+    if (parts[2] === "upcoming" && parts[3] != null) {
+      const fid = fixtureIdFromSlugOrId(parts.slice(3).join("/"));
+      if (fid != null) { parts[3] = String(fid); parts.length = 4; }
+    }
+    return parts.join("/");
+  }
+  if (parts[0] === "match" || parts[0] === "upcoming") {
+    const fid = fixtureIdFromSlugOrId(parts.slice(1).join("/"));
+    return fid != null ? `${parts[0]}/${fid}` : path;
+  }
+  return path;
+}
+
+// Rewrite the address bar to the canonical clean slug URL — so an old id-link or
+// a #standings link shows the readable URL / bare root. replaceState doesn't
+// fire hashchange, so this never re-renders. The leaderboard's canonical URL is
+// the bare root (no hash).
+function canonicalizeUrl(idPath, idFrom) {
+  const slugPath = (idPath === "standings") ? "" : slugifyPath(idPath);
+  const slugFrom = idFrom ? slugifyPath(idFrom) : "";
+  const target = slugFrom ? `${slugPath}?from=${encodeURIComponent(slugFrom)}` : slugPath;
+  if (window.location.hash.slice(1) === target) return;
+  const base = window.location.pathname + window.location.search;
+  try { history.replaceState(null, "", target ? `${base}#${target}` : base); } catch {}
+}
+
 // The path GA reports: the route as-is, except team routes swap the opaque
 // Spawtz team id for the team-name slug (/team/anderson-aces) so GA reports
 // are readable at a glance. The id stays only if the name can't be resolved
@@ -764,7 +888,9 @@ function parseHash() {
 }
 
 function makeHash(path, from) {
-  return from ? `${path}?from=${encodeURIComponent(from)}` : path;
+  const p = slugifyPath(path);
+  const f = from ? slugifyPath(from) : "";
+  return f ? `${p}?from=${encodeURIComponent(f)}` : p;
 }
 
 function backTargetFor(from, fallbackHash, fallbackLabel) {
@@ -915,27 +1041,32 @@ function teamContextId(s) {
 // page reached FROM a team (the `from` breadcrumb) inherits that team's banner,
 // so a scorecard opened from another team's page stays badged as that team.
 function brandTarget(path, from) {
-  if (path === "standings") {
+  if (path === "" || path === "standings") {
     const div = state.standings?.division_name || "Division";
-    // The leaderboard is a top-level page with no home to link back to, so the
-    // banner title isn't a link (hash: null).
+    // The leaderboard is the root/home — its banner title isn't a link.
     return { name: `Leaderboard ${div}`, hash: null };
   }
   const ctx = teamContextId(path) ?? teamContextId(from);
   if (ctx != null && ctx !== TEAM_ID && isDivisionTeam(ctx)) {
-    return { name: divTeamName(ctx), hash: `#team/${ctx}` };
+    return { name: divTeamName(ctx), hash: `#${slugifyPath(`team/${ctx}`)}` };
   }
-  return { name: "Blazing Firebirds", hash: "#" };
+  // Our own pages — banner home-links to our team page (no longer the root).
+  return { name: TEAM_DISPLAY, hash: `#${slugifyPath(`team/${TEAM_ID}`)}` };
 }
 
 function render(skipScroll) {
   clearTimeout(heroFlipTimer);  // re-armed by the home / upcoming view when a hero is shown
-  const { path, from } = parseHash();
-  // Team / match / upcoming routes are tracked from their renderers AFTER
-  // their data resolves, so the GA path carries names ("/team/anderson-aces",
-  // "/match/byc-vs-renegades-2026-05-16") rather than opaque Spawtz ids (on
-  // a cold direct hit the names aren't known yet at route time).
-  if (!/^(team|match|upcoming)\//.test(path)) trackPageView(path);
+  const parsed = parseHash();
+  // Resolve readable slugs → ids on the way in, so every renderer below stays
+  // id-based and untouched, then canonicalise the address bar to the clean slug
+  // URL (rewriting an old id-link or a #standings link in place).
+  const path = resolveToIdPath(parsed.path);
+  const from = resolveToIdPath(parsed.from);
+  canonicalizeUrl(path, from);
+  // Team / match / upcoming routes are tracked from their renderers AFTER their
+  // data resolves (the GA path then carries names, not opaque ids). The root is
+  // the leaderboard, reported as /standings.
+  if (!/^(team|match|upcoming)\//.test(path)) trackPageView(path === "" ? "standings" : path);
   const bt = brandTarget(path, from);
   setBrand(bt.name, bt.hash);
   const app = document.getElementById("app");
@@ -956,12 +1087,16 @@ function render(skipScroll) {
   } else if (path.startsWith("upcoming/")) {
     const fid = parseInt(path.slice("upcoming/".length), 10);
     renderUpcoming(app, fid, from);
-  } else if (path === "standings") {
-    renderStandings(app, from);
   } else if (path.startsWith("team/")) {
     const parts = path.split("/");
     const teamId = parseInt(parts[1], 10);
-    if (parts[2] === "player") {
+    // Our own team is addressable via the uniform team path too, but uses our
+    // richer home / player / upcoming renderers (which read the root data files).
+    if (teamId === TEAM_ID) {
+      if (parts[2] === "player") renderPlayer(app, decodeURIComponent(parts.slice(3).join("/")), from);
+      else if (parts[2] === "upcoming") renderUpcoming(app, parseInt(parts[3], 10), from);
+      else renderHome(app);
+    } else if (parts[2] === "player") {
       renderTeamPlayer(app, teamId, decodeURIComponent(parts.slice(3).join("/")), from);
     } else if (parts[2] === "upcoming") {
       renderTeamUpcoming(app, teamId, parseInt(parts[3], 10), from);
@@ -969,7 +1104,8 @@ function render(skipScroll) {
       renderTeam(app, teamId, from);
     }
   } else {
-    renderHome(app);
+    // Root ("") and "standings" (and anything unrecognised) → the leaderboard home.
+    renderStandings(app, from);
   }
 }
 
@@ -1081,9 +1217,8 @@ function renderStandings(app, from) {
 
   const rows = teams.map(t => {
     const diff = t.difference > 0 ? `+${t.difference}` : `${t.difference}`;
-    // Every row is clickable — including ours: navigating to our own team id
-    // is redirected to home by renderTeam, so our row opens our dashboard.
-    const target = `team/${t.team_id}`;
+    // Every row is clickable — including ours (our slug routes to our home).
+    const target = makeHash(`team/${t.team_id}`);
     return `
       <tr class="ladder-row" data-target-hash="${escapeHtml(target)}">
         <td class="num ladder-pos">${t.position}</td>
@@ -1357,7 +1492,7 @@ function teamPlayerCardHtml(p, teamId) {
 // --- Team home --------------------------------------------------------
 
 async function renderTeam(app, teamId, from) {
-  if (teamId === TEAM_ID) { window.location.hash = ""; return; }
+  if (teamId === TEAM_ID) { window.location.hash = makeHash(`team/${TEAM_ID}`); return; }
   // No back link on a team landing page — the leaderboard is reached via the
   // record card's "Ladder ›" cell (and the banner is the team's own home).
   app.innerHTML = `<div class="loading">Loading team…</div>`;
@@ -2944,7 +3079,7 @@ function wireResultClicks(scope) {
     el.addEventListener("click", () => {
       // Coming from home → no `from` so the match's back button defaults
       // to "Back to Home".
-      window.location.hash = `match/${fid}`;
+      window.location.hash = makeHash(`match/${fid}`);
     });
   });
 }

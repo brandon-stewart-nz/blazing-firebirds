@@ -2,7 +2,7 @@
   "name": "Yorker",
   "short_name": "Yorker",
   "description": "Auto-updating dashboard for Vernon's indoor cricket team",
-  "start_url": "./#standings",
+  "start_url": "./",
   "id": "./",
   "scope": "./",
   "display": "standalone",
