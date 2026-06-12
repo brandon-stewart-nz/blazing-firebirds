@@ -900,7 +900,8 @@ function backTargetFor(from, fallbackHash, fallbackLabel) {
   if (!from) return { hash: fallbackHash, label: fallbackLabel };
   if (from.startsWith("player/")) {
     const key = decodeURIComponent(from.slice("player/".length));
-    let player = state.players?.players.find(p => playerKey(p.name) === key);
+    let player = state.players?.players.find(p => playerSlug(p.name) === key);
+    if (!player) player = state.players?.players.find(p => playerKey(p.name) === key);
     if (!player) player = state.players?.players.find(p => firstNameKey(p.name) === firstNameKey(key));
     const firstName = player
       ? displayName(player.name).split(/\s+/)[0]
@@ -2348,7 +2349,7 @@ function playerCardHtml(p) {
   const isStandIn = num == null;
   const avatarText = isStandIn ? initials : String(num);
   return `
-    <a class="player-card ${isStandIn ? "player-card--standin" : ""}" href="#player/${encodeURIComponent(playerKey(p.name))}">
+    <a class="player-card ${isStandIn ? "player-card--standin" : ""}" href="#player/${encodeURIComponent(ourPlayerSlug(p.name))}">
       <div class="player-card__avatar">${escapeHtml(avatarText)}</div>
       <div class="player-card__name">${escapeHtml(shown)}${isStandIn ? ` <span class="player-card__tag">stand-in</span>` : ""}</div>
       <div class="player-card__stats">
@@ -2396,7 +2397,8 @@ function bestBowlingMatch(matches) {
 }
 
 function renderPlayer(app, key, from) {
-  let player = state.players.players.find(p => playerKey(p.name) === key);
+  let player = state.players.players.find(p => playerSlug(p.name) === key);
+  if (!player) player = state.players.players.find(p => playerKey(p.name) === key);
   if (!player) player = state.players.players.find(p => firstNameKey(p.name) === firstNameKey(key));
   if (!player) {
     app.innerHTML = `<a class="back" href="#">‹ Back</a><div class="loading">Player not found.</div>`;
@@ -2530,7 +2532,7 @@ function renderPlayer(app, key, from) {
       </table>
     </div>`}
   `;
-  wirePlayerMatchClicks(app, key);
+  wirePlayerMatchClicks(app, ourPlayerSlug(player.name));
 }
 
 // --- Match view ------------------------------------------------------
@@ -2920,7 +2922,7 @@ function bowlingTableHtml(bowlers, opts = {}) {
 function rowLinkAttrs(name, linkable, matchId, fromKind = "match") {
   if (!linkable) return "";
   const target = makeHash(
-    `player/${encodeURIComponent(playerKey(name))}`,
+    `player/${encodeURIComponent(ourPlayerSlug(name))}`,
     matchId != null ? `${fromKind}/${matchId}` : ""
   );
   return `class="player-row" data-target-hash="${escapeHtml(target)}"`;
@@ -2997,6 +2999,17 @@ function playerKey(name) {
   const core = coreKey(first);
   if (core !== null && (!surname || surnameClose(surname, ROSTER_SURNAMES[core]))) return core;
   return surname ? `${first} ${surname}` : first;
+}
+
+// URL slug for one of OUR players — full name (first-last) when a surname is
+// known, matching how other teams' players are slugged (playerSlug). Resolves
+// the name to its canonical roster record first, so a scorecard's name variant
+// (Jakob/Jacob, or a surname-less entry) still maps to the same URL as the
+// player's squad card. Falls back to a surname-less slug for true stand-ins.
+function ourPlayerSlug(name) {
+  const key = playerKey(name);
+  const p = state.players?.players.find(x => playerKey(x.name) === key);
+  return playerSlug((p && p.name) || name);
 }
 
 function parseSpawtzDate(dateStr, timeStr) {
