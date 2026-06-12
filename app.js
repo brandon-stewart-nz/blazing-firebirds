@@ -1991,7 +1991,7 @@ function heroCardHtml(next) {
 }
 
 async function renderUpcoming(app, fid, from) {
-  const back = backTargetFor(from, "", "Back to Home");
+  const back = backTargetFor(from, makeHash(`team/${TEAM_ID}`), "Back to Home");
   const backHtml = `<a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>`;
 
   const fromDemo = DEMO_NEXT_GAME && DEMO_NEXT_GAME.fixture_id === fid ? DEMO_NEXT_GAME : null;
@@ -2417,7 +2417,7 @@ function renderPlayer(app, key, from) {
     ? `<div class="detail-header__sub">${parentLabel}: ${escapeHtml(formatList(parents))}</div>`
     : "";
 
-  const back = backTargetFor(from, "", "Back to Squad");
+  const back = backTargetFor(from, makeHash(`team/${TEAM_ID}`), "Back to Squad");
 
   // Personal-best chips for the hero box (each links to its game).
   const hsBest = bestBattingMatch(player.matches);
@@ -2538,7 +2538,7 @@ function renderPlayer(app, key, from) {
 // --- Match view ------------------------------------------------------
 
 async function renderMatch(app, fid, from) {
-  const back = backTargetFor(from, "", "Back to Home");
+  const back = backTargetFor(from, makeHash(`team/${TEAM_ID}`), "Back to Home");
   const backHtml = `<a class="back" href="#${escapeHtml(back.hash)}">‹ ${escapeHtml(back.label)}</a>`;
   app.innerHTML = `${backHtml}<div class="loading">Loading match…</div>`;
   const fixture = state.fixtures.fixtures.find(f => f.fixture_id === fid);
