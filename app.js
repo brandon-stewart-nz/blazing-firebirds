@@ -3100,16 +3100,15 @@ function wirePlayerMatchClicks(scope, fromPlayerKey) {
 
 function installChipHtml() {
   if (isStandalonePWA) return ""; // Already installed — never offer again.
+  // Mobile only — phones/tablets (iOS + Android). No desktop install button:
+  // the install affordance is offered on mobile devices only.
+  const isMobileDevice = isIOSDevice || /Android/i.test(navigator.userAgent);
+  if (!isMobileDevice) return "";
   // Initial visibility:
   //   - iOS: show right away; click opens the instructions overlay.
-  //   - Anything else: render hidden, the beforeinstallprompt listener
-  //     unhides it once the browser confirms install eligibility.
+  //   - Android: render hidden, the beforeinstallprompt listener unhides it
+  //     once the browser confirms install eligibility.
   const showNow = isIOSDevice || deferredInstallPrompt !== null;
-  // Label tracks form factor: phones/tablets get "Add to Home Screen",
-  // desktops (Mac/Windows/Linux) get "Add to Desktop".
-  const isMobileDevice =
-    isIOSDevice || /Android/i.test(navigator.userAgent);
-  const chipLabel = isMobileDevice ? "Add to Home Screen" : "Add to Desktop";
   return `
     <button class="install-chip" type="button"${showNow ? "" : " hidden"}>
       <span class="install-chip__icon" aria-hidden="true">
@@ -3119,7 +3118,7 @@ function installChipHtml() {
           <path d="M9 12l3 3 3-3"/>
         </svg>
       </span>
-      <span class="install-chip__text">${chipLabel}</span>
+      <span class="install-chip__text">Add to Home Screen</span>
     </button>`;
 }
 
